@@ -14,9 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('profile', 'UserController@profile');
 Route::post('profile', 'UserController@update_avatar');
-
+Route::get('admin/addvisitor','AdminController@addvisitor');
+Route::get('admin/addemployee','AdminController@addemployee');
+Route::get('admin/addadministrator','AdminController@addadministrator');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');

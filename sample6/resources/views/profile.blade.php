@@ -19,6 +19,13 @@
     </div>
     <div class="panel-body">
 
+        <p><strong>Id:</strong>{{ $user->id }}</p>
+        <p><strong>Name:</strong>{{ $user->name }}</p>
+        <p><strong>Gender:</strong>{{ $user->gender }}</p>
+        <p><strong>Age:</strong>{{ $user->age }}</p>
+        <p><strong>Phonenumber:</strong>{{ $user->phonenumber }}</p>
+        <p><strong>Email:</strong>{{ $user->email }}</p>
+        <p><strong>User Type:</strong>{{ $user->whoareu }}</p>
     </div>
   </div>
 

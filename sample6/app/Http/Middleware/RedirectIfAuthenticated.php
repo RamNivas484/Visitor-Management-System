@@ -15,19 +15,12 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {if (Auth::guard($guard)->check()) {
-        $userType = Auth::user()->whoareu;
-        echo $userType;
-        if (strcmp($userType,'Administrator')==1) {
-           return redirect('/admin');
-        } else if ($userType == 'Employee') {
-            return redirect('/employee');
-        } else if (strcmp($userType == 'Visitor')==1) {
-            return redirect('/visitor');
-        }
-    }
+     public function handle($request, Closure $next, $guard = null)
+     {
+         if (Auth::guard($guard)->check()) {
+             return redirect('/home');
+         }
 
-        return $next($request);
-    }
+         return $next($request);
+     }
 }

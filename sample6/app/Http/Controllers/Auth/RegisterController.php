@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Validator;
+use Illuminate\Support\Facades\Auth;
+
 class RegisterController extends Controller
 {
     /*
@@ -66,8 +68,15 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'gender' => $data['gender'],
+            'age' => $data['age'],
+            'phonenumber' => $data['phonenumber'],
             'email' => $data['email'],
             'whoareu' => $data['whoareu'],
+            'visitortype' => $data['visitortype'],
+            'companyname' => $data['companyname'],
+            'companylocation' => $data['companylocation'],
+            'companywebsite' => $data['companywebsite'],
             'password' => bcrypt($data['password']),
         ]);
     }
@@ -80,7 +89,7 @@ class RegisterController extends Controller
 
         Mail::to($user->email)->send(new ConfirmationEmail($user));
 
-        return back()->with('status','Please Confirm your email address.');
+        return redirect('login')->with('status','Please Confirm your email address.');
     }
     public function confirmEmail($token)
     {

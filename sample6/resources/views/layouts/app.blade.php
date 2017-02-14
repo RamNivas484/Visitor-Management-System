@@ -49,12 +49,18 @@
                     </button>
 
                     <!-- Branding Image -->
+                    @if(Auth::guest())
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Visitor management System') }}
                     </a>
+                    @else
+                    <a class="navbar-brand" href="{{ url('/home') }}">
+                        {{ config('app.name', 'Visitor management System') }}
+                    </a>
+                    @endif
                 </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <div class="collapse navbar-collapse" id="app-navbar-collapse" >
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
@@ -99,26 +105,314 @@
 @else
         <?php
              $userType = Auth::user()->whoareu;
-             if((strcmp($userType,"Visitor"))==0):
+             if((strcmp($userType,"Administrator"))==0):
         ?>
         <div class="container">
             <div class="row">
                 <div class="col-sm-3 col-md-offset-0">
-                    <div class="panel panel-default">
+                    <div class="panel panel-info">
                         <div class="panel-heading">Operations</div>
                         <div class="panel-body">
                           <ul class="nav" id="side-menu">
-                              <li><a href="#"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-                              <li><a href="#"><i class="glyphicon glyphicon-user"></i> Add Employee</a></li>
-                              <li><a href="#"><i class="glyphicon glyphicon-sunglasses"></i> Add Administrator</a></li>
-                              <li><a href="#"><i class="glyphicon glyphicon-th-list"></i> Booking Details </a></li>
-                              <li><a href="#"><i class="glyphicon glyphicon-ban-circle"></i> Block Visitor </a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+                            <li><a href="{{ url('/admin/addvisitor') }}"><i class="glyphicon glyphicon-user"></i> Add Visitor</a></li>
+                            <li><a href="{{ url('/admin/addemployee') }}"><i class="glyphicon glyphicon-user"></i> Add Employee</a></li>
+                            <li><a href="{{ url('/admin/addadministrator') }}"><i class="glyphicon glyphicon-user"></i> Add Administrator</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-th-list"></i> Booking Details </a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-ban-circle"></i> Block Visitor </a></li>
                           </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-9 col-md-offset-0">
-                    <div class="panel panel-default">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                             Dashboard
+                        </div>
+                        <div class="panel-body">
+                          <div class="row ">
+                              <div class="col-lg-3 col-md-6">
+                                  <div class="panel panel-primary">
+                                      <div class="panel-heading">
+                                          <div class="row">
+                                              <div class="col-xs-3">
+                                                  <i class="glyphicon glyphicon-th-large fa-5x"></i>
+                                              </div>
+                                              <div class="col-xs-9 text-right">
+                                                  <div class="huge">
+
+                                                   <?php
+                                                    $visitor = DB::table('users')->where('whoareu', 'Visitor')->count();
+                                                    $employee = DB::table('users')->where('whoareu', 'Employee')->count();
+                                                    $sum=$visitor+$employee;
+                                                    echo "$sum";
+                                                    ?>
+                                                    </div>
+                                                  <div>Total People</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <a href="#">
+                                          <div class="panel-footer">
+                                              <span class="pull-left">View Details</span>
+                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
+                                              <div class="clearfix"></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                  <div class="panel panel-green">
+                                      <div class="panel-heading">
+                                          <div class="row">
+                                              <div class="col-xs-3">
+                                                  <i class="glyphicon glyphicon-briefcase fa-5x"></i>
+                                              </div>
+                                              <div class="col-xs-9 text-right">
+                                                  <div class="huge">
+                                                    <?php
+                                                     $users = DB::table('users')->where('whoareu', 'Employee')->count();
+                                                                 echo "$users";
+
+                                                                     ?></div>
+                                                  <div>Total Employee</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <a href="#">
+                                          <div class="panel-footer">
+                                              <span class="pull-left">View Details</span>
+                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right "></i></span>
+                                              <div class="clearfix"></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                  <div class="panel panel-yellow">
+                                      <div class="panel-heading">
+                                          <div class="row">
+                                              <div class="col-xs-3">
+                                                  <i class="glyphicon glyphicon-eye-open fa-5x"></i>
+                                              </div>
+                                              <div class="col-xs-9 text-right">
+                                                  <div class="huge">
+                                                    <?php
+                                                                 $users = DB::table('users')->where('whoareu', 'Visitor')->count();
+                                                                 echo "$users";
+                                                    ?>
+                                                  </div>
+                                                  <div>Total Visitors</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <a href="#">
+                                          <div class="panel-footer">
+                                              <span class="pull-left">View Details</span>
+                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
+                                              <div class="clearfix"></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                  <div class="panel panel-red">
+                                      <div class="panel-heading">
+                                          <div class="row">
+                                              <div class="col-xs-3">
+                                                  <i class="glyphicon glyphicon-ban-circle fa-5x"></i>
+                                              </div>
+                                              <div class="col-xs-9 text-right">
+                                                  <div class="huge">13</div>
+                                                  <div>Banned Visitors</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <a href="#">
+                                          <div class="panel-footer">
+                                              <span class="pull-left">View Details</span>
+                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
+                                              <div class="clearfix"></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                          </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <?php endif; ?>
+@endif
+
+
+@if (Auth::guest())
+@else
+        <?php
+             $userType = Auth::user()->whoareu;
+             if((strcmp($userType,"Visitor"))==0):
+        ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 col-md-offset-0">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Operations</div>
+                        <div class="panel-body">
+                          <ul class="nav" id="side-menu">
+                              <li><a href="#"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+                              <li><a href="#"><i class="glyphicon glyphicon-user"></i> Book Employee</a></li>
+                              <li><a href="#"><i class="glyphicon glyphicon-sunglasses"></i> See Employee</a></li>
+
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-md-offset-0">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                             Dashboard
+                        </div>
+                        <div class="panel-body">
+                          <div class="row ">
+                              <div class="col-lg-3 col-md-6">
+                                  <div class="panel panel-primary">
+                                      <div class="panel-heading">
+                                          <div class="row">
+                                              <div class="col-xs-3">
+                                                  <i class="glyphicon glyphicon-th-large fa-5x"></i>
+                                              </div>
+                                              <div class="col-xs-9 text-right">
+                                                  <div class="huge">
+
+                                                   <?php
+                                                    $visitor = DB::table('users')->where('whoareu', 'Visitor')->count();
+                                                    $employee = DB::table('users')->where('whoareu', 'Employee')->count();
+                                                    $sum=$visitor+$employee;
+                                                    echo "$sum";
+                                                    ?>
+                                                    </div>
+                                                  <div>Total People</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <a href="#">
+                                          <div class="panel-footer">
+                                              <span class="pull-left">View Details</span>
+                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
+                                              <div class="clearfix"></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                  <div class="panel panel-green">
+                                      <div class="panel-heading">
+                                          <div class="row">
+                                              <div class="col-xs-3">
+                                                  <i class="glyphicon glyphicon-briefcase fa-5x"></i>
+                                              </div>
+                                              <div class="col-xs-9 text-right">
+                                                  <div class="huge">
+                                                    <?php
+                                                     $users = DB::table('users')->where('whoareu', 'Employee')->count();
+                                                                 echo "$users";
+
+                                                                     ?></div>
+                                                  <div>Total Employee</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <a href="#">
+                                          <div class="panel-footer">
+                                              <span class="pull-left">View Details</span>
+                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right "></i></span>
+                                              <div class="clearfix"></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                  <div class="panel panel-yellow">
+                                      <div class="panel-heading">
+                                          <div class="row">
+                                              <div class="col-xs-3">
+                                                  <i class="glyphicon glyphicon-eye-open fa-5x"></i>
+                                              </div>
+                                              <div class="col-xs-9 text-right">
+                                                  <div class="huge">
+                                                    <?php
+                                                                 $users = DB::table('users')->where('whoareu', 'Visitor')->count();
+                                                                 echo "$users";
+                                                    ?>
+                                                  </div>
+                                                  <div>Total Visitors</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <a href="#">
+                                          <div class="panel-footer">
+                                              <span class="pull-left">View Details</span>
+                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
+                                              <div class="clearfix"></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                  <div class="panel panel-red">
+                                      <div class="panel-heading">
+                                          <div class="row">
+                                              <div class="col-xs-3">
+                                                  <i class="glyphicon glyphicon-ban-circle fa-5x"></i>
+                                              </div>
+                                              <div class="col-xs-9 text-right">
+                                                  <div class="huge">13</div>
+                                                  <div>Banned Visitors</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <a href="#">
+                                          <div class="panel-footer">
+                                              <span class="pull-left">View Details</span>
+                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
+                                              <div class="clearfix"></div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>
+                          </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <?php endif; ?>
+@endif
+
+@if (Auth::guest())
+@else
+        <?php
+             $userType = Auth::user()->whoareu;
+             if((strcmp($userType,"Employee"))==0):
+        ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 col-md-offset-0">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Operations</div>
+                        <div class="panel-body">
+                          <ul class="nav" id="side-menu">
+                              <li><a href="#"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+                              <li><a href="#"><i class="glyphicon glyphicon-th-list"></i> Booking Details </a></li>
+                              <li><a href="#"><i class="glyphicon glyphicon-ban-circle"></i> Visitor Log </a></li>
+                              <li><a href="#"><i class="glyphicon glyphicon-th-list"></i>Employee Log</a></li>
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-md-offset-0">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                              Dashboard
                         </div>
