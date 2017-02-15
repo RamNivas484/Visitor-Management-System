@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Route::get('profile', 'UserController@profile');
 Route::post('profile', 'UserController@update_avatar');
-Route::get('admin/addvisitor','AdminController@addvisitor');
+Route::get('admin/addvisitor','AdminController@addvisitorview');
+Route::post('admin/addvisitor','AdminController@addvisitordata');
 Route::get('admin/addemployee','AdminController@addemployee');
 Route::get('admin/addadministrator','AdminController@addadministrator');
 Auth::routes();
