@@ -46,7 +46,7 @@
                 <div class="panel-body">
                 <form name="form1" class="form-horizontal" role="form" method="POST" action="{{ url('/admin/addvisitor') }}">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+                      <input type="hidden" name="remember_token" value="{{ csrf_token() }}">
                       <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                           <label for="name" class="col-md-4 control-label">Name</label>
 
@@ -152,6 +152,17 @@
 
                       <!-- This Code works only when the visitor is a official Visitor Code Ends -->
 
+                      <!-- personal visitor details starts
+                      <div id="personaldetails" name="personaldetails" style="display:none;" onsubmit="required()">
+
+                          <div class="form-group">
+                              <label for="companylocation" class="col-md-4 control-label">Company Location</label>
+                              <div class="col-md-6">
+                                  <input id="companylocation" name="companylocation" type="text" class="form-control input-md">
+                              </div>
+                          </div>
+                      </div>
+                     personal visitor details ends-->
 
 
 

@@ -5,13 +5,14 @@
 
     <script>
         $(document).ready(function (){
-            $("#visitortype").change(function() {
-                
+            $("#visitortype").change(function()
+            {
                 if ($(this).val() == "Official Visitor")
                 {
                     $("#officialdetails").show();
                 }
-                else{
+                else
+                {
                     $("#officialdetails").hide();
                 }
             });

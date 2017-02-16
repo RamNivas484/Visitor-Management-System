@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use DB;
 use App\User;
 use App\Http\Requests;
-use Input;
 use Redirect;
 
 class AdminController extends Controller
@@ -15,9 +14,9 @@ class AdminController extends Controller
 	   {
 		   return view('admin.addvisitor');
 	   }
-     public function addvisitordata(array $data)
+     public function addvisitordata()
 	   {
-        /*		$user = new User;
+        		$user = new User;
  		        $user->name=Input::get('name');
  		        $user->gender=Input::get('gender');
  		        $user->age=Input::get('age');
@@ -29,14 +28,15 @@ class AdminController extends Controller
             $user->companylocation=Input::get('companylocation');
             $user->companywebsite=Input::get('companywebsite');
             $user->password=bcrypt(Input::get('password'));
+          //  $user->avatar=public_path('uploads\avatars\default.jpg' ) as "default.jpg";
             $user->verified="1";
             $user->status="0";
             $user->ban="0";
  		        $user->save();
  		        $user=User::all();
-            return redirect('addvisitor')->with('Status','Visitor Data Added Successfully.'); */
+            return redirect('admin/addvisitor')->with('status','Visitor Data Added Successfully.');
 
-           return User::create([
+    /*       return User::create([
                 'name' => $data['name'],
                 'gender' => $data['gender'],
                 'age' => $data['age'],
@@ -51,7 +51,7 @@ class AdminController extends Controller
                 'verified' => "1",
                 'status' => "0",
                 'ban' => "0",
-            ]);
+            ]);  */
 
 
 	   }
