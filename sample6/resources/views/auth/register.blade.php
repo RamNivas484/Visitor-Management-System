@@ -5,15 +5,20 @@
 
     <script>
         $(document).ready(function (){
-            $("#visitortype").change(function()
-            {
+            $("#visitortype").change(function() {
+
                 if ($(this).val() == "Official Visitor")
                 {
                     $("#officialdetails").show();
+                    $("#personaldetails").hide();
                 }
-                else
-                {
+                else if ($(this).val() == "Personal Visitor"){
                     $("#officialdetails").hide();
+                    $("#personaldetails").show();
+                }
+                else{
+                    $("#officialdetails").hide();
+                    $("#personaldetails").hide();
                 }
             });
         });
@@ -106,8 +111,9 @@
                         <div class="form-group">
                             <label for="gender" class="col-md-4 control-label">Visitor Type</label>
                                 <div class="col-md-6">
-                                    <select id="visitortype" name="visitortype" class="form-control">
-                                        <option value="Personal Visitor" selected>Personal Visitor</option>
+                                    <select id="visitortype" name="visitortype" class="form-control" required>
+                                      <option value="" selected>--Select Visitor Type--</option>
+                                        <option value="Personal Visitor">Personal Visitor</option>
                                         <option value="Official Visitor">Official Visitor</option>
                                     </select>
                                </div>
@@ -138,7 +144,30 @@
                         </div>
 
                         <!-- This Code works only when the visitor is a official Visitor Code Ends -->
+                        <!-- personal visitor details starts -->
+                        <div id="personaldetails" name="personaldetails" style="display:none;" onsubmit="required()">
 
+                            <div class="form-group">
+                                <label for="pv_empdept" class="col-md-4 control-label">Employee Department</label>
+                                <div class="col-md-6">
+                                    <select id="pv_empdept" name="pv_empdept" class="form-control">
+                                        <option value="" selected>--Select Employee Department--</option>
+                                        <option value="CSE">CSE</option>
+                                        <option value="IT">IT</option>
+                                        <option value="ECE">ECE</option>
+                                        <option value="CIVIL">CIVIL</option>
+                                        <option value="MECH">MECH</option>
+                                    </select>
+                               </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pv_empname" class="col-md-4 control-label">Employee Name </label>
+                                <div class="col-md-6">
+                                    <input id="pv_empname" name="pv_empname" type="text" class="form-control input-md">
+                                </div>
+                            </div>
+                        </div>
+                       <!--personal visitor details ends-->
 
 
 

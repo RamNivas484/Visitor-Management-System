@@ -25,6 +25,8 @@ class users extends Migration
             $table->string('companyname')->nullable();
             $table->string('companylocation')->nullable();
             $table->string('companywebsite')->nullable();
+            $table->string('pv_empname')->nullable();
+            $table->string('pv_empdept')->nullable();
             $table->string('avatar')->default('default.jpg');
             $table->string('password');
             $table->boolean('verified')->default(false);
