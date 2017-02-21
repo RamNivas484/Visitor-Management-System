@@ -32,6 +32,20 @@
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+        function changestatus()
+        {
+          <?php
+               $status = Auth::guest()->status;
+               if((strcmp($status,"0"))==0)
+               {
+                 Auth::guest()->status => "1";
+               }
+               else
+               {
+                 Auth::guest()->status => "0";
+               }
+          ?>
+        }
     </script>
 </head>
 <body>
@@ -75,6 +89,18 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                         <li><a href="{{ url('/profile') }}"><i class="fa fa-btn fa-user"></i>Profile</a></li>
+                                        <?php
+                                             $status = Auth::user()->status;
+                                             if((strcmp($status,"0"))==0):
+                                        ?>
+                                        <li><a href="" style="color:red;" onclick="changestatus()">● Check in Now</a></li>
+                                        <?php endif; ?>
+                                        <?php
+                                             $status = Auth::user()->status;
+                                             if((strcmp($status,"1"))==0):
+                                        ?>
+                                        <li><a href="" style="color:green;" onclick="cahngestatus()">● Check out Now</a></li>
+                                        <?php endif; ?>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();

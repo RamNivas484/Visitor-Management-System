@@ -66,9 +66,6 @@
                               @endif
                           </div>
                       </div>
-
-
-
                       <div class="form-group">
                           <label for="gender" class="col-md-4 control-label">Gender</label>
 
@@ -79,21 +76,18 @@
                               </select>
                           </div>
                       </div>
-
                       <div class="form-group">
                           <label for="age" class="col-md-4 control-label">Age</label>
                           <div class="col-md-6">
                              <input id="age" name="age" type="text" class="form-control input-md" pattern="[0-9]{2}" required>
                           </div>
                       </div>
-
                       <div class="form-group">
                           <label for="phonenumber" class="col-md-4 control-label">Phone Number</label>
                           <div class="col-md-6">
                              <input id="phonenumber" name="phonenumber" type="text" class="form-control input-md" pattern="[789][0-9]{9}" required>
                           </div>
                       </div>
-
                       <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                           <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
@@ -107,9 +101,8 @@
                               @endif
                           </div>
                       </div>
-
                       <!-- getting person -->
-                  <div class="form-group" style="display:none;">
+                      <div class="form-group" style="display:none;">
                           <label for="whoareu" class="col-md-4 control-label">Who are you?</label>
 
                           <div class="col-md-6">
@@ -119,9 +112,7 @@
                           </div>
                       </div>
                       <!-- getting person code ends -->
-
                       <!-- getting visitor type starts-->
-
                       <div class="form-group">
                           <label for="gender" class="col-md-4 control-label">Visitor Type</label>
                               <div class="col-md-6">
@@ -132,9 +123,7 @@
                                   </select>
                              </div>
                       </div>
-
                       <!-- getting visitor type ends-->
-
                       <!-- This Code works only when the visitor is a official Visitor Code Starts -->
                       <div id="officialdetails" name="officialdetails" style="display:none;" onsubmit="required()">
                           <div class="form-group">
@@ -156,12 +145,9 @@
                               </div>
                           </div>
                       </div>
-
                       <!-- This Code works only when the visitor is a official Visitor Code Ends -->
-
                       <!-- personal visitor details starts -->
                       <div id="personaldetails" name="personaldetails" style="display:none;" onsubmit="required()">
-
                           <div class="form-group">
                               <label for="pv_empdept" class="col-md-4 control-label">Employee Department</label>
                               <div class="col-md-6">
@@ -182,17 +168,11 @@
                               </div>
                           </div>
                       </div>
-                     <!--personal visitor details ends-->
-
-
-
-
+                      <!--personal visitor details ends-->
                       <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                           <label for="password" class="col-md-4 control-label">Password</label>
-
                           <div class="col-md-6">
                               <input id="password" type="password" class="form-control" name="password" required>
-
                               @if ($errors->has('password'))
                                   <span class="help-block">
                                       <strong>{{ $errors->first('password') }}</strong>
@@ -200,7 +180,6 @@
                               @endif
                           </div>
                       </div>
-
                       <div class="form-group">
                           <div class="col-md-6 col-md-offset-4">
                               <button type="submit" class="btn btn-primary">

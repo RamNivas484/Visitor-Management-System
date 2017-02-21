@@ -32,6 +32,20 @@
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+        function changestatus()
+        {
+          <?php
+               $status = Auth::user()->status;
+               if((strcmp($status,"0"))==0)
+               {
+
+               }
+               else
+               {
+               }
+          ?>
+
+        }
     </script>
 </head>
 <body>
@@ -81,6 +95,18 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                         <li><a href="{{ url('/profile') }}"><i class="fa fa-btn fa-user"></i>Profile</a></li>
+                                        <?php
+                                             $status = Auth::user()->status;
+                                             if((strcmp($status,"0"))==0):
+                                        ?>
+                                        <li><a href="" style="color:red;">● Check in Now</a></li>
+                                        <?php endif; ?>
+                                        <?php
+                                             $status = Auth::user()->status;
+                                             if((strcmp($status,"1"))==0):
+                                        ?>
+                                        <li><a href="" style="color:green;">● Check out Now</a></li>
+                                        <?php endif; ?>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
@@ -114,7 +140,7 @@
                         <div class="panel-heading">Operations</div>
                         <div class="panel-body">
                           <ul class="nav" id="side-menu">
-                            <li><a href="#"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+                            <li><a href="/home"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
                             <li><a href="{{ url('/admin/addvisitor') }}"><i class="glyphicon glyphicon-user"></i> Add Visitor</a></li>
                             <li><a href="{{ url('/admin/addemployee') }}"><i class="glyphicon glyphicon-user"></i> Add Employee</a></li>
                             <li><a href="{{ url('/admin/addadministrator') }}"><i class="glyphicon glyphicon-user"></i> Add Administrator</a></li>
