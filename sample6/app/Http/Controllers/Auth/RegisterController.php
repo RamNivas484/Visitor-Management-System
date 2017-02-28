@@ -99,4 +99,5 @@ class RegisterController extends Controller
 
       return redirect('login')->with('status','You are now confirmed. Please login.');
     }
+  
 }

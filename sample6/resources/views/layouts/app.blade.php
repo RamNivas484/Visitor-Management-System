@@ -33,18 +33,7 @@
             'csrfToken' => csrf_token(),
         ]) !!};
         function changestatus()
-        {
-          <?php
-               $status = Auth::user()->status;
-               if((strcmp($status,"0"))==0)
-               {
-
-               }
-               else
-               {
-               }
-          ?>
-
+        { 
         }
     </script>
 </head>

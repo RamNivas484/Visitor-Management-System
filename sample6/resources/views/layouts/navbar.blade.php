@@ -33,17 +33,17 @@
             'csrfToken' => csrf_token(),
         ]) !!};
         function changestatus()
-        {
-          <?php
-               $status = Auth::guest()->status;
-               if((strcmp($status,"0"))==0)
-               {
-                 Auth::guest()->status => "1";
-               }
-               else
-               {
-                 Auth::guest()->status => "0";
-               }
+        { <?php
+
+             $status = Auth::guest()->status;
+             if((strcmp($status,"0"))==0)
+             {
+                return redirect('/home');
+             }
+             else
+             {
+               return redirect('/home');
+             }
           ?>
         }
     </script>
