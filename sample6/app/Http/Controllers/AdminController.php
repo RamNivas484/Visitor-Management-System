@@ -27,6 +27,8 @@ class AdminController extends Controller
             $user->companyname=Input::get('companyname');
             $user->companylocation=Input::get('companylocation');
             $user->companywebsite=Input::get('companywebsite');
+            $user->pv_empdept=Input::get('pv_empdept');
+            $user->pv_empname=Input::get('pv_empname');
             $user->password=bcrypt(Input::get('password'));
           //  $user->avatar=public_path('uploads\avatars\default.jpg' ) as "default.jpg";
             $user->verified="1";

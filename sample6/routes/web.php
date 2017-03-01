@@ -21,6 +21,7 @@ Route::get('admin/addvisitor','AdminController@addvisitorview');
 Route::post('admin/addvisitor','AdminController@addvisitordata');
 Route::get('admin/addemployee','AdminController@addemployee');
 Route::get('admin/addadministrator','AdminController@addadministrator');
+Route::get('/changestatus','changestatus@change');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');

@@ -32,9 +32,20 @@
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
-        function changestatus()
-        { 
-        }
+    /*    function changestatus()
+        { <?php /*
+
+             $status = Auth::guest()->status;
+             if((strcmp($status,"0"))==0)
+             {
+
+             }
+             else
+             {
+
+             } */
+          ?>
+        }  */
     </script>
 </head>
 <body>
@@ -88,13 +99,13 @@
                                              $status = Auth::user()->status;
                                              if((strcmp($status,"0"))==0):
                                         ?>
-                                        <li><a href="" style="color:red;">● Check in Now</a></li>
+                                        <li><a href="{{ url('/changestatus') }}" style="color:red;">● Check in Now</a></li>
                                         <?php endif; ?>
                                         <?php
                                              $status = Auth::user()->status;
                                              if((strcmp($status,"1"))==0):
                                         ?>
-                                        <li><a href="" style="color:green;">● Check out Now</a></li>
+                                        <li><a href="{{ url('/changestatus') }}" style="color:green;">● Check out Now</a></li>
                                         <?php endif; ?>
                                     <li>
                                         <a href="{{ url('/logout') }}"
