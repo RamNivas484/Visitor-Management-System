@@ -7,9 +7,15 @@ use DB;
 use App\User;
 use App\Http\Requests;
 use Redirect;
+use Auth;
 
 class AdminController extends Controller
 {
+  public function __construct()
+{
+  $this->middleware('auth');
+}
+
      public function addvisitorview()
 	   {
 		   return view('admin.addvisitor');
@@ -36,33 +42,71 @@ class AdminController extends Controller
             $user->ban="0";
  		        $user->save();
  		        $user=User::all();
-            return redirect('admin/addvisitor')->with('status','Visitor Data Added Successfully.');
-
-    /*       return User::create([
-                'name' => $data['name'],
-                'gender' => $data['gender'],
-                'age' => $data['age'],
-                'phonenumber' => $data['phonenumber'],
-                'email' => $data['email'],
-                'whoareu' => "Visitor",
-                'visitortype' => $data['visitortype'],
-                'companyname' => $data['companyname'],
-                'companylocation' => $data['companylocation'],
-                'companywebsite' => $data['companywebsite'],
-                'password' => bcrypt($data['password']),
-                'verified' => "1",
-                'status' => "0",
-                'ban' => "0",
-            ]);  */
-
-
+            return redirect('admin/addvisitor')->with('status','New Visitor Data Added Successfully.');
 	   }
      public function addemployee()
- 	   {
- 		   return view('admin.addemployee');
+     {
+       return view('admin.addemployee');
+     }
+     public function addemployeedata()
+ 	   {     $user = new User;
+           $user->name=Input::get('name');
+           $user->gender=Input::get('gender');
+           $user->age=Input::get('age');
+           $user->phonenumber=Input::get('phonenumber');
+           $user->email=Input::get('email');
+           $user->empdept=Input::get('empdept');
+           $user->empid=Input::get('empid');
+           $user->whoareu="Employee";
+           $user->password=bcrypt(Input::get('password'));
+           $user->verified="1";
+           $user->status="0";
+           $user->ban="0";
+           $user->save();
+           $user=User::all();
+ 		       return redirect('admin/addemployee')->with('status','New Employee Data Added Successfully.');
  	   }
      public function addadministrator()
+     {
+       return view('admin.addadministrator');
+     }
+     public function addadministratordata()
  	   {
- 		   return view('admin.addadministrator');
+             $user = new User;
+             $user->name=Input::get('name');
+             $user->gender=Input::get('gender');
+             $user->age=Input::get('age');
+             $user->phonenumber=Input::get('phonenumber');
+             $user->email=Input::get('email');
+             $user->whoareu="Administrator";
+             $user->password=bcrypt(Input::get('password'));
+             $user->verified="1";
+             $user->status="0";
+             $user->ban="0";
+  		       $user->save();
+  		       $user=User::all();
+             return redirect('admin/addadministrator')->with('status','New Administrator Data Added Successfully.');
  	   }
+     public function registeredvisitorslist()
+     {
+/*       $users=User::all();
+         return view('admin.registeredvisitorslist',compact('users'));
+*/
+        $users=User::all();
+        return view('admin.registeredvisitorslist',compact('users'));
+     }
+
+     public function employeelist()
+     {
+
+               $users=User::all();
+               return view('admin.employeelist',compact('users'));
+     }
+     public function adminlist()
+     {
+
+               $users=User::all();
+               return view('admin.adminlist',compact('users'));
+     }
+
 }

@@ -20,7 +20,13 @@ Route::post('profile', 'UserController@update_avatar');
 Route::get('admin/addvisitor','AdminController@addvisitorview');
 Route::post('admin/addvisitor','AdminController@addvisitordata');
 Route::get('admin/addemployee','AdminController@addemployee');
+Route::get('admin/registeredvisitorslist','AdminController@registeredvisitorslist');
+Route::get('admin/employeelist','AdminController@employeelist');
+Route::get('admin/adminlist','AdminController@adminlist');
+
+Route::post('admin/addemployee','AdminController@addemployeedata');
 Route::get('admin/addadministrator','AdminController@addadministrator');
+Route::post('admin/addadministrator','AdminController@addadministratordata');
 Route::get('/changestatus','changestatus@change');
 Auth::routes();
 
