@@ -8,7 +8,6 @@ use App\User;
 use App\Http\Requests;
 use Redirect;
 use Auth;
-
 class AdminController extends Controller
 {
   public function __construct()
@@ -107,6 +106,12 @@ class AdminController extends Controller
 
                $users=User::all();
                return view('admin.adminlist',compact('users'));
+     }
+     public function totaltable()
+     {
+
+               $users=User::all();
+               return view('admin.totaltable',compact('users'));
      }
 
 }

@@ -301,117 +301,27 @@
                 <div class="col-md-9 col-md-offset-0">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                             Dashboard
+                            Check The Employee Availability by Entering Employee Email
                         </div>
+                          @include('partials.flash')
                         <div class="panel-body">
-                          <div class="row ">
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-primary">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-th-large fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
-
-                                                   <?php
-                                                    $visitor = DB::table('users')->where('whoareu', 'Visitor')->count();
-                                                    $employee = DB::table('users')->where('whoareu', 'Employee')->count();
-                                                    $sum=$visitor+$employee;
-                                                    echo "$sum";
-                                                    ?>
-                                                    </div>
-                                                  <div>Total People</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-green">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-briefcase fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
-                                                    <?php
-                                                     $users = DB::table('users')->where('whoareu', 'Employee')->count();
-                                                                 echo "$users";
-
-                                                                     ?></div>
-                                                  <div>Total Employee</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right "></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-yellow">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-eye-open fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
-                                                    <?php
-                                                                 $users = DB::table('users')->where('whoareu', 'Visitor')->count();
-                                                                 echo "$users";
-                                                    ?>
-                                                  </div>
-                                                  <div>Total Visitors</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-red">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-ban-circle fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">13</div>
-                                                  <div>Banned Visitors</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                          </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                          <form name="form1" class="form-horizontal" role="form" method="POST" action="{{ url('/visitor/checkavailability') }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="remember_token" value="{{ csrf_token() }}">
+                                <div class="form-group">
+                                    <label for="emp_email" class="col-md-4 control-label">Enter Employee Mail </label>
+                                    <div class="col-md-6">
+                                        <input id="emp_email" name="emp_email" type="email" class="form-control input-md">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Check Availability
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

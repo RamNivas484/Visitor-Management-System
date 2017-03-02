@@ -16,10 +16,11 @@ class Totallog extends Migration
       Schema::create('totallog', function (Blueprint $table) {
           $table->increments('id');
           $table->string('name');
-          $table->string('email')->unique();
+          $table->string('email');
           $table->string('whoareu');
           $table->dateTime('checkedintime');
           $table->dateTime('checkedouttime');
+          $table->string('status')->default('0');
       });
     }
 

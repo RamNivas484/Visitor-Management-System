@@ -301,117 +301,59 @@
                 <div class="col-md-9 col-md-offset-0">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                             Dashboard
+                             Edit Your details
                         </div>
+                          @include('partials.flash')
                         <div class="panel-body">
-                          <div class="row ">
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-primary">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-th-large fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
+                          <form name="form1" class="form-horizontal" role="form" method="POST" action="{{ url('/visitor/editprofile') }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="remember_token" value="{{ csrf_token() }}">
+                                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                    <label for="name" class="col-md-4 control-label">Name</label>
 
-                                                   <?php
-                                                    $visitor = DB::table('users')->where('whoareu', 'Visitor')->count();
-                                                    $employee = DB::table('users')->where('whoareu', 'Employee')->count();
-                                                    $sum=$visitor+$employee;
-                                                    echo "$sum";
-                                                    ?>
-                                                    </div>
-                                                  <div>Total People</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-green">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-briefcase fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
-                                                    <?php
-                                                     $users = DB::table('users')->where('whoareu', 'Employee')->count();
-                                                                 echo "$users";
+                                    <div class="col-md-6">
+                                        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
-                                                                     ?></div>
-                                                  <div>Total Employee</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right "></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-yellow">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-eye-open fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
-                                                    <?php
-                                                                 $users = DB::table('users')->where('whoareu', 'Visitor')->count();
-                                                                 echo "$users";
-                                                    ?>
-                                                  </div>
-                                                  <div>Total Visitors</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-red">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-ban-circle fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">13</div>
-                                                  <div>Banned Visitors</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                          </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                        @if ($errors->has('name'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender" class="col-md-4 control-label">Gender</label>
+
+                                    <div class="col-md-6">
+                                        <select id="gender" name="gender" class="form-control">
+                                             <option value="Male">Male</option>
+                                             <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="age" class="col-md-4 control-label">Age</label>
+                                    <div class="col-md-6">
+                                       <input id="age" name="age" type="text" class="form-control input-md" pattern="[0-9]{2}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phonenumber" class="col-md-4 control-label">Phone Number</label>
+                                    <div class="col-md-6">
+                                       <input id="phonenumber" name="phonenumber" type="text" class="form-control input-md" pattern="[789][0-9]{9}" required>
+                                    </div>
+                                </div>
+
+                                <!-- getting person -->
+
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary">
+                                          Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -444,117 +386,10 @@
                 <div class="col-md-9 col-md-offset-0">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                             Dashboard
+                             Edit Your Profile
                         </div>
                         <div class="panel-body">
-                          <div class="row ">
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-primary">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-th-large fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
 
-                                                   <?php
-                                                    $visitor = DB::table('users')->where('whoareu', 'Visitor')->count();
-                                                    $employee = DB::table('users')->where('whoareu', 'Employee')->count();
-                                                    $sum=$visitor+$employee;
-                                                    echo "$sum";
-                                                    ?>
-                                                    </div>
-                                                  <div>Total People</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-green">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-briefcase fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
-                                                    <?php
-                                                     $users = DB::table('users')->where('whoareu', 'Employee')->count();
-                                                                 echo "$users";
-
-                                                                     ?></div>
-                                                  <div>Total Employee</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right "></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-yellow">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-eye-open fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">
-                                                    <?php
-                                                                 $users = DB::table('users')->where('whoareu', 'Visitor')->count();
-                                                                 echo "$users";
-                                                    ?>
-                                                  </div>
-                                                  <div>Total Visitors</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-3 col-md-6">
-                                  <div class="panel panel-red">
-                                      <div class="panel-heading">
-                                          <div class="row">
-                                              <div class="col-xs-3">
-                                                  <i class="glyphicon glyphicon-ban-circle fa-5x"></i>
-                                              </div>
-                                              <div class="col-xs-9 text-right">
-                                                  <div class="huge">13</div>
-                                                  <div>Banned Visitors</div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <a href="#">
-                                          <div class="panel-footer">
-                                              <span class="pull-left">View Details</span>
-                                              <span class="pull-right"><i class="glyphicon glyphicon-menu-right"></i></span>
-                                              <div class="clearfix"></div>
-                                          </div>
-                                      </a>
-                                  </div>
-                              </div>
-                          </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                         </div>
                     </div>
                 </div>

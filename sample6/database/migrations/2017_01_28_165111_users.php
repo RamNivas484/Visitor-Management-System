@@ -29,6 +29,7 @@ class users extends Migration
             $table->string('pv_empdept')->nullable();
             $table->string('empid')->nullable();
             $table->string('empdept')->nullable();
+            $table->string('count')->default('0');
             $table->string('avatar')->default('default.jpg');
             $table->string('password');
             $table->boolean('verified')->default(false);
