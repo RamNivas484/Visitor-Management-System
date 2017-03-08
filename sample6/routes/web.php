@@ -14,30 +14,20 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', function () {
+    return view('home');
+});
+Route::get('/login', function () {
+    return view('login');
+});
 
-Route::get('profile', 'UserController@profile');
-Route::post('profile', 'UserController@update_avatar');
-Route::get('admin/addvisitor','AdminController@addvisitorview');
-Route::post('admin/addvisitor','AdminController@addvisitordata');
-Route::get('admin/addemployee','AdminController@addemployee');
-Route::get('admin/registeredvisitorslist','AdminController@registeredvisitorslist');
-Route::get('admin/employeelist','AdminController@employeelist');
-Route::get('admin/adminlist','AdminController@adminlist');
-Route::get('admin/totaltable','AdminController@totaltable');
-Route::post('admin/addemployee','AdminController@addemployeedata');
-Route::get('admin/addadministrator','AdminController@addadministrator');
-Route::post('admin/addadministrator','AdminController@addadministratordata');
-Route::get('/changestatus','changestatus@change');
-Auth::routes();
-Route::get('/home', 'HomeController@index');
-Route::get("details",'detailscontroller@index');
-Route::post("store",'detailscontroller@store');
-Route::get('/visitor/editprofile','BookController@editprofile');
-Route::post('/visitor/editprofile','BookController@editprofiledata');
-Route::get('/visitor/checkavailability','BookController@checkavailability');
-Route::post('/visitor/checkavailability','BookController@checkavailabilitydata');
-Route::get('/visitor/bookemployee','BookController@bookemployee');
-Route::post('/visitor/bookemployee','BookController@bookemployeedata');
-Route::get('/visitor/changepassword','BookController@changepassword');
-Route::get('/visitor/entrylog','BookController@entrylog');
-Route::get('/visitor/bookedstatus','BookController@bookedstatus');
+Route::get('/register', function () {
+    return view('register.register');
+});
+Route::get('/visitorcheckin','visitorcheckincontroller@index');
+Route::post('/register_action','RegisterController@store');
+Route::post('/login_check','RegisterController@login');
+Route::get('/logout',function () {
+    Auth::logout();
+    return Redirect::to('');
+})->middleware("auth");
