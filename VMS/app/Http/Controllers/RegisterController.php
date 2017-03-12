@@ -38,7 +38,7 @@ class RegisterController extends Controller
     }
     public function login()
     {              $data=Input::except(array('_token'));
-    //var_dump($data);
+    //
                   $rule=array(
                     'email'=>'required|email',
                     'password'=>'required',

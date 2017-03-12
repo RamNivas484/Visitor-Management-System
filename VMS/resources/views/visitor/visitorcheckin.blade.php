@@ -69,12 +69,21 @@
 
 </head>
 @section('content')
+@if(Session::has('success'))
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-success">
+      {{Session::get('success')}}
+    </div>
+  </div>
+</div>
+@endif
 <div class="row">
 <div class="col-md-8 col-md-offset-2">
 <div class="panel panel-info">
       <div class="panel-heading">Visitor Checkin</div>
       <div class="panel-body">
-          <form class="form-horizontal" action="" method="post" >
+          <form class="form-horizontal" action="visitorcheckin_store" method="post" >
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="form-group">
               <label for="name" class="col-md-4 control-label" align='center'>Your Name:</label>
@@ -233,11 +242,12 @@
                   @endif
                 </div>
             </div>-->
+
             <div id="forcse" name="forcse" style="display:none;" onsubmit="required()">
             <div class="form-group">
               <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
                 <div class="col-md-6">
-                  <select class="form-control" name="item_id">
+                  <select id="emp_name" name="emp_name" class="form-control" >
                   <option value="">--Select Employee to Visit--</option>
                   @foreach($employee as $emp)
                   <?php
@@ -248,6 +258,11 @@
                   <?php endif; ?>
                   @endforeach
                   </select>
+                  @if($errors->has('emp_name'))
+                  <span class="help-block" style="color:red;">
+                    <strong>{{ $errors->first('emp_name') }}</strong>
+                  </span>
+                  @endif
                 </div>
              </div>
             </div>
@@ -255,7 +270,7 @@
             <div class="form-group">
              <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
                <div class="col-md-6">
-                 <select class="form-control" name="item_id">
+                 <select id="emp_name" name="emp_name" class="form-control" >
                  <option value="">--Select Employee to Visit--</option>
                  @foreach($employee as $emp)
                  <?php
@@ -266,6 +281,11 @@
                  <?php endif; ?>
                  @endforeach
                  </select>
+                 @if($errors->has('emp_name'))
+                 <span class="help-block" style="color:red;">
+                   <strong>{{ $errors->first('emp_name') }}</strong>
+                 </span>
+                 @endif
                </div>
             </div>
            </div>
@@ -273,7 +293,7 @@
            <div class="form-group">
             <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
               <div class="col-md-6">
-                <select class="form-control" name="item_id">
+                <select id="emp_name" name="emp_name" class="form-control" >
                 <option value="">--Select Employee to Visit--</option>
                 @foreach($employee as $emp)
                 <?php
@@ -284,6 +304,11 @@
                 <?php endif; ?>
                 @endforeach
                 </select>
+                @if($errors->has('emp_name'))
+                <span class="help-block" style="color:red;">
+                  <strong>{{ $errors->first('emp_name') }}</strong>
+                </span>
+                @endif
               </div>
            </div>
           </div>
@@ -291,7 +316,7 @@
           <div class="form-group">
             <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
               <div class="col-md-6">
-                <select class="form-control" name="item_id">
+                <select id="emp_name" name="emp_name" class="form-control" >
                 <option value="">--Select Employee to Visit--</option>
                 @foreach($employee as $emp)
                 <?php
@@ -302,6 +327,12 @@
                 <?php endif; ?>
                 @endforeach
                 </select>
+
+                @if($errors->has('emp_name'))
+                <span class="help-block" style="color:red;">
+                  <strong>{{ $errors->first('emp_name') }}</strong>
+                </span>
+                @endif
               </div>
           </div>
          </div>
@@ -309,7 +340,7 @@
          <div class="form-group">
            <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
              <div class="col-md-6">
-               <select class="form-control" name="item_id">
+               <select id="emp_name" name="emp_name" class="form-control" >
                <option value="">--Select Employee to Visit--</option>
                @foreach($employee as $emp)
                   <?php
@@ -320,6 +351,11 @@
                   <?php endif; ?>
                @endforeach
                </select>
+               @if($errors->has('emp_name'))
+               <span class="help-block" style="color:red;">
+                 <strong>{{ $errors->first('emp_name') }}</strong>
+               </span>
+               @endif
              </div>
          </div>
         </div>

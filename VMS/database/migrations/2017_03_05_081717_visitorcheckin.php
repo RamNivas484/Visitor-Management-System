@@ -18,7 +18,7 @@ class Visitorcheckin extends Migration
           $table->string('name');
           $table->string('gender');
           $table->string('age');
-          $table->string('email')->unique()->nullable();
+          $table->string('email')->nullable();
           $table->string('phonenumber')->unique();
           $table->string('visiting_purpose');
           $table->string('comp_name')->nullable();
@@ -30,7 +30,7 @@ class Visitorcheckin extends Migration
           $table->string('emp_name');
           $table->string('belongings')->nullable();
           $table->string('vehicle_number')->nullable();
-          $table->boolean('status')->default(false);
+          $table->boolean('status')->default(true);
           $table->rememberToken();
           $table->timestamps();
       });

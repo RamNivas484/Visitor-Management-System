@@ -25,6 +25,8 @@ Route::get('/register', function () {
     return view('register.register');
 });
 Route::get('/visitorcheckin','visitorcheckincontroller@index');
+Route::post('/visitorcheckin_store','visitorcheckincontroller@store');
+
 Route::post('/register_action','RegisterController@store');
 Route::post('/login_check','RegisterController@login');
 Route::get('/logout',function () {
