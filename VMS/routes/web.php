@@ -25,6 +25,9 @@ Route::get('/register', function () {
     return view('register.register');
 });
 Route::get('/visitorcheckin','visitorcheckincontroller@index');
+Route::get('/findempname','visitorcheckincontroller@findempname');
+Route::get('/findempdept','visitorcheckincontroller@findempdept');
+Route::get('/findempavailability','visitorcheckincontroller@findempavailability');
 Route::post('/visitorcheckin_store','visitorcheckincontroller@store');
 
 Route::post('/register_action','RegisterController@store');

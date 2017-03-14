@@ -1,7 +1,7 @@
 @extends('layout')
 <head>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script>
         $(document).ready(function ()
@@ -13,65 +13,102 @@
                 else
                     $("#getofficialdetails").hide();
             });
-        });
-        $(document).ready(function ()
-        {   $("#emp_dept").change(function()
-            {   if ($(this).val() == "CSE")
-                {    $("#forcse").show();
-                     $("#forit").hide();
-                     $("#forece").hide();
-                     $("#formech").hide();
-                     $("#forcivil").hide();
-                }
-                else if ($(this).val() == "IT")
-                {
-                       $("#forcse").hide();
-                       $("#forit").show();
-                       $("#forece").hide();
-                       $("#formech").hide();
-                       $("#forcivil").hide();
-                }
-                else if ($(this).val() == "ECE")
-                {
-                       $("#forcse").hide();
-                       $("#forit").hide();
-                       $("#forece").show();
-                       $("#formech").hide();
-                       $("#forcivil").hide();
-                }
-                else if ($(this).val() == "MECH")
-                {
-                       $("#forcse").hide();
-                       $("#forit").hide();
-                       $("#forece").hide();
-                       $("#formech").show();
-                       $("#forcivil").hide();
-                }
-                else if ($(this).val() == "CIVIL")
-                {
-                       $("#forcse").hide();
-                       $("#forit").hide();
-                       $("#forece").hide();
-                       $("#formech").hide();
-                       $("#forcivil").show();
-                }
-                else
-                {
-                       $("#forcse").hide();
-                       $("#forit").hide();
-                       $("#forece").hide();
-                       $("#formech").hide();
-                       $("#forcivil").hide();
-                }
-            });
+
         });
     </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(document).on('change','.emp_dept',function(){
+        //  console.log("proceed");
+          var dept=$(this).val();
+        //   console.log(dept);
+        var div=$(this).parent().parent().parent();
+         var op=" ";
+           $.ajax({
+                      type:'get',
+                      url:'{!!URL::to('findempname')!!}',
+                      data:{'id':dept},
+                      success:function(data){
+                                //   console.log('success');
+                                   console.log(data);
+                                  console.log(data.length);
+                                   op+='<option value="" selected disabled>--Select Employee--</option>';
+                                   for(var i=0;i<data.length;i++)
+                                   {
+                                     op+='<option value="'+data[i].name+'">'+data[i].name+'-'+data[i].designation+'</option>';
+                                     console.log(data[i].designation);
+                                   }
+                                   div.find('.emp_name').html(" ");
+                                   div.find('.emp_name').append(op);
+                      },
+                      error:function(){
+
+                      }
+           });
+        });
+        $(document).on('change','.visiting_purpose',function(){
+        //  console.log("proceed");
+          var purpose=$(this).val();
+        //   console.log(dept);
+         var div=$(this).parent().parent().parent();
+         var op=" ";
+           $.ajax({
+                      type:'get',
+                      url:'{!!URL::to('findempdept')!!}',
+                      data:{'id':purpose},
+                      success:function(data){
+                                //   console.log('success');
+                                   console.log(data);
+                                  console.log(data.length);
+                                   op+='<option value="" selected disabled>--Select Department--</option>';
+                                   for(var i=0;i<data.length;i++)
+                                   {
+                                     op+='<option value="'+data[i].emp_dept+'">'+data[i].emp_dept+'</option>';
+                                     console.log(data[i].emp_dept);
+                                   }
+                                   div.find('.emp_dept').html(" ");
+                                   div.find('.emp_dept').append(op);
+                      },
+                      error:function(){
+
+                      }
+           });
+        });
+          $(document).on('change','.emp_name',function()
+          {    var name=$(this).val();
+               var a=$(this).parent().parent().parent();
+               var op=" ";
+               $.ajax({
+                          type:'get',
+                          url:'{!!URL::to('findempavailability')!!}',
+                          data:{'id':name},
+                          dataType:'json',
+                          success:function(data){
+
+                               console.log(data[0].status);
+                               op+=data[0].status;
+                               if (op==0) {
+                                 a.find('.availability').val("Unavailable");
+                               }
+                               else if (op==1) {
+                                 a.find('.availability').val("Available");
+                               }
+
+                          },
+                          error:function(){
+
+                          }
+               });
+          });
+      });
+    </script>
+
 
 </head>
 @section('content')
 @if(Session::has('success'))
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-10 col-md-offset-1">
     <div class="alert alert-success">
       {{Session::get('success')}}
     </div>
@@ -79,9 +116,9 @@
 </div>
 @endif
 <div class="row">
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-10 col-md-offset-1">
 <div class="panel panel-info">
-      <div class="panel-heading">Visitor Checkin</div>
+      <div class="panel-heading">Visitor Register and Checkin</div>
       <div class="panel-body">
           <form class="form-horizontal" action="visitorcheckin_store" method="post" >
             <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -110,7 +147,11 @@
             <div class="form-group">
               <label for="gender" class="col-md-4 control-label" align='center'>Your Gender:</label>
                 <div class="col-md-6" >
-                  <input id="gender" name="gender" class="form-control" type="text">
+                  <select id="gender" name="gender" class="form-control">
+                                      <option value="" selected disabled>--Select Gender--</option>
+                                      <option value="Male">Male</option>
+                                      <option value="Female">Female</option>
+                  </select>
                   @if($errors->has('gender'))
                   <span class="help-block" style="color:red;">
                     <strong>{{ $errors->first('gender') }}</strong>
@@ -144,8 +185,8 @@
             <div class="form-group">
               <label for="visiting_purpose" class="col-md-4 control-label" >Visiting Purpose:</label>
                 <div class="col-md-6">
-                  <select id="visiting_purpose" name="visiting_purpose" class="form-control">
-                                      <option value="" selected>--Select Visiting Purpose--</option>
+                  <select id="visiting_purpose" name="visiting_purpose" class="form-control visiting_purpose">
+                                      <option value="" selected disabled>--Select Visiting Purpose--</option>
                                       <option value="Personal Visit">Personal Visit</option>
                                       <option value="Official Visit">Official Visit</option>
                   </select>
@@ -214,19 +255,29 @@
             </div>
           </div>
             <div class="form-group">
-              <label for="emp_dept" class="col-md-4 control-label" >Employee Department:</label>
+              <label for="emp_dept" class="col-md-4 control-label " >Employee Department:</label>
                 <div class="col-md-6">
-                  <select id="emp_dept" name="emp_dept" class="form-control">
-                                      <option value="" selected>--Select Employee Department--</option>
-                                      <option value="CSE">CSE</option>
-                                      <option value="IT">IT</option>
-                                      <option value="ECE">ECE</option>
-                                      <option value="CIVIL">CIVIL</option>
-                                      <option value="MECH">MECH</option>
+                  <select id="emp_dept" name="emp_dept" class="form-control emp_dept">
+                                        <option value="" disabled="true" selected="true">--Select Employee Department--</option>
                   </select>
                   @if($errors->has('emp_dept'))
                   <span class="help-block" style="color:red;">
                     <strong>{{ $errors->first('emp_dept') }}</strong>
+                  </span>
+                  @endif
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="emp_name" class="col-md-4 control-label " >Employee Name:</label>
+                <div class="col-md-6">
+                  <select id="emp_name" name="emp_name" class="form-control emp_name">
+                                      <option value="" disabled="true" selected="true">--Select Employee--</option>
+
+                  </select>
+                  @if($errors->has('emp_name'))
+                  <span class="help-block" style="color:red;">
+                    <strong>{{ $errors->first('emp_name') }}</strong>
                   </span>
                   @endif
                 </div>
@@ -242,123 +293,17 @@
                   @endif
                 </div>
             </div>-->
-
-            <div id="forcse" name="forcse" style="display:none;" onsubmit="required()">
             <div class="form-group">
-              <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
+              <label for="availability" class="col-md-4 control-label" >Availability:</label>
                 <div class="col-md-6">
-                  <select id="emp_name" name="emp_name" class="form-control" >
-                  <option value="">--Select Employee to Visit--</option>
-                  @foreach($employee as $emp)
-                  <?php
-                             $dept = $emp->dept;
-                             if((strcmp($dept,"CSE"))==0):
-                  ?>
-                  <option value="{{$emp->name}}">{{$emp->name}}</option>
-                  <?php endif; ?>
-                  @endforeach
-                  </select>
-                  @if($errors->has('emp_name'))
+                  <input id="availability" name="availability" class="form-control availability" type="text" disabled>
+                  @if($errors->has('availability'))
                   <span class="help-block" style="color:red;">
-                    <strong>{{ $errors->first('emp_name') }}</strong>
+                    <strong>{{ $errors->first('availability') }}</strong>
                   </span>
                   @endif
                 </div>
-             </div>
             </div>
-            <div id="forit" name="forit" style="display:none;" onsubmit="required()">
-            <div class="form-group">
-             <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
-               <div class="col-md-6">
-                 <select id="emp_name" name="emp_name" class="form-control" >
-                 <option value="">--Select Employee to Visit--</option>
-                 @foreach($employee as $emp)
-                 <?php
-                            $dept = $emp->dept;
-                            if((strcmp($dept,"IT"))==0):
-                 ?>
-                 <option value="{{$emp->name}}">{{$emp->name}}</option>
-                 <?php endif; ?>
-                 @endforeach
-                 </select>
-                 @if($errors->has('emp_name'))
-                 <span class="help-block" style="color:red;">
-                   <strong>{{ $errors->first('emp_name') }}</strong>
-                 </span>
-                 @endif
-               </div>
-            </div>
-           </div>
-           <div id="formech" name="formech" style="display:none;" onsubmit="required()">
-           <div class="form-group">
-            <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
-              <div class="col-md-6">
-                <select id="emp_name" name="emp_name" class="form-control" >
-                <option value="">--Select Employee to Visit--</option>
-                @foreach($employee as $emp)
-                <?php
-                           $dept = $emp->dept;
-                           if((strcmp($dept,"MECH"))==0):
-                ?>
-                <option value="{{$emp->name}}">{{$emp->name}}</option>
-                <?php endif; ?>
-                @endforeach
-                </select>
-                @if($errors->has('emp_name'))
-                <span class="help-block" style="color:red;">
-                  <strong>{{ $errors->first('emp_name') }}</strong>
-                </span>
-                @endif
-              </div>
-           </div>
-          </div>
-          <div id="forece" name="forece" style="display:none;" onsubmit="required()">
-          <div class="form-group">
-            <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
-              <div class="col-md-6">
-                <select id="emp_name" name="emp_name" class="form-control" >
-                <option value="">--Select Employee to Visit--</option>
-                @foreach($employee as $emp)
-                <?php
-                           $dept = $emp->dept;
-                           if((strcmp($dept,"ECE"))==0):
-                ?>
-                <option value="{{$emp->name}}">{{$emp->name}}</option>
-                <?php endif; ?>
-                @endforeach
-                </select>
-
-                @if($errors->has('emp_name'))
-                <span class="help-block" style="color:red;">
-                  <strong>{{ $errors->first('emp_name') }}</strong>
-                </span>
-                @endif
-              </div>
-          </div>
-         </div>
-         <div id="forcivil" name="forcivil" style="display:none;" onsubmit="required()">
-         <div class="form-group">
-           <label for="emp_name" class="col-md-4 control-label" >Employee Name:</label>
-             <div class="col-md-6">
-               <select id="emp_name" name="emp_name" class="form-control" >
-               <option value="">--Select Employee to Visit--</option>
-               @foreach($employee as $emp)
-                  <?php
-                             $dept = $emp->dept;
-                             if((strcmp($dept,"CIVIL"))==0):
-                  ?>
-                  <option value="{{$emp->name}}">{{$emp->name}}</option>
-                  <?php endif; ?>
-               @endforeach
-               </select>
-               @if($errors->has('emp_name'))
-               <span class="help-block" style="color:red;">
-                 <strong>{{ $errors->first('emp_name') }}</strong>
-               </span>
-               @endif
-             </div>
-         </div>
-        </div>
             <div class="form-group">
               <label for="belongings" class="col-md-4 control-label" >Your Belongings(Optional):</label>
                 <div class="col-md-6">

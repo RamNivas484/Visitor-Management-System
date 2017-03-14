@@ -14,7 +14,7 @@
               <div class="form-group">
                 <label for="email" class="col-md-4 control-label" >Email:</label>
                   <div class="col-md-6">
-                    <input id="email" name="email" class="form-control" type="text">
+                    <input id="email" name="email" class="form-control" type="email">
                     @if($errors->has('email'))
                     <span class="help-block" style="color:red;">
                       <strong>{{ $errors->first('email') }}</strong>
@@ -35,7 +35,7 @@
                     @endif
                   </div>
               </div>
-              
+
               <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
                   <center>

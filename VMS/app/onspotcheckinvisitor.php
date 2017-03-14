@@ -15,7 +15,7 @@ class onspotcheckinvisitor extends Model
                           'email',
                'visiting_purpose',
               'comp_name','comp_dept','comp_designation','comp_location','comp_website',
-            'emp_dept','emp_name','belongings','vehicle_number'];
+            'emp_dept','emp_name','availability','belongings','vehicle_number'];
     public static function formstore($data)
     {
       $name=Input::get('name');

@@ -34,9 +34,11 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Visitor<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="visitorlogin">Login</a></li>
-            <li><a href="{{URL::to('visitorcheckin')}}">Check In Now</a></li>
-			<li><a href="#">Register</a></li>
+
+            <li><a href="{{URL::to('')}}">Register</a></li>
+            <li><a href="{{URL::to('visitorcheckin')}}">Register and Check In Now</a></li>
+            <li><a href="{{URL::to('')}}">Login</a></li>
+            
           </ul>
         </li>
         <li class="dropdown">
