@@ -1,6 +1,4 @@
 @extends('layout')
-
-
 @section('content')
 @if(Session::has('success'))
 <div class="row">
@@ -15,10 +13,10 @@
   <div class="col-md-8 col-md-offset-2">
   <div class="panel panel-info">
         <div class="panel-heading">
-          Visitor Login
+        Employee Login
         </div>
         <div class="panel-body">
-            <form class="form-horizontal" action="login_check" method="post" >
+            <form class="form-horizontal" action="employeelogin_check" method="post" >
               <input type="hidden" name="_token" value="{{csrf_token()}}">
               <div class="form-group">
                 <label for="email" class="col-md-4 control-label" >Email:</label>
@@ -44,12 +42,12 @@
                     @endif
                   </div>
               </div>
-                <input id="usertype" name="usertype" class="hidden" type="text" value="Visitor">
+              <input id="usertype" name="usertype" class="hidden" type="text" value="Employee">
               <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
                   <center>
                     <button type="submit" class="btn btn-primary">
-                      Submit
+                      Login
                     </button>
                   </center>
                 </div>

@@ -52,7 +52,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Employee<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{URL::to('employeelogin')}}">Login</a></li>
-            <li><a href="{{URL::to('employeecheckin')}}">Check In</a></li>
+            <li><a href="">Check In</a></li>
           </ul>
         </li>
         <li><a href="{{URL::to('adminlogin')}}">Administrator</a></li>
@@ -63,7 +63,32 @@
 </nav>
 
 <div class="container">
-  @yield('content')
+  <div class="row">
+      <div class="col-sm-3 col-md-offset-0">
+          <div class="panel panel-info">
+              <div class="panel-heading">Operations</div>
+              <div class="panel-body">
+                <ul class="nav" id="side-menu">
+                  <li><a href="emphomepage"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-user"></i> View Profile</a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-time"></i> Visitor Book Requests</a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Visitor's Log </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-plus"></i> Accepted Visitor's </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Admin Availability </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-ban-circle"></i> Request Ban Visitor </a></li>
+                </ul>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-9 col-md-offset-0">
+          <div class="panel panel-info">
+              @yield('content')
+          </div>
+      </div>
+  </div>
 </div>
 
 

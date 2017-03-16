@@ -42,7 +42,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Visitor<span class="caret"></span></a>
           <ul class="dropdown-menu">
 
-            <li><a href="{{URL::to('visitorlogin')}}">Login</a></li>
+            <li><a href="{{URL::to('vistorlogin')}}">Login</a></li>
             <li><a href="{{URL::to('')}}">two</a></li>
             <li><a href="{{URL::to('')}}">three</a></li>
 
@@ -52,7 +52,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Employee<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{URL::to('employeelogin')}}">Login</a></li>
-            <li><a href="{{URL::to('employeecheckin')}}">Check In</a></li>
+            <li><a href="">Check In</a></li>
           </ul>
         </li>
         <li><a href="{{URL::to('adminlogin')}}">Administrator</a></li>
@@ -63,7 +63,34 @@
 </nav>
 
 <div class="container">
-  @yield('content')
+  <div class="row">
+      <div class="col-sm-3 col-md-offset-0">
+          <div class="panel panel-info">
+              <div class="panel-heading">Operations</div>
+              <div class="panel-body">
+                <ul class="nav" id="side-menu">
+                  <li><a href="adminhomepage"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-plus"></i> Add Visitor </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-plus"></i> Add Employee </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-plus"></i> Add Administrator </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-ban-circle"></i> Ban Requests </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-minus"></i> Remove Visitor </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-minus"></i> Remove Employee </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-minus"></i> Remove Administrator </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-ban-circle"></i> Ban Visitor </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-th-list"></i> Visitors List </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-th-list"></i> Employee List </a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-th-list"></i> Admin List </a></li>
+                </ul>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-9 col-md-offset-0">
+          <div class="panel panel-info">
+              @yield('content')
+          </div>
+      </div>
+  </div>
 </div>
 
 

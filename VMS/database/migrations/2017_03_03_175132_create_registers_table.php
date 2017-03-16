@@ -15,8 +15,11 @@ class CreateRegistersTable extends Migration
     {
         Schema::create('register_users', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('usertype')->default("Visitor");
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->unique();
+            $table->string('status')->default(false);
+            $table->string('ban')->default(false);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

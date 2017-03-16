@@ -20,18 +20,37 @@ Route::get('/home', function () {
 Route::get('/login', function () {
     return view('login');
 });
-
+Route::get('visitorlogin', function () {
+    return view('visitor.visitorlogin');
+});
+Route::get('adminlogin', function () {
+    return view('admin.adminlogin');
+});
+Route::get('employeelogin', function () {
+    return view('employee.employeelogin');
+});
+Route::get('employeecheckin', function () {
+    return view('employee.empcheckin');
+});
+Route::get('/visitorhomepage', function () {
+    return view('visitor.visitorhomepage');
+});
+Route::get('/adminhomepage', function () {
+    return view('admin.adminhomepage');
+});
+Route::get('/emphomepage', function () {
+    return view('employee.emphomepage');
+});
 Route::get('/register', function () {
     return view('register.register');
 });
-Route::get('/visitorcheckin','visitorcheckincontroller@index');
-Route::get('/findempname','visitorcheckincontroller@findempname');
-Route::get('/findempdept','visitorcheckincontroller@findempdept');
-Route::get('/findempavailability','visitorcheckincontroller@findempavailability');
-Route::post('/visitorcheckin_store','visitorcheckincontroller@store');
 
 Route::post('/register_action','RegisterController@store');
 Route::post('/login_check','RegisterController@login');
+Route::post('/visitorlogin_check','RegisterController@login');
+Route::post('/adminlogin_check','RegisterController@login');
+Route::post('/employeelogin_check','RegisterController@login');
+Route::post('/employeecheckin_check','RegisterController@checkin');
 Route::get('/logout',function () {
     Auth::logout();
     return Redirect::to('');

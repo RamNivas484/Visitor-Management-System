@@ -1,4 +1,4 @@
 @extends('layout')
 @section('content')
-<h2>Slideshow will be coming</h2>
+<h2>Welcome Page</h2>
 @endsection
