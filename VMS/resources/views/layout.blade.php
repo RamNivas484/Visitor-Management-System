@@ -35,8 +35,7 @@
       <ul class="nav navbar-nav navbar-right">
       <li><a href="{{URL::to('register')}}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
       <li><a href="{{URL::to('login')}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      <li><a href="{{URL::to('adminlogin')}}"><span class="glyphicon glyphicon-log-in"></span>Administrator</a></li>
-      <li><a href="{{URL::to('employeelogin')}}"><span class="glyphicon glyphicon-log-in"></span>Employee</a></li>
+      
       <ul class="nav navbar-nav">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Visitor<span class="caret"></span></a>
