@@ -35,14 +35,14 @@
       <ul class="nav navbar-nav navbar-right">
       <li><a href="{{URL::to('register')}}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
       <li><a href="{{URL::to('login')}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      
+
       <ul class="nav navbar-nav">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Visitor<span class="caret"></span></a>
           <ul class="dropdown-menu">
 
             <li><a href="{{URL::to('visitorlogin')}}">Login</a></li>
-            <li><a href="{{URL::to('')}}">two</a></li>
+            <li><a href="{{URL::to('visitorregister')}}">Register</a></li>
             <li><a href="{{URL::to('')}}">three</a></li>
 
           </ul>

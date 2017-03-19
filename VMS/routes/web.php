@@ -23,6 +23,9 @@ Route::get('/login', function () {
 Route::get('visitorlogin', function () {
     return view('visitor.visitorlogin');
 });
+Route::get('visitorregister', function () {
+    return view('visitor.register');
+});
 Route::get('adminlogin', function () {
     return view('admin.adminlogin');
 });
