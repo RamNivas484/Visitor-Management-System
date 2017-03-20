@@ -20,6 +20,18 @@ class Register extends Authenticatable
       $users->email=$email;
       $users->password=$password;
       $users->save();
-
+    }
+    public static function visitorregisterandcheckinstore($data)
+    {
+      $name=Input::get('name');
+      $email=Input::get('email');
+      $password=Hash::make(Input::get('password'));
+      $users=new Register();
+      $users->name=$name;
+      $users->email=$email;
+      $users->password=$password;
+      $users->usertype="Visitor";
+      $users->status="1";
+      $users->save();
     }
 }

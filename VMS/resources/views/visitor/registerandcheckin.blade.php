@@ -26,7 +26,7 @@
          var op=" ";
            $.ajax({
                       type:'get',
-                      url:'{!!URL::to('findempname')!!}',
+                      url:'{!!URL::to('visitorfindempname')!!}',
                       data:{'id':dept},
                       success:function(data){
                                 //   console.log('success');
@@ -54,7 +54,7 @@
          var op=" ";
            $.ajax({
                       type:'get',
-                      url:'{!!URL::to('findempdept')!!}',
+                      url:'{!!URL::to('visitorfindempdept')!!}',
                       data:{'id':purpose},
                       success:function(data){
                                 //   console.log('success');
@@ -63,8 +63,8 @@
                                    op+='<option value="" selected disabled>--Select Department--</option>';
                                    for(var i=0;i<data.length;i++)
                                    {
-                                     op+='<option value="'+data[i].emp_dept+'">'+data[i].emp_dept+'</option>';
-                                     console.log(data[i].emp_dept);
+                                     op+='<option value="'+data[i].dept+'">'+data[i].dept+'</option>';
+                                     console.log(data[i].dept);
                                    }
                                    div.find('.emp_dept').html(" ");
                                    div.find('.emp_dept').append(op);
@@ -80,7 +80,7 @@
                var op=" ";
                $.ajax({
                           type:'get',
-                          url:'{!!URL::to('findempavailability')!!}',
+                          url:'{!!URL::to('visitorfindempavailability')!!}',
                           data:{'id':name},
                           dataType:'json',
                           success:function(data){
@@ -120,7 +120,7 @@
 <div class="panel panel-info">
       <div class="panel-heading">Visitor Register and Checkin</div>
       <div class="panel-body">
-          <form class="form-horizontal" action="visitor_register_store" method="post" >
+          <form class="form-horizontal" action="visitor_registerandcheckin_store" method="post" >
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="form-group">
               <label for="name" class="col-md-4 control-label" align='center'>Your Name:</label>

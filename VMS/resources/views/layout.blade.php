@@ -42,7 +42,7 @@
           <ul class="dropdown-menu">
 
             <li><a href="{{URL::to('visitorlogin')}}">Login</a></li>
-            <li><a href="{{URL::to('visitorregister')}}">Register</a></li>
+            <li><a href="{{URL::to('visitorregisterandcheckin')}}">Register and Check In</a></li>
             <li><a href="{{URL::to('')}}">three</a></li>
 
           </ul>
