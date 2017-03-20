@@ -37,6 +37,8 @@ class visitorcontroller extends Controller
               'visiting_purpose'=>'required',
               'emp_dept'=>'required',
               'emp_name'=>'required',
+              'password'=>'required|min:6',
+              'cpassword'=>'required|same:password'
             );
           }
           elseif ((strcmp($visiting_purpose,"Official Visit"))==0)
@@ -54,6 +56,8 @@ class visitorcontroller extends Controller
               'comp_website'=>'required',
               'emp_dept'=>'required',
               'emp_name'=>'required',
+              'password'=>'required|min:6',
+              'cpassword'=>'required|same:password'
             );
           }
           else
@@ -65,6 +69,8 @@ class visitorcontroller extends Controller
              'visiting_purpose'=>'required',
              'emp_dept'=>'required',
              'emp_name'=>'required',
+             'password'=>'required|min:6',
+             'cpassword'=>'required|same:password'
               );
 
           }
@@ -82,6 +88,9 @@ class visitorcontroller extends Controller
            'comp_website.required'=>'Choose Your Company Website',
            'emp_dept.required'=>'Choose Employee Department',
            'emp_name.required'=>'Choose Employee',
+           'cpassword.required'=>'The Confirm Password is Required',
+           'password.min'=>'the Password must be atleast 6 characters',
+           'cpassword.same'=>'The Password Fields donot match',
          );
          $validator=Validator::make($data,$rule,$message);
          $employee=employeemodel::all();
@@ -98,6 +107,8 @@ class visitorcontroller extends Controller
             visitormodel::visitortableregistercheckinstore(Input::except(array('_token')));
             if($email!="")
             Register::visitorregisterandcheckinstore(Input::except(array('_token')));
+            else
+            Register::visitorregisterandcheckinstorephone(Input::except(array('_token')));
             checkinmodel::visitorregisterandcheckinstore(Input::except(array('_token')));
 
              return Redirect::to('visitorregisterandcheckin')->with('success','Welcome You have Successfully Checkedin!!!');

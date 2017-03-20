@@ -25,6 +25,8 @@ class checkinmodel extends Model
         $emp_name=Input::get('emp_name');
         $belongings=Input::get('belongings');
         $vehicle_number=Input::get('vehicle_number');
+        if($email=='')
+        $email="Visitor Dont Have Email";
         $visitor=new checkinmodel();
         $visitor->usertype="Visitor";
         $visitor->name=$name;

@@ -32,6 +32,9 @@ Route::get('/adminhomepage', function () {
 Route::get('/emphomepage', function () {
     return view('employee.emphomepage');
 });
+Route::get('/visitorcheckout', function () {
+    return view('visitor.visitorcheckout');
+});
 Route::get('/register', function () {
     return view('register.register');
 });

@@ -327,6 +327,28 @@
                 </div>
             </div>
             <div class="form-group">
+              <label for="password" class="col-md-4 control-label">Enter Password:</label>
+                <div class="col-md-6">
+                  <input id="password" name="password" class="form-control" type="password" placeholder="Atleast 6 characters">
+                  @if($errors->has('password'))
+                  <span class="help-block" style="color:red;">
+                    <strong>{{ $errors->first('password') }}</strong>
+                  </span>
+                  @endif
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-md-4 control-label">Confirm Password:</label>
+                <div class="col-md-6">
+                  <input id="password" name="cpassword" class="form-control" type="password">
+                  @if($errors->has('cpassword'))
+                  <span class="help-block" style="color:red;">
+                    <strong>{{ $errors->first('cpassword') }}</strong>
+                  </span>
+                  @endif
+                </div>
+            </div>
+            <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
                 <center><button type="submit" class="btn btn-primary">
                         Submit

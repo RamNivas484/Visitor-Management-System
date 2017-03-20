@@ -43,11 +43,10 @@ class RegisterController extends Controller
                   $password=Input::get('password');
                   $usertype=Input::get('usertype');
                   $rule=array(
-                    'email'=>'required|email',
+                    'email'=>'required',
                     'password'=>'required',
                   );
                   $validator=Validator::make($data,$rule);
-
                   if($usertype=='Visitor')
                   { if($validator->fails())
                     {
@@ -118,7 +117,7 @@ class RegisterController extends Controller
                     $password=Input::get('password');
                     $usertype=Input::get('usertype');
                     $rule=array(
-                      'email'=>'required|email',
+                      'email'=>'required',
                       'password'=>'required',
                     );
                     $validator=Validator::make($data,$rule);

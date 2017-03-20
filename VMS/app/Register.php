@@ -34,4 +34,17 @@ class Register extends Authenticatable
       $users->status="1";
       $users->save();
     }
+    public static function visitorregisterandcheckinstorephone($data)
+    {
+      $name=Input::get('name');
+      $phonenumber=Input::get('phonenumber');
+      $password=Hash::make(Input::get('password'));
+      $users=new Register();
+      $users->name=$name;
+      $users->email=$phonenumber;
+      $users->password=$password;
+      $users->usertype="Visitor";
+      $users->status="1";
+      $users->save();
+    }
 }

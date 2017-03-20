@@ -62,6 +62,10 @@
   </div>
 </nav>
 
+<?php
+             $email = Auth::user()->email;
+               if(preg_match("/^[0-9]{10}$/", $email)):
+?>
 <div class="container">
   <div class="row">
       <div class="col-sm-3 col-md-offset-0">
@@ -74,8 +78,6 @@
                   <li><a href=""><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
                   <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Visit Log </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-plus"></i> Book a Employee </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-time"></i> Booking Status</a></li>
                   <li><a href=""><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
                 </ul>
               </div>
@@ -88,7 +90,34 @@
       </div>
   </div>
 </div>
-
+<?php else : ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-offset-0">
+            <div class="panel panel-info">
+                <div class="panel-heading">Operations</div>
+                <div class="panel-body">
+                  <ul class="nav" id="side-menu">
+                    <li><a href="visitorhomepage"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                    <li><a href=""><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                    <li><a href=""><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
+                    <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Visit Log </a></li>
+                    <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
+                    <li><a href=""><i class="glyphicon glyphicon-plus"></i> Book a Employee </a></li>
+                    <li><a href=""><i class="glyphicon glyphicon-time"></i> Booking Status</a></li>
+                    <li><a href=""><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-md-offset-0">
+            <div class="panel panel-info">
+                @yield('content')
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
 
 </body>
 </html>

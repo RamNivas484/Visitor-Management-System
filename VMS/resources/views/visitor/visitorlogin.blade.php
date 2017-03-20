@@ -21,7 +21,7 @@
             <form class="form-horizontal" action="visitorlogin_check" method="post" >
               <input type="hidden" name="_token" value="{{csrf_token()}}">
               <div class="form-group">
-                <label for="email" class="col-md-4 control-label" >Email:</label>
+                <label for="email" class="col-md-4 control-label" >Email or Phone Number:</label>
                   <div class="col-md-6">
                     <input id="email" name="email" class="form-control" type="text">
                     @if($errors->has('email'))
