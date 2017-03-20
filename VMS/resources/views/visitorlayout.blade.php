@@ -74,8 +74,8 @@
               <div class="panel-body">
                 <ul class="nav" id="side-menu">
                   <li><a href="visitorhomepage"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
+                  <li><a href="visitorprofile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                  <li><a href="visitoreditprofile"><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
                   <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Visit Log </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
@@ -99,8 +99,8 @@
                 <div class="panel-body">
                   <ul class="nav" id="side-menu">
                     <li><a href="visitorhomepage"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
+                    <li><a href="visitorprofile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                    <li><a href="visitoreditprofile"><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
                     <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Visit Log </a></li>
                     <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
                     <li><a href=""><i class="glyphicon glyphicon-plus"></i> Book a Employee </a></li>

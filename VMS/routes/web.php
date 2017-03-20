@@ -38,10 +38,15 @@ Route::get('/visitorcheckout', function () {
 Route::get('/register', function () {
     return view('register.register');
 });
+Route::get('/visitoreditprofile', function () {
+    return view('visitor.visitoreditprofile');
+});
 Route::post('/visitor_registerandcheckin_store','visitorcontroller@register_checkin_store');
 Route::get('/visitorfindempname','visitorcontroller@findempname');
 Route::get('/visitorfindempdept','visitorcontroller@findempdept');
 Route::get('/visitorfindempavailability','visitorcontroller@findempavailability');
+Route::get('/visitorprofile','visitorcontroller@visitorprofile');
+Route::post('/visitoreditprofile','visitorcontroller@visitoreditprofile');
 Route::post('/register_action','RegisterController@store');
 Route::post('/login_check','RegisterController@login');
 Route::post('/visitorlogin_check','RegisterController@login');

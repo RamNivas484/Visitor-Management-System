@@ -12,6 +12,7 @@ use Input;
 use Validator;
 use Redirect;
 use DB;
+use Auth;
 
 class visitorcontroller extends Controller
 {
@@ -114,6 +115,64 @@ class visitorcontroller extends Controller
              return Redirect::to('visitorregisterandcheckin')->with('success','Welcome You have Successfully Checkedin!!!');
          }
        }
+    }
+    public function visitorprofile(Request $request)
+    {
+      $visitor=visitormodel::all();
+      return view('visitor.visitorprofile',compact('visitor'));
+    }
+    public function visitoreditprofile(Request $request)
+    { $data=Input::except(array('_token'));
+      $rule=array(
+        'name'=>'required',
+        'age'=>'required',
+        'gender'=>'required',
+        'phonenumber'=>'required',
+      );
+      $message=array(
+        'name.required'=>'Enter Your Exisiting Name',
+        'age.required'=>'Reenter Your Age',
+        'gender.required'=>'Choose Your Gender',
+        'phonenumber.required'=>'Enter Phone Number Again',
+      );
+      $validator=Validator::make($data,$rule,$message);
+
+
+      $newname = $request->input('name');
+		  $newage = $request->input('age');
+		  $newgender = $request->input('gender');
+      $newphonenumber = $request->input('phonenumber');
+      $newemail = $request->input('email');
+
+      if($validator->fails())
+      {
+        return view('visitor.visitoreditprofile')->withErrors($validator);
+        //var_dump($data);
+        //onspotcheckinvisitor::formstore(Input::except(array('_token')));
+        //  return view('visitor.visitorcheckin',compact('employee'))->with('success','successfully Checkedin');
+      // onspotcheckinvisitor::formstore(Input::except(array('_token')));
+      }
+      else
+      {
+          if((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail=="")
+          DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,Auth::user()->email]);
+          elseif((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail!="")
+          DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
+          else
+          DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
+          if((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail=="")
+          DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",Auth::user()->email]);
+          elseif((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail!="")
+          DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
+          else
+          DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
+          if($newemail!="")
+          DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
+          else
+          DB::update('update register_users set name=?,email=? where email=?',[$newname,$newphonenumber,Auth::user()->email]);
+
+          return Redirect::to('visitoreditprofile')->with('success','You Have Successfully Edited Your Profile!!!');
+      }
     }
     public function findempname(Request $request)
     {
