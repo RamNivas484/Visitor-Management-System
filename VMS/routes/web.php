@@ -32,6 +32,9 @@ Route::get('/adminhomepage', function () {
 Route::get('/emphomepage', function () {
     return view('employee.emphomepage');
 });
+Route::get('/visitorcheckin', function () {
+    return view('visitor.visitorcheckin');
+});
 Route::get('/visitorcheckout', function () {
     return view('visitor.visitorcheckout');
 });
@@ -52,7 +55,10 @@ Route::post('/login_check','RegisterController@login');
 Route::post('/visitorlogin_check','RegisterController@login');
 Route::post('/adminlogin_check','RegisterController@login');
 Route::post('/employeelogin_check','RegisterController@login');
-Route::post('/employeecheckin_check','RegisterController@checkin');
+//Route::post('/employeecheckin_check','RegisterController@checkin');
+Route::post('/visitor_checkout','RegisterController@checkout');
+Route::post('/visitor_checkin','RegisterController@visitorcheckin');
+
 Route::get('/logout',function () {
     Auth::logout();
     return Redirect::to('');

@@ -327,7 +327,7 @@
                 </div>
             </div>
             <div class="form-group">
-              <label for="password" class="col-md-4 control-label">Enter Password:</label>
+              <label for="password" class="col-md-4 control-label">Enter Password(Required for future visits):</label>
                 <div class="col-md-6">
                   <input id="password" name="password" class="form-control" type="password" placeholder="Atleast 6 characters">
                   @if($errors->has('password'))

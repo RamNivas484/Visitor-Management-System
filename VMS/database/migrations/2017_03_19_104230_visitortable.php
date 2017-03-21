@@ -22,6 +22,11 @@ class Visitortable extends Migration
            $table->string('email')->nullable();
            $table->string('phonenumber')->unique();
            $table->string('password');
+           $table->string('comp_name')->nullable();
+           $table->string('comp_dept')->nullable();
+           $table->string('comp_designation')->nullable();
+           $table->string('comp_location')->nullable();
+           $table->string('comp_website')->nullable();
            $table->boolean('status')->default(false);
            $table->boolean('ban')->default(false);
            $table->string('count')->default('0');
