@@ -155,12 +155,26 @@ class visitorcontroller extends Controller
       else
       {
           if((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail=="")
-          DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,Auth::user()->email]);
+          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,Auth::user()->email]);
+                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",Auth::user()->email]);
+                  DB::update('update register_users set name=?,email=? where email=?',[$newname,$newphonenumber,Auth::user()->email]);
+          }
           elseif((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail!="")
-          DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
-          else
-          DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
-          if((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail=="")
+          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
+                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
+                  DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
+          }
+          elseif((!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false) &&$newemail=="")
+          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=? where email=?',[$newname,$newage,$newgender,$newphonenumber,Auth::user()->email]);
+                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where email=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",Auth::user()->email]);
+                  DB::update('update register_users set name=?,email=? where email=?',[$newname,$newphonenumber,Auth::user()->email]);
+          }
+          elseif((!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false) &&$newemail!="")
+          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=? where email=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
+                   DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where email=?',[$newname,$newage,$newgender,$newphonenumber,$email,Auth::user()->email]);
+                   DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
+          }
+  /*        if((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail=="")
           DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",Auth::user()->email]);
           elseif((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail!="")
           DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
@@ -170,7 +184,7 @@ class visitorcontroller extends Controller
           DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
           else
           DB::update('update register_users set name=?,email=? where email=?',[$newname,$newphonenumber,Auth::user()->email]);
-
+*/
           return Redirect::to('visitoreditprofile')->with('success','You Have Successfully Edited Your Profile!!!');
       }
     }

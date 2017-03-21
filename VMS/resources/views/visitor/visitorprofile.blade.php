@@ -5,7 +5,7 @@
 
 
                         <div class="panel-heading">
-                             <h1>&nbsp; {{ ucwords(Auth::user()->email) }} Profile</h1>
+                             <h1>&nbsp; {{ ucwords(Auth::user()->name) }} Profile</h1>
                         </div>
                         <div class="panel-body">
                             @foreach($visitor as $vis)

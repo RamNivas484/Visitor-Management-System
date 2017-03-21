@@ -3,7 +3,8 @@
 @section('content')
 
                         <div class="panel-heading">
-                             <h1>&nbsp; Welcome {{ ucwords(Auth::user()->name) }} </h1>
+                             <h1>&nbsp;Edit Profile</h1>
+                             <h6>&nbsp;&nbsp;&nbsp;(Enter All Details,Only Email is Optional)<h6>
                         </div>
                         <div class="panel-body">
                           @if(Session::has('success'))
