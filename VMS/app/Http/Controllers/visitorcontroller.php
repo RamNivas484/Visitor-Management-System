@@ -14,6 +14,7 @@ use Redirect;
 use DB;
 use Auth;
 
+
 class visitorcontroller extends Controller
 {
   public static function register_checkin_store()
@@ -21,6 +22,7 @@ class visitorcontroller extends Controller
     $data=Input::except(array('_token'));
     $visiting_purpose=Input::get('visiting_purpose');
     $email=Input::get('email');
+
 
     if (visitormodel::where('phonenumber', '=', Input::get('phonenumber'))->exists())
     {

@@ -34,6 +34,8 @@ class Checkedintable extends Migration
             $table->string('emp_designation')->nullable();
             $table->string('belongings')->nullable();
             $table->string('vehicle_number')->nullable();
+            $table->string('checkintime');
+            $table->string('checkouttime');
             $table->boolean('status');
             $table->rememberToken();
             $table->timestamps();

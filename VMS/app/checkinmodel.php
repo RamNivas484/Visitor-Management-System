@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Input;
 use Hash;
+use DateTime;
 class checkinmodel extends Model
 {
       protected $table="checkedintable";
       public static function visitorregisterandcheckinstore($data)
-      {
+      { $now = new DateTime();
         $name=Input::get('name');
         $age=Input::get('age');
         $gender=Input::get('gender');
@@ -45,6 +46,8 @@ class checkinmodel extends Model
         $visitor->belongings=$belongings;
         $visitor->vehicle_number=$vehicle_number;
         $visitor->status="1";
+        $visitor->checkintime=$now;
+        $visitor->checkouttime=$now;
         $visitor->save();
       }
 }

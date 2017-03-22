@@ -193,6 +193,28 @@
                     @endif
                   </div>
               </div>
+              <div class="form-group">
+                <label for="belongings" class="col-md-4 control-label" >Your Belongings(Optional):</label>
+                  <div class="col-md-6">
+                    <input id="belongings" name="belongings" class="form-control" type="text">
+                    @if($errors->has('belongings'))
+                    <span class="help-block" style="color:red;">
+                      <strong>{{ $errors->first('belongings') }}</strong>
+                    </span>
+                    @endif
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="vehicle_number" class="col-md-4 control-label" >Vehicle Number(Optional):</label>
+                  <div class="col-md-6">
+                    <input id="vehicle_number" name="vehicle_number" class="form-control" type="text">
+                    @if($errors->has('vehicle_number'))
+                    <span class="help-block" style="color:red;">
+                      <strong>{{ $errors->first('vehicle_number') }}</strong>
+                    </span>
+                    @endif
+                  </div>
+              </div>
               <input id="usertype" name="usertype" class="hidden" type="text" value="Visitor">
               <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">

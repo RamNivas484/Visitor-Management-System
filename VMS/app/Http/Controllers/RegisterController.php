@@ -9,6 +9,7 @@ use Redirect;
 use App\Register;
 use Auth;
 use DB;
+use DateTime;
 class RegisterController extends Controller
 {
     public function store()
@@ -44,7 +45,12 @@ class RegisterController extends Controller
       $email=Input::get('email');
       $password=Input::get('password');
       $usertype=Input::get('usertype');
+      $visit_emp_dept=Input::get('visit_emp_dept');
+      $visit_emp_name=Input::get('visit_emp_name');
       $visiting_purpose=Input::get('visiting_purpose');
+      $belongings=Input::get('belongings');
+      $vehicle_number=Input::get('vehicle_number');
+      $now = new DateTime();
       //var_dump($data);
       $rule=array(
 
@@ -71,15 +77,43 @@ class RegisterController extends Controller
       else
       {
           if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
-          {
-            if(preg_match("/^[0-9]{10}$/",$email))
-            $visitor = DB::table('visitortable')->where('phonenumber', $email)->first();
-            else
-            $visitor = DB::table('visitortable')->where('email', $email)->first();
-
-          //  var_dump($visitor);
-            echo $visitor->name;
-          Auth::logout();
+          { if(Auth::user()->status=="0")
+            {   if(preg_match("/^[0-9]{10}$/",$email))
+                  $visitor = DB::table('visitortable')->where('phonenumber', $email)->first();
+                else
+                  $visitor = DB::table('visitortable')->where('email', $email)->first();
+                  $count=$visitor->count+1;
+                if(preg_match("/^[0-9]{10}$/", Auth::user()->email))
+                {    DB::update('update visitortable set status=1,count=? where phonenumber=? and status=?',[$count,$email,'0']);
+                     DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
+                     DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                                                            phonenumber,visitortype,comp_name,comp_dept,comp_designation,
+                                                            comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
+                                                            vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+                                                            ,["Visitor",$visitor->name,$visitor->gender,$visitor->age,"Visitor Dont Have Email",
+                                                              $visitor->phonenumber,$visiting_purpose,$visitor->comp_name,$visitor->comp_dept,$visitor->comp_designation,
+                                                              $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
+                                                              $vehicle_number,$now,$now,"1"]);
+                }
+                elseif(!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false)
+                {    DB::update('update visitortable set status=1,count=? where email=? and status=?',[$email,'0']);
+                     DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
+                     DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                                                         phonenumber,visitortype,comp_name,comp_dept,comp_designation,
+                                                         comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
+                                                         vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+                                                         ,["Visitor",$visitor->name,$visitor->gender,$visitor->age,$visitor->email,
+                                                           $visitor->phonenumber,$visiting_purpose,$visitor->comp_name,$visitor->comp_dept,$visitor->comp_designation,
+                                                           $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
+                                                           $vehicle_number,$now,$now,"1"]);
+                }
+              Auth::logout();
+                return Redirect::to('visitorcheckin')->with('success','Welcome you have successfully checked in!!!');
+            }
+            elseif (Auth::user()->status=="1")
+            {   Auth::logout();
+                return Redirect::to('visitorcheckin')->with('failed','You have already checked in!!!Checkout and Try again!!!');
+            }
           }
           else
           { if(preg_match("/^[0-9]{10}$/",$email))
@@ -228,6 +262,7 @@ class RegisterController extends Controller
                         'email'=>'required',
                         'password'=>'required',
                       );
+                        $now = new DateTime();
                       $validator=Validator::make($data,$rule);
                       if($usertype=='Visitor')
                       { if($validator->fails())
@@ -244,11 +279,11 @@ class RegisterController extends Controller
                                {  DB::update('update register_users set status=0 where email=? and status=?',[$email,'1']);
                                   if(preg_match("/^[0-9]{10}$/", Auth::user()->email))
                                   {    DB::update('update visitortable set status=0 where phonenumber=? and status=?',[$email,'1']);
-                                       DB::update('update checkedintable set status=0 where phonenumber=? and status=?',[$email,'1']);
+                                       DB::update('update checkedintable set status=0,checkouttime=? where phonenumber=? and status=?',[$now,$email,'1']);
                                   }
                                   elseif(!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false)
                                   {    DB::update('update visitortable set status=0 where email=? and status=?',[$email,'1']);
-                                       DB::update('update checkedintable set status=0 where email=? and status=?',[$email,'1']);
+                                       DB::update('update checkedintable set status=0,checkouttime=? where email=? and status=?',[$now,$email,'1']);
                                   }
                                   Auth::logout();
                                   return Redirect::to('visitorcheckout')->with('success','Thank you for visiting you have successfully checked out!!!');
