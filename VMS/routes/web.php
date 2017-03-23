@@ -23,6 +23,9 @@ Route::get('employeelogin', function () {
 Route::get('employeecheckin', function () {
     return view('employee.empcheckin');
 });
+Route::get('adminadduser', function () {
+    return view('admin.adminadduser');
+});
 Route::get('/visitorhomepage', function () {
     return view('visitor.visitorhomepage');
 });
@@ -58,6 +61,7 @@ Route::post('/employeelogin_check','RegisterController@login');
 //Route::post('/employeecheckin_check','RegisterController@checkin');
 Route::post('/visitor_checkout','RegisterController@checkout');
 Route::post('/visitor_checkin','RegisterController@visitorcheckin');
+Route::post('/adminadduser','admincontroller@adduser');
 
 Route::get('/logout',function () {
     Auth::logout();

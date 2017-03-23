@@ -47,4 +47,56 @@ class Register extends Authenticatable
       $users->status="1";
       $users->save();
     }
+    public static function adminaddvisitoremail($data)
+    {
+      $name=Input::get('visitorname');
+      $email=Input::get('visitoremail');
+      $password=Hash::make(Input::get('visitorpassword'));
+      $users=new Register();
+      $users->name=$name;
+      $users->email=$email;
+      $users->password=$password;
+      $users->usertype="Visitor";
+      $users->status="0";
+      $users->save();
+    }
+    public static function adminaddvisitorphone($data)
+    {
+      $name=Input::get('visitorname');
+      $phonenumber=Input::get('visitorphonenumber');
+      $password=Hash::make(Input::get('visitorpassword'));
+      $users=new Register();
+      $users->name=$name;
+      $users->email=$phonenumber;
+      $users->password=$password;
+      $users->usertype="Visitor";
+      $users->status="0";
+      $users->save();
+    }
+    public static function adminaddemployee($data)
+    {
+      $name=Input::get('employeename');
+      $email=Input::get('employeeemail');
+      $password=Hash::make(Input::get('employeepassword'));
+      $users=new Register();
+      $users->name=$name;
+      $users->email=$email;
+      $users->password=$password;
+      $users->usertype="Employee";
+      $users->status="0";
+      $users->save();
+    }
+    public static function adminaddadmin($data)
+    {
+      $name=Input::get('adminname');
+      $email=Input::get('adminemail');
+      $password=Hash::make(Input::get('adminpassword'));
+      $users=new Register();
+      $users->name=$name;
+      $users->email=$email;
+      $users->password=$password;
+      $users->usertype="Administrator";
+      $users->status="0";
+      $users->save();
+    }
 }

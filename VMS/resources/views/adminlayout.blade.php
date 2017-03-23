@@ -70,9 +70,7 @@
               <div class="panel-body">
                 <ul class="nav" id="side-menu">
                   <li><a href="adminhomepage"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-plus"></i> Add Visitor </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-plus"></i> Add Employee </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-plus"></i> Add Administrator </a></li>
+                  <li><a href="adminadduser"><i class="glyphicon glyphicon-plus"></i> Add User </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-ban-circle"></i> Ban Requests </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-minus"></i> Remove Visitor </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-minus"></i> Remove Employee </a></li>

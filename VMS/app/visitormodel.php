@@ -38,6 +38,36 @@ class visitormodel extends Model
       $visitor->count="1";
       $visitor->save();
     }
+    public static function adminaddvisitor($data)
+    {
+
+      $name=Input::get('visitorname');
+      $age=Input::get('visitorage');
+      $gender=Input::get('visitorgender');
+      $phonenumber=Input::get('visitorphonenumber');
+      $email=Input::get('visitoremail');
+      $comp_name=Input::get('visitorcomp_name');
+      $comp_dept=Input::get('visitorcomp_dept');
+      $comp_designation=Input::get('visitorcomp_designation');
+      $comp_location=Input::get('visitorcomp_location');
+      $comp_website=Input::get('visitorcomp_website');
+      $password=Hash::make(Input::get('visitorpassword'));
+      $visitor=new visitormodel();
+      $visitor->name=$name;
+      $visitor->age=$age;
+      $visitor->gender=$gender;
+      $visitor->phonenumber=$phonenumber;
+      $visitor->email=$email;
+      $visitor->comp_name=$comp_name;
+      $visitor->comp_dept=$comp_dept;
+      $visitor->comp_designation=$comp_designation;
+      $visitor->comp_location=$comp_location;
+      $visitor->comp_website=$comp_website;
+      $visitor->password=$password;
+      $visitor->status="0";
+      $visitor->count="0";
+      $visitor->save();
+    }
     /*public static function visitortablestore($data)
     {
       $name=Input::get('name');
