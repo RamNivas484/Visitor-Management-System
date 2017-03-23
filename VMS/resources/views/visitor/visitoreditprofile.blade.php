@@ -4,7 +4,7 @@
 
                         <div class="panel-heading">
                              <h1>&nbsp;Edit Profile</h1>
-                             <h6>&nbsp;&nbsp;&nbsp;(Enter All Details,Only Email is Optional)<h6>
+                             <h6>&nbsp;&nbsp;&nbsp;(Enter All Details,Only Email is Optional but Email is required for booking Purpose.)<h6>
                         </div>
                         <div class="panel-body">
                           @if(Session::has('success'))

@@ -54,10 +54,15 @@ Route::get('/register', function () {
 Route::get('/visitoreditprofile', function () {
     return view('visitor.visitoreditprofile');
 });
+Route::get('/visitorbooking', function () {
+    return view('visitor.booking');
+});
 Route::post('/visitor_registerandcheckin_store','visitorcontroller@register_checkin_store');
 Route::get('/visitorfindempname','visitorcontroller@findempname');
 Route::get('/visitorfindempdept','visitorcontroller@findempdept');
 Route::get('/visitorfindempavailability','visitorcontroller@findempavailability');
+Route::get('/visitorfindempemail','visitorcontroller@findempmail');
+
 Route::get('/visitorprofile','visitorcontroller@visitorprofile');
 Route::post('/visitoreditprofile','visitorcontroller@visitoreditprofile');
 Route::post('/register_action','RegisterController@store');
@@ -69,6 +74,7 @@ Route::post('/employeelogin_check','RegisterController@login');
 Route::post('/visitor_checkout','RegisterController@checkout');
 Route::post('/visitor_checkin','RegisterController@visitorcheckin');
 Route::post('/visitor_changepassword','visitorcontroller@visitorchangepassword');
+Route::post('/visitorbooking','visitorcontroller@visitorbooking');
 Route::post('/adminadduser','admincontroller@adduser');
 Route::post('/visitorchangepassword','admincontroller@adduser');
 

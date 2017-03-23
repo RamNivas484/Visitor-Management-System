@@ -8,6 +8,7 @@ use App\checkinmodel;
 use App\visitormodel;
 use App\employeemodel;
 use App\empdeptmodel;
+use App\bookingmodel;
 use Input;
 use Validator;
 use Redirect;
@@ -242,6 +243,43 @@ class visitorcontroller extends Controller
 
         }
     }
+    public function visitorbooking(Request $request)
+    {
+      $data=Input::except(array('_token'));
+        $rule=array(
+          'visiting_purpose'=>'required',
+          'emp_dept'=>'required',
+          'emp_name'=>'required',
+          'noofhours'=>'required',
+          'fromtime'=>'required',
+        );
+        $message=array(
+          'visiting_purpose.required'=>'Select Visit Type',
+          'emp_dept.required'=>'Select Employee Department',
+          'emp_name.required'=>'Select Employee',
+          'noofhours.required'=>'Select Required No of Hours',
+          'fromtime.required'=>'Select From Time',
+
+        );
+        $validator=Validator::make($data,$rule,$message);
+        $visitoremail=Auth::user()->email;
+        $visittype= $request->input('visiting_purpose');
+        $empdept= $request->input('emp_dept');
+        $empname= $request->input('emp_name');
+        $empmail= $request->input('empmail');
+        $fromtime= $request->input('fromtime');
+        $noofhours= $request->input('noofhours');
+        $otherinfo= $request->input('otherinfo');
+        if($validator->fails())
+        {
+          return view('visitor.booking')->withErrors($validator);
+        }
+        else
+        {
+          bookingmodel::booking(Input::except(array('_token')));
+          return Redirect::to('visitorbooking')->with('success','Employee Booked Successfully!!! You will Receive Mail once your booking is accepted.Periodically Check Booking status for Other information.');
+        }
+    }
     public function findempname(Request $request)
     {
       $data=employeemodel::select('name','designation')->where('dept',$request->id)->get();
@@ -255,6 +293,13 @@ class visitorcontroller extends Controller
     public function findempavailability(Request $request)
     {
       $data=employeemodel::select('status')->where('name',$request->id)->get();
+      return response()->json($data);
+    }
+    public function findempmail(Request $request)
+    {
+      $data=employeemodel::select('email')->where('dept',$request->dept)
+                                          ->where('name',$request->name)
+                                          ->get();
       return response()->json($data);
     }
 }

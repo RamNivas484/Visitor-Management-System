@@ -49,6 +49,6 @@ class Checkedintable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('checkedintable');
     }
 }
