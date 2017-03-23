@@ -13,6 +13,7 @@ use Validator;
 use Redirect;
 use DB;
 use Auth;
+use Hash;
 
 
 class visitorcontroller extends Controller
@@ -189,6 +190,44 @@ class visitorcontroller extends Controller
 */
           return Redirect::to('visitoreditprofile')->with('success','You Have Successfully Edited Your Profile!!!');
       }
+    }
+    public function visitorchangepassword(Request $request)
+    {
+      $data=Input::except(array('_token'));
+        $rule=array(
+          'visitoroldpassword'=>'required',
+          'visitornewpassword'=>'required',
+          'visitorconfirmpassword'=>'required|same:visitornewpassword',
+
+        );
+        $message=array(
+          'visitornewpassword.required'=>'Enter New Password',
+          'visitornewpassword.same'=>'New Password and Confirm password field donot match',
+          'visitoroldpassword.required'=>'Enter Old Password',
+          'visitorconfirmpassword.required'=>'Enter The new password again',
+
+        );
+        $validator=Validator::make($data,$rule,$message);
+        $oldpassword = $request->input('visitoroldpassword');
+  		  $newpassword = $request->input('visitornewpassword');
+  		  $confirmpassword = $request->input('visitorconfirmpassword');
+        $hashed=Hash::make($newpassword);
+        if($validator->fails())
+        {
+          return view('visitor.changepassword')->withErrors($validator);
+        }
+        else
+        { if (Hash::check($oldpassword, Auth::user()->password))
+          {
+            DB::update('update register_users set password=? where email=?',[$hashed,Auth::user()->email]);
+            return Redirect::to('visitorchangepassword')->with('success','You have changed your Password!!!');
+          }
+          else
+          {
+              return Redirect::to('visitorchangepassword')->with('failed','Incorrect old Password!!!');
+          }
+
+        }
     }
     public function findempname(Request $request)
     {

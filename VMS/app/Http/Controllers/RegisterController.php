@@ -96,7 +96,7 @@ class RegisterController extends Controller
                                                               $vehicle_number,$now,$now,"1"]);
                 }
                 elseif(!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false)
-                {    DB::update('update visitortable set status=1,count=? where email=? and status=?',[$email,'0']);
+                {    DB::update('update visitortable set status=1,count=? where email=? and status=?',[$count,$email,'0']);
                      DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
                      DB::insert('insert into checkedintable(usertype,name,gender,age,email,
                                                          phonenumber,visitortype,comp_name,comp_dept,comp_designation,

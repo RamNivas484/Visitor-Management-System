@@ -17,6 +17,9 @@ Route::get('visitorregisterandcheckin', function () {
 Route::get('adminlogin', function () {
     return view('admin.adminlogin');
 });
+Route::get('visitorchangepassword', function () {
+    return view('visitor.changepassword');
+});
 Route::get('employeelogin', function () {
     return view('employee.employeelogin');
 });
@@ -28,6 +31,9 @@ Route::get('adminadduser', function () {
 });
 Route::get('/visitorhomepage', function () {
     return view('visitor.visitorhomepage');
+});
+Route::get('/visitorcheckavailability', function () {
+    return view('visitor.visitorcheckavailability');
 });
 Route::get('/adminhomepage', function () {
     return view('admin.adminhomepage');
@@ -61,7 +67,9 @@ Route::post('/employeelogin_check','RegisterController@login');
 //Route::post('/employeecheckin_check','RegisterController@checkin');
 Route::post('/visitor_checkout','RegisterController@checkout');
 Route::post('/visitor_checkin','RegisterController@visitorcheckin');
+Route::post('/visitor_changepassword','visitorcontroller@visitorchangepassword');
 Route::post('/adminadduser','admincontroller@adduser');
+Route::post('/visitorchangepassword','admincontroller@adduser');
 
 Route::get('/logout',function () {
     Auth::logout();

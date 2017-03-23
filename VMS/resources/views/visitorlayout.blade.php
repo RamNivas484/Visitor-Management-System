@@ -77,8 +77,8 @@
                   <li><a href="visitorprofile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                   <li><a href="visitoreditprofile"><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
                   <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Visit Log </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
+                  <li><a href="visitorcheckavailability"><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
+                  <li><a href="visitorchangepassword"><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
                 </ul>
               </div>
           </div>
@@ -102,10 +102,10 @@
                     <li><a href="visitorprofile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                     <li><a href="visitoreditprofile"><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
                     <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Visit Log </a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
+                    <li><a href="visitorcheckavailability"><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
                     <li><a href=""><i class="glyphicon glyphicon-plus"></i> Book a Employee </a></li>
                     <li><a href=""><i class="glyphicon glyphicon-time"></i> Booking Status</a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
+                    <li><a href="visitorchangepassword"><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
                   </ul>
                 </div>
             </div>
