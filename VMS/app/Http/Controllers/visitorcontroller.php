@@ -138,6 +138,12 @@ class visitorcontroller extends Controller
           }
           return view('visitor.visitorlog',compact('personalvisitorlog','officialvisitorlog'));
     }
+    public function bookingstatus(Request $request)
+    {
+           $email=Auth::user()->email;
+           $booking=bookingmodel::select('visitortype','empname','empdept','from','noofhours','staus','employeeinfo')->where('visitoremail',$email)->get();
+           return view('visitor.bookingstatus',compact('booking'));
+    }
     public function visitoreditprofile(Request $request)
     { $data=Input::except(array('_token'));
       $rule=array(
