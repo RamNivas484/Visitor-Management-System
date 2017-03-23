@@ -124,6 +124,19 @@ class visitorcontroller extends Controller
       $visitor=visitormodel::all();
       return view('visitor.visitorprofile',compact('visitor'));
     }
+    public function visitorlog(Request $request)
+    {
+           $email=Auth::user()->email;
+          if(preg_match("/^[0-9]{10}$/", Auth::user()->email))
+          {  $personalvisitorlog=checkinmodel::select('visit_emp_name','visit_emp_dept','checkintime','checkouttime')->where('phonenumber',$email)->where('visitortype',"Personal Visit")->get();
+             $officialvisitorlog=checkinmodel::select('visit_emp_name','visit_emp_dept','checkintime','checkouttime')->where('phonenumber',$email)->where('visitortype',"Official Visit")->get();
+          }
+          elseif(!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false)
+          {  $personalvisitorlog=checkinmodel::select('visit_emp_name','visit_emp_dept','checkintime','checkouttime')->where('visitortype',"Personal Visit")->where('email',$email)->get();
+             $officialvisitorlog=checkinmodel::select('visit_emp_name','visit_emp_dept','checkintime','checkouttime')->where('visitortype',"Official Visit")->where('email',$email)->get();
+          }
+          return view('visitor.visitorlog',compact('personalvisitorlog','officialvisitorlog'));
+    }
     public function visitoreditprofile(Request $request)
     { $data=Input::except(array('_token'));
       $rule=array(
@@ -168,7 +181,7 @@ class visitorcontroller extends Controller
                   DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
           }
           elseif((!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false) &&$newemail=="")
-          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=? where email=?',[$newname,$newage,$newgender,$newphonenumber,Auth::user()->email]);
+          {        DB::update('update visitortable set name=?,age=?,email=?,gender=?phonenumber=? where email=?',[$newname,$newage,$newgender,$newemail,$newphonenumber,Auth::user()->email]);
                   DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where email=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",Auth::user()->email]);
                   DB::update('update register_users set name=?,email=? where email=?',[$newname,$newphonenumber,Auth::user()->email]);
           }

@@ -45,8 +45,8 @@ class RegisterController extends Controller
       $email=Input::get('email');
       $password=Input::get('password');
       $usertype=Input::get('usertype');
-      $visit_emp_dept=Input::get('visit_emp_dept');
-      $visit_emp_name=Input::get('visit_emp_name');
+      $visit_emp_dept=Input::get('emp_dept');
+      $visit_emp_name=Input::get('emp_name');
       $visiting_purpose=Input::get('visiting_purpose');
       $belongings=Input::get('belongings');
       $vehicle_number=Input::get('vehicle_number');
@@ -72,7 +72,6 @@ class RegisterController extends Controller
       if($validator->fails())
       {
         return Redirect::to('visitorcheckin')->withErrors($validator);
-
       }
       else
       {
@@ -107,7 +106,7 @@ class RegisterController extends Controller
                                                            $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
                                                            $vehicle_number,$now,$now,"1"]);
                 }
-              Auth::logout();
+                Auth::logout();
                 return Redirect::to('visitorcheckin')->with('success','Welcome you have successfully checked in!!!');
             }
             elseif (Auth::user()->status=="1")

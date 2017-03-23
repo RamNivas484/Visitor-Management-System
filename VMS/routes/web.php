@@ -20,6 +20,7 @@ Route::get('adminlogin', function () {
 Route::get('visitorchangepassword', function () {
     return view('visitor.changepassword');
 });
+Route::get('visitorlog','visitorcontroller@visitorlog');
 Route::get('employeelogin', function () {
     return view('employee.employeelogin');
 });
