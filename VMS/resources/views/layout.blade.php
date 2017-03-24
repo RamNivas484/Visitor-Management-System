@@ -53,6 +53,7 @@
           <ul class="dropdown-menu">
             <li><a href="{{URL::to('employeelogin')}}">Login</a></li>
             <li><a href="{{URL::to('employeecheckin')}}">Check In</a></li>
+            <li><a href="{{URL::to('employeecheckout')}}">Check Out</a></li>
           </ul>
         </li>
         <li><a href="{{URL::to('adminlogin')}}">Administrator</a></li>

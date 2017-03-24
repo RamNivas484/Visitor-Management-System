@@ -202,6 +202,17 @@
                                </div>
                            </div>
                            <div class="form-group">
+                             <label for="date" class="col-md-4 control-label" align='center'>Date:</label>
+                               <div class="col-md-6" >
+                                 <input id="date" name="date" class="form-control" type="text" placeholder="DD-MM-YYYY">
+                                 @if($errors->has('date'))
+                                 <span class="help-block" style="color:red;">
+                                   <strong>{{ $errors->first('date') }}</strong>
+                                 </span>
+                                 @endif
+                               </div>
+                           </div>
+                           <div class="form-group">
                              <label for="fromtime" class="col-md-4 control-label" >From:</label>
                                <div class="col-md-6">
                                  <select id="fromtime" name="fromtime" class="form-control">

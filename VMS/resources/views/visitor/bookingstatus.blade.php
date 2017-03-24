@@ -13,6 +13,7 @@
                             <th>Visit Type</th>
                             <th>Employee Dept</th>
                             <th>Employee Name</th>
+                            <th>Date</th>
                             <th>From Time</th>
                             <th>No Of Hours</th>
                             <th>Status</th>
@@ -24,16 +25,19 @@
                             <td>{{$book->visitortype}}</td>
                             <td>{{$book->empname}}</td>
                             <td>{{$book->empdept}}</td>
+                            <td>{{$book->date}}</td>
                             <td>{{$book->from}}</td>
                             <td>{{$book->noofhours}}</td>
 
                             <?php
                                              $status = $book->staus;
-                                             if((strcmp($status,"0"))==0):
+                                             if((strcmp($status,"Pending"))==0):
                             ?>
                             <td>Pending</td>
-                            <?php elseif((strcmp($status,"1"))==0): ?>
+                            <?php elseif((strcmp($status,"Approved"))==0): ?>
                             <td>Approved</td>
+                            <?php elseif((strcmp($status,"Rejected"))==0): ?>
+                            <td>Rejected</td>
                               <?php endif; ?>
                             <td>{{$book->employeeinfo}}</td>
                             </tr>

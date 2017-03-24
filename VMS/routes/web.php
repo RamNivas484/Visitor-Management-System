@@ -21,6 +21,7 @@ Route::get('visitorchangepassword', function () {
     return view('visitor.changepassword');
 });
 Route::get('visitorlog','visitorcontroller@visitorlog');
+
 Route::get('bookingstatus','visitorcontroller@bookingstatus');
 
 
@@ -30,6 +31,9 @@ Route::get('employeelogin', function () {
 });
 Route::get('employeecheckin', function () {
     return view('employee.empcheckin');
+});
+Route::get('employeecheckout', function () {
+    return view('employee.employeecheckout');
 });
 Route::get('adminadduser', function () {
     return view('admin.adminadduser');
@@ -58,6 +62,9 @@ Route::get('/register', function () {
 Route::get('/visitoreditprofile', function () {
     return view('visitor.visitoreditprofile');
 });
+Route::get('/employee_editprofile', function () {
+    return view('employee.employeeeditprofile');
+});
 Route::get('/visitorbooking', function () {
     return view('visitor.booking');
 });
@@ -66,16 +73,20 @@ Route::get('/visitorfindempname','visitorcontroller@findempname');
 Route::get('/visitorfindempdept','visitorcontroller@findempdept');
 Route::get('/visitorfindempavailability','visitorcontroller@findempavailability');
 Route::get('/visitorfindempemail','visitorcontroller@findempmail');
-
+Route::get('/employee_pvreq','employeecontroller@findemppvrequests');
 Route::get('/visitorprofile','visitorcontroller@visitorprofile');
+Route::get('/employeeprofile','employeecontroller@employeeprofile');
 Route::post('/visitoreditprofile','visitorcontroller@visitoreditprofile');
+Route::post('/employeeeditprofile','employeecontroller@employeeeditprofile');
 Route::post('/register_action','RegisterController@store');
 Route::post('/login_check','RegisterController@login');
 Route::post('/visitorlogin_check','RegisterController@login');
 Route::post('/adminlogin_check','RegisterController@login');
 Route::post('/employeelogin_check','RegisterController@login');
+Route::post('/employeecheckin_check','RegisterController@empcheckin');
 //Route::post('/employeecheckin_check','RegisterController@checkin');
 Route::post('/visitor_checkout','RegisterController@checkout');
+Route::post('/employee_checkout','RegisterController@checkout');
 Route::post('/visitor_checkin','RegisterController@visitorcheckin');
 Route::post('/visitor_changepassword','visitorcontroller@visitorchangepassword');
 Route::post('/visitorbooking','visitorcontroller@visitorbooking');

@@ -141,7 +141,7 @@ class visitorcontroller extends Controller
     public function bookingstatus(Request $request)
     {
            $email=Auth::user()->email;
-           $booking=bookingmodel::select('visitortype','empname','empdept','from','noofhours','staus','employeeinfo')->where('visitoremail',$email)->get();
+           $booking=bookingmodel::select('visitortype','empname','empdept','date','from','noofhours','staus','employeeinfo')->where('visitoremail',$email)->get();
            return view('visitor.bookingstatus',compact('booking'));
     }
     public function visitoreditprofile(Request $request)
@@ -257,6 +257,7 @@ class visitorcontroller extends Controller
           'emp_dept'=>'required',
           'emp_name'=>'required',
           'noofhours'=>'required',
+          'date'=>'required',
           'fromtime'=>'required',
         );
         $message=array(
@@ -264,6 +265,7 @@ class visitorcontroller extends Controller
           'emp_dept.required'=>'Select Employee Department',
           'emp_name.required'=>'Select Employee',
           'noofhours.required'=>'Select Required No of Hours',
+          'date.required'=>'Choose a date',
           'fromtime.required'=>'Select From Time',
 
         );
@@ -273,6 +275,7 @@ class visitorcontroller extends Controller
         $empdept= $request->input('emp_dept');
         $empname= $request->input('emp_name');
         $empmail= $request->input('empmail');
+        $date=$request->input('date');
         $fromtime= $request->input('fromtime');
         $noofhours= $request->input('noofhours');
         $otherinfo= $request->input('otherinfo');

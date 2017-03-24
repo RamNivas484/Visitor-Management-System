@@ -323,25 +323,76 @@ class RegisterController extends Controller
                       }
                       elseif ($usertype=='Employee')
                       {
-                          if($validator->fails())
+                        if($validator->fails())
                           {
-                          return Redirect::to('employeecheckin')->withErrors($validator);
+                          return Redirect::to('employeecheckout')->withErrors($validator);
                           }
                           else
                           {
                               if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
                               {
-                                /* DB::update('update register_users set status=1 where email=?',[$email]);
+                                 if(Auth::user()->status=="1")
+                                 {  DB::update('update register_users set status=0 where email=? and status=1',[$email]);
+                                    DB::update('update employeetable set status=0 where email=? and status=?',[$email,'1']);
+                                    DB::update('update checkedintable set status=0,checkouttime=? where email=? and status=?',[$now,$email,'1']);
+                                    Auth::logout();
+                                    return Redirect::to('employeecheckout')->with('success','Thank you for visiting you have successfully checked out!!!');
+                                 }
+                                 else
+                                 {
+                                    Auth::logout();
+                                    return Redirect::to('employeecheckout')->with('failed','Sorry,you have never checked in!!!');
+                                 }
+                              }
+                              else
+                              {
+                                    return Redirect::to('employeecheckout')->with('failed','Incorrect Employee Data');
+                              }
+                            }
+                      }
+      }
+      public function empcheckin()
+      {
+                      $data=Input::except(array('_token'));
+                      $email=Input::get('email');
+                      $password=Input::get('password');
+                      $usertype=Input::get('usertype');
+                      $now = new DateTime();
+                      $rule=array(
+                        'email'=>'required',
+                        'password'=>'required',
+                      );
+                      $validator=Validator::make($data,$rule);
 
-                                 Auth::logout();
-                                 return Redirect::to('employeecheckin')->with('success','Successfully Checked In'); */
+                          if($validator->fails())
+                          {
+                              return Redirect::to('employeecheckin')->withErrors($validator);
+                          }
+                          else
+                          {   if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
+                              {  if(Auth::user()->status=="0")
+                                {
+                                  $employee = DB::table('employeetable')->where('email', $email)->first();
+                                  DB::update('update employeetable set status=1 where email=? and status=0',[$email]);
+                                  DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                                                                       phonenumber,emp_dept,emp_designation,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?)'
+                                                                       ,["Employee",$employee->name,$employee->gender,$employee->age,$employee->email,
+                                                                         $employee->phonenumber,$employee->dept,$employee->designation,$now,$now,"1"]);
+                                  DB::update('update register_users set status=1 where email=? and status=0',[$email]);
+                                  Auth::logout();
+                                  return Redirect::to('employeecheckin')->with('success','Welcome You have Successfully Checked In!!!');
+                                }
+                                elseif (Auth::user()->status=="1")
+                                {
+                                      Auth::logout();
+                                      return Redirect::to('employeecheckin')->with('failed','You have already checked in!!!Checkout and Try again!!!');
+                                }
                               }
                               else
                               {
                                 return Redirect::to('employeecheckin')->with('failed','Incorrect Employee Data');
                               }
                             }
-                      }
       }
 
 }
