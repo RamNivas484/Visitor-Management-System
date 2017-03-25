@@ -74,13 +74,12 @@
                   <li><a href="employee_editprofile"><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
                   <li><a href="employee_pvreq"><i class="glyphicon glyphicon-time"></i> Personal Visit Requests</a></li>
                   <li><a href=""><i class="glyphicon glyphicon-plus"></i> Accepted Personal Visits </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-time"></i> Official Visit Requests</a></li>
+                  <li><a href="employee_ovreq"><i class="glyphicon glyphicon-time"></i> Official Visit Requests</a></li>
                   <li><a href=""><i class="glyphicon glyphicon-plus"></i> Accepted Official Visits </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Visitor's Log </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-th-list"></i> My Entry Log </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-search"></i> Check Admin Availability </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
+                  <li><a href="empvisitorlog"><i class="glyphicon glyphicon-th-list"></i> My Visitor's Log </a></li>
+                  <li><a href="employeelog"><i class="glyphicon glyphicon-th-list"></i> My Entry Log </a></li>
+                  <li><a href="employeecheckavailability"><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
+                  <li><a href="employeechangepassword"><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-ban-circle"></i> Request Ban Visitor </a></li>
                 </ul>
               </div>

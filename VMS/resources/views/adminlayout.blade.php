@@ -69,7 +69,8 @@
               <div class="panel-heading">Operations</div>
               <div class="panel-body">
                 <ul class="nav" id="side-menu">
-                  <li><a href="adminhomepage"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+                  <li><a href="adminhomepage"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                  <li><a href=""><i class="glyphicon glyphicon-th-large"></i> Dashboard</a></li>
                   <li><a href="adminadduser"><i class="glyphicon glyphicon-plus"></i> Add User </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-ban-circle"></i> Ban Requests </a></li>
                   <li><a href=""><i class="glyphicon glyphicon-minus"></i> Remove Visitor </a></li>

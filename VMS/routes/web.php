@@ -20,7 +20,11 @@ Route::get('adminlogin', function () {
 Route::get('visitorchangepassword', function () {
     return view('visitor.changepassword');
 });
+Route::get('employeechangepassword', function () {
+    return view('employee.changepassword');
+});
 Route::get('visitorlog','visitorcontroller@visitorlog');
+Route::get('employeelog','employeecontroller@employeelog');
 
 Route::get('bookingstatus','visitorcontroller@bookingstatus');
 
@@ -43,6 +47,9 @@ Route::get('/visitorhomepage', function () {
 });
 Route::get('/visitorcheckavailability', function () {
     return view('visitor.visitorcheckavailability');
+});
+Route::get('/employeecheckavailability', function () {
+    return view('employee.employeecheckavailability');
 });
 Route::get('/adminhomepage', function () {
     return view('admin.adminhomepage');
@@ -74,7 +81,9 @@ Route::get('/visitorfindempdept','visitorcontroller@findempdept');
 Route::get('/visitorfindempavailability','visitorcontroller@findempavailability');
 Route::get('/visitorfindempemail','visitorcontroller@findempmail');
 Route::get('/employee_pvreq','employeecontroller@findemppvrequests');
+Route::get('/employee_ovreq','employeecontroller@findempovrequests');
 Route::get('/visitorprofile','visitorcontroller@visitorprofile');
+Route::get('/empvisitorlog','employeecontroller@empvisitorlog');
 Route::get('/employeeprofile','employeecontroller@employeeprofile');
 Route::post('/visitoreditprofile','visitorcontroller@visitoreditprofile');
 Route::post('/employeeeditprofile','employeecontroller@employeeeditprofile');
@@ -89,6 +98,7 @@ Route::post('/visitor_checkout','RegisterController@checkout');
 Route::post('/employee_checkout','RegisterController@checkout');
 Route::post('/visitor_checkin','RegisterController@visitorcheckin');
 Route::post('/visitor_changepassword','visitorcontroller@visitorchangepassword');
+Route::post('/employee_changepassword','employeecontroller@employeechangepassword');
 Route::post('/visitorbooking','visitorcontroller@visitorbooking');
 Route::post('/adminadduser','admincontroller@adduser');
 Route::post('/visitorchangepassword','admincontroller@adduser');

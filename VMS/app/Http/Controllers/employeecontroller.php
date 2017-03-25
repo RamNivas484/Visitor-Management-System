@@ -4,24 +4,45 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\employeemodel;
+use App\checkinmodel;
 use App\bookingmodel;
 use Validator;
 use Input;
 use DB;
 use Redirect;
 use Auth;
+use Hash;
 class employeecontroller extends Controller
 {
   public function employeeprofile(Request $request)
   {
-    $employee=employeemodel::all();
+    $ov=bookingmodel::select('visitorname','visitorphonenumber','compname','designation','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Official Visit")->get();
     return view('employee.employeeprofile',compact('employee'));
+  }
+  public function empvisitorlog(Request $request)
+  {
+    $employeevisitorlog=checkinmodel::select('visitortype','name','phonenumber','comp_name','comp_designation','checkintime','checkouttime','status')->where('visit_emp_name',Auth::user()->name)->get();
+    return view('employee.employeevisitorlog',compact('employeevisitorlog'));
+
+
   }
   public function findemppvrequests(Request $request)
   {
-    $pv=bookingmodel::select('visitoremail','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Personal Visit")->get();
+    $employeevisitlog=bookingmodel::select('visitorname','visitorphonenumber','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Personal Visit")->get();
+    return view('employee.employeepersonalvisitbookrequest',compact('employeevisitlog'));
+  }
+  public function findempovrequests(Request $request)
+  {
+    $ov=bookingmodel::select('visitorname','visitorphonenumber','compname','designation','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Official Visit")->get();
 
-    return view('employee.employeepersonalvisitbookrequest',compact('pv'));
+    return view('employee.employeeofficialvisitbookrequest',compact('ov'));
+  }
+  public function employeelog(Request $request)
+  {
+         $email=Auth::user()->email;
+
+         $employeelog=checkinmodel::select('checkintime','checkouttime')->where('email',$email)->get();
+         return view('employee.employeelog',compact('employeelog'));
   }
   public function employeeeditprofile(Request $request)
   { $data=Input::except(array('_token'));
@@ -71,5 +92,43 @@ class employeecontroller extends Controller
        DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
        return Redirect::to('employee_editprofile')->with('success','You Have Successfully Edited Your Profile!!!');
     }
+  }
+  public function employeechangepassword(Request $request)
+  {
+    $data=Input::except(array('_token'));
+      $rule=array(
+        'employeeoldpassword'=>'required',
+        'employeenewpassword'=>'required',
+        'employeeconfirmpassword'=>'required|same:employeenewpassword',
+
+      );
+      $message=array(
+        'employeenewpassword.required'=>'Enter New Password',
+        'employeenewpassword.same'=>'New Password and Confirm password field donot match',
+        'employeeoldpassword.required'=>'Enter Old Password',
+        'employeeconfirmpassword.required'=>'Enter The new password again',
+
+      );
+      $validator=Validator::make($data,$rule,$message);
+      $oldpassword = $request->input('employeeoldpassword');
+      $newpassword = $request->input('employeenewpassword');
+      $confirmpassword = $request->input('employeeconfirmpassword');
+      $hashed=Hash::make($newpassword);
+      if($validator->fails())
+      {
+        return view('employee.changepassword')->withErrors($validator);
+      }
+      else
+      { if (Hash::check($oldpassword, Auth::user()->password))
+        {
+          DB::update('update register_users set password=? where email=?',[$hashed,Auth::user()->email]);
+          return Redirect::to('employeechangepassword')->with('success','You have changed your Password!!!');
+        }
+        else
+        {
+            return Redirect::to('employeechangepassword')->with('failed','Incorrect old Password!!!');
+        }
+
+      }
   }
 }
