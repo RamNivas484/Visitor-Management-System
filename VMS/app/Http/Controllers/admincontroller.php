@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\visitormodel;
 use App\employeemodel;
+use App\checkinmodel;
 use App\adminmodel;
 use App\Register;
 use Redirect;
@@ -143,4 +144,26 @@ class admincontroller extends Controller
         }
       }
     }
+    public static function admindashboard()
+    {
+        $visitor=checkinmodel::select('name')->where('usertype',"Visitor")->where('status',"1")->count();
+        $employee=checkinmodel::select('name')->where('usertype',"Employee")->where('status',"1")->count();
+        $admin=checkinmodel::select('name')->where('usertype',"Administrator")->where('status',"1")->count();
+        return view('admin.admindashboard',compact('visitor','employee','admin'));
+    }
+    public static function visitorlist()
+    {
+        $visitor=visitormodel::select('name','gender','age','email','phonenumber','comp_name','comp_dept','comp_designation','comp_location','comp_website','status','ban','count')->get();
+        return view('admin.visitorlist',compact('visitor'));
+    }
+    public static function employeelist()
+    {   $employee=employeemodel::select('empid','name','gender','age','email','phonenumber','homephonenumber','address','city','postalcode','education','dept','designation','salary','status')->get();
+        return view('admin.employeelist',compact('employee'));
+    }
+    public static function adminlist()
+    {
+      $admin=adminmodel::select('adminid','name','gender','age','email','phonenumber','homephonenumber','address','city','postalcode','education','dept','designation','salary','status')->get();
+          return view('admin.adminlist',compact('admin'));
+    }
+
 }

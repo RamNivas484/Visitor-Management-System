@@ -301,23 +301,30 @@ class RegisterController extends Controller
                       }
                       elseif ($usertype=='Administrator')
                       {
-                          if($validator->fails())
+                        if($validator->fails())
                           {
-                              return Redirect::to('adminlogin')->withErrors($validator);
+                          return Redirect::to('admincheckout')->withErrors($validator);
                           }
                           else
                           {
-                              //$data=Input::except(array('_token'));
-
                               if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
-                              //if(Auth::attempt($userdata))
                               {
-                                  return Redirect::to('adminhomepage');
-                              //  return Redirect::to('/home');
+                                 if(Auth::user()->status=="1")
+                                 {  DB::update('update register_users set status=0 where email=? and status=1',[$email]);
+                                    DB::update('update admintable set status=0 where email=? and status=?',[$email,'1']);
+                                    DB::update('update checkedintable set status=0,checkouttime=? where email=? and status=?',[$now,$email,'1']);
+                                    Auth::logout();
+                                    return Redirect::to('admincheckout')->with('success','Thank you for visiting you have successfully checked out!!!');
+                                 }
+                                 else
+                                 {
+                                    Auth::logout();
+                                    return Redirect::to('admincheckout')->with('failed','Sorry,you have never checked in!!!');
+                                 }
                               }
                               else
                               {
-                                return Redirect::to('adminlogin')->with('success','Incorrect Admin Data');
+                                    return Redirect::to('admincheckout')->with('failed','Incorrect Administrator Data');
                               }
                             }
                       }
@@ -391,6 +398,49 @@ class RegisterController extends Controller
                               else
                               {
                                 return Redirect::to('employeecheckin')->with('failed','Incorrect Employee Data');
+                              }
+                            }
+      }
+      public function admincheckin()
+      {
+                      $data=Input::except(array('_token'));
+                      $email=Input::get('email');
+                      $password=Input::get('password');
+                      $usertype=Input::get('usertype');
+                      $now = new DateTime();
+                      $rule=array(
+                        'email'=>'required',
+                        'password'=>'required',
+                      );
+                      $validator=Validator::make($data,$rule);
+
+                          if($validator->fails())
+                          {
+                              return Redirect::to('admincheckin')->withErrors($validator);
+                          }
+                          else
+                          {   if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
+                              {  if(Auth::user()->status=="0")
+                                {
+                                  $admin = DB::table('admintable')->where('email', $email)->first();
+                                  DB::update('update admintable set status=1 where email=? and status=0',[$email]);
+                                  DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                                                                       phonenumber,emp_dept,emp_designation,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?)'
+                                                                       ,["Administrator",$admin->name,$admin->gender,$admin->age,$admin->email,
+                                                                         $admin->phonenumber,$admin->dept,$admin->designation,$now,$now,"1"]);
+                                  DB::update('update register_users set status=1 where email=? and status=0',[$email]);
+                                  Auth::logout();
+                                  return Redirect::to('admincheckin')->with('success','Welcome You have Successfully Checked In!!!');
+                                }
+                                elseif (Auth::user()->status=="1")
+                                {
+                                      Auth::logout();
+                                      return Redirect::to('admincheckin')->with('failed','You have already checked in!!!Checkout and Try again!!!');
+                                }
+                              }
+                              else
+                              {
+                                return Redirect::to('admincheckin')->with('failed','Incorrect Administrator Data');
                               }
                             }
       }

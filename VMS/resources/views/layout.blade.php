@@ -56,7 +56,14 @@
             <li><a href="{{URL::to('employeecheckout')}}">Check Out</a></li>
           </ul>
         </li>
-        <li><a href="{{URL::to('adminlogin')}}">Administrator</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrator<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{URL::to('adminlogin')}}">Login</a></li>
+            <li><a href="{{URL::to('admincheckin')}}">Check In</a></li>
+            <li><a href="{{URL::to('admincheckout')}}">Check Out</a></li>
+          </ul>
+        </li>
       </ul>
       </ul>
 @endif

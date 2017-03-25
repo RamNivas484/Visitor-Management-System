@@ -14,6 +14,8 @@ Route::get('visitorlogin', function () {
 Route::get('visitorregisterandcheckin', function () {
     return view('visitor.registerandcheckin');
 });
+
+
 Route::get('adminlogin', function () {
     return view('admin.adminlogin');
 });
@@ -36,8 +38,14 @@ Route::get('employeelogin', function () {
 Route::get('employeecheckin', function () {
     return view('employee.empcheckin');
 });
+Route::get('admincheckin', function () {
+    return view('admin.admincheckin');
+});
 Route::get('employeecheckout', function () {
     return view('employee.employeecheckout');
+});
+Route::get('admincheckout', function () {
+    return view('admin.admincheckout');
 });
 Route::get('adminadduser', function () {
     return view('admin.adminadduser');
@@ -85,6 +93,12 @@ Route::get('/employee_ovreq','employeecontroller@findempovrequests');
 Route::get('/visitorprofile','visitorcontroller@visitorprofile');
 Route::get('/empvisitorlog','employeecontroller@empvisitorlog');
 Route::get('/employeeprofile','employeecontroller@employeeprofile');
+Route::get('/admindashboard','admincontroller@admindashboard');
+
+Route::get('/visitorlist','admincontroller@visitorlist');
+Route::get('/employeelist','admincontroller@employeelist');
+Route::get('/adminlist','admincontroller@adminlist');
+
 Route::post('/visitoreditprofile','visitorcontroller@visitoreditprofile');
 Route::post('/employeeeditprofile','employeecontroller@employeeeditprofile');
 Route::post('/register_action','RegisterController@store');
@@ -93,15 +107,19 @@ Route::post('/visitorlogin_check','RegisterController@login');
 Route::post('/adminlogin_check','RegisterController@login');
 Route::post('/employeelogin_check','RegisterController@login');
 Route::post('/employeecheckin_check','RegisterController@empcheckin');
+Route::post('/admincheckin_check','RegisterController@admincheckin');
 //Route::post('/employeecheckin_check','RegisterController@checkin');
 Route::post('/visitor_checkout','RegisterController@checkout');
 Route::post('/employee_checkout','RegisterController@checkout');
+Route::post('/admin_checkout','RegisterController@checkout');
+
 Route::post('/visitor_checkin','RegisterController@visitorcheckin');
 Route::post('/visitor_changepassword','visitorcontroller@visitorchangepassword');
 Route::post('/employee_changepassword','employeecontroller@employeechangepassword');
 Route::post('/visitorbooking','visitorcontroller@visitorbooking');
 Route::post('/adminadduser','admincontroller@adduser');
-Route::post('/visitorchangepassword','admincontroller@adduser');
+
+
 
 Route::get('/logout',function () {
     Auth::logout();
