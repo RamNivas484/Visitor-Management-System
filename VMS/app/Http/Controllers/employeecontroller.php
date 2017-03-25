@@ -16,7 +16,7 @@ class employeecontroller extends Controller
 {
   public function employeeprofile(Request $request)
   {
-    $ov=bookingmodel::select('visitorname','visitorphonenumber','compname','designation','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Official Visit")->get();
+    $employee=employeemodel::all();
     return view('employee.employeeprofile',compact('employee'));
   }
   public function empvisitorlog(Request $request)
@@ -28,14 +28,25 @@ class employeecontroller extends Controller
   }
   public function findemppvrequests(Request $request)
   {
-    $employeevisitlog=bookingmodel::select('visitorname','visitorphonenumber','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Personal Visit")->get();
-    return view('employee.employeepersonalvisitbookrequest',compact('employeevisitlog'));
+    $pv=bookingmodel::select('id','visitorname','visitorphonenumber','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Personal Visit")->where('staus',"Pending")->get();
+    return view('employee.employeepersonalvisitbookrequest',compact('pv'));
   }
   public function findempovrequests(Request $request)
   {
-    $ov=bookingmodel::select('visitorname','visitorphonenumber','compname','designation','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Official Visit")->get();
+    $ov=bookingmodel::select('id','visitorname','visitorphonenumber','compname','designation','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Official Visit")->where('staus',"Pending")->get();
 
     return view('employee.employeeofficialvisitbookrequest',compact('ov'));
+  }
+  public function acceptedpersonalvisits(Request $request)
+  {
+    $pv=bookingmodel::select('id','visitorname','visitorphonenumber','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Personal Visit")->where('staus',"Approved")->get();
+    return view('employee.acceptedpersonalvisits',compact('pv'));
+  }
+  public function acceptedofficialvisits(Request $request)
+  {
+    $ov=bookingmodel::select('id','visitorname','visitorphonenumber','compname','designation','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Official Visit")->where('staus',"Approved")->get();
+
+    return view('employee.acceptedofficialvisits',compact('ov'));
   }
   public function employeelog(Request $request)
   {

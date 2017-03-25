@@ -90,6 +90,10 @@ Route::get('/visitorfindempavailability','visitorcontroller@findempavailability'
 Route::get('/visitorfindempemail','visitorcontroller@findempmail');
 Route::get('/employee_pvreq','employeecontroller@findemppvrequests');
 Route::get('/employee_ovreq','employeecontroller@findempovrequests');
+
+Route::get('acceptedpersonalvisits','employeecontroller@acceptedpersonalvisits');
+Route::get('acceptedofficialvisits','employeecontroller@acceptedofficialvisits');
+
 Route::get('/visitorprofile','visitorcontroller@visitorprofile');
 Route::get('/empvisitorlog','employeecontroller@empvisitorlog');
 Route::get('/employeeprofile','employeecontroller@employeeprofile');
@@ -119,7 +123,20 @@ Route::post('/employee_changepassword','employeecontroller@employeechangepasswor
 Route::post('/visitorbooking','visitorcontroller@visitorbooking');
 Route::post('/adminadduser','admincontroller@adduser');
 
-
+Route::get('employee/{officialvisitorid}/acceptofficialvisit', ['as' => 'acceptofficialvisit', 'uses' => 'bookingcontroller@acceptofficialvisit']);
+Route::get('employee/{officialvisitorid}/rejectofficialvisit', ['as' => 'rejectofficialvisit', 'uses' => 'bookingcontroller@rejectofficialvisit']);
+Route::get('employee/{personalvisitorid}/acceptpersonalvisit', ['as' => 'acceptpersonalvisit', 'uses' => 'bookingcontroller@acceptpersonalvisit']);
+Route::get('employee/{personalvisitorid}/rejectpersonalvisit', ['as' => 'rejectpersonalvisit', 'uses' => 'bookingcontroller@rejectpersonalvisit']);
+/*
+Route::post('rejectofficialvisitupdate','bookingcontroller@rejectofficialvisitupdate');
+Route::post('acceptofficialvisitupdate','bookingcontroller@acceptofficialvisitupdate');
+Route::post('rejectpersonalvisitupdate','bookingcontroller@rejectpersonalvisitupdate');
+Route::post('acceptpersonalvisitupdate','bookingcontroller@acceptpersonalvisitupdate');
+*/
+Route::post('employee/{officialvisitorid}/rejectofficialvisitupdate', ['as' => 'rejectofficialvisitupdate', 'uses' => 'bookingcontroller@rejectofficialvisitupdate']);
+Route::post('employee/{officialvisitorid}/acceptofficialvisitupdate', ['as' => 'acceptofficialvisitupdate', 'uses' => 'bookingcontroller@acceptofficialvisitupdate']);
+Route::post('employee/{personalvisitorid}/rejectpersonalvisitupdate', ['as' => 'rejectpersonalvisitupdate', 'uses' => 'bookingcontroller@rejectpersonalvisitupdate']);
+Route::post('employee/{personalvisitorid}/acceptpersonalvisitupdate', ['as' => 'acceptpersonalvisitupdate', 'uses' => 'bookingcontroller@acceptpersonalvisitupdate']);
 
 Route::get('/logout',function () {
     Auth::logout();

@@ -27,7 +27,7 @@
                             <th>No.Of Hours</th>
                             <th>Other info</th>
                             <th>Status</th>
-                            <th>Action</th>
+
                             </thead>
                             <tbody>
                             @foreach($ov as $officialvisitor)
@@ -51,9 +51,6 @@
                             <?php elseif((strcmp($status,"Rejected"))==0): ?>
                             <td>Rejected</td>
                             <?php endif; ?>
-                            <td><a href="{{ route('acceptofficialvisit', $officialvisitor->id) }}" class="btn btn-success btn-sm">Accept </a>||
-
-								                <a href="{{ route('rejectofficialvisit', $officialvisitor->id) }}" class="btn btn-danger btn-sm">Reject</a></td>
 
                             </tr>
                             @endforeach

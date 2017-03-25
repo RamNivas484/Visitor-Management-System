@@ -4,7 +4,7 @@
 @section('content')
 
                         <div class="panel-heading">
-                             <h3>Your Official Visit Book Requests</h3>
+                             <h3>Your Personal Visit Book Requests</h3>
                         </div>
                         <div class="panel-body">
                           @if(Session::has('success'))
@@ -20,29 +20,25 @@
                             <thead>
                             <th>Visitor Name</th>
                             <th>Phone Number</th>
-                            <th>Company Name</th>
-                            <th>Designation</th>
                             <th>Date</th>
                             <th>From</th>
                             <th>No.Of Hours</th>
                             <th>Other info</th>
                             <th>Status</th>
-                            <th>Action</th>
+
                             </thead>
                             <tbody>
-                            @foreach($ov as $officialvisitor)
+                            @foreach($pv as $personalvisitor)
                             <tr>
 
-                            <td>{{$officialvisitor->visitorname}}</td>
-                            <td>{{$officialvisitor->visitorphonenumber}}</td>
-                            <td>{{$officialvisitor->compname}}</td>
-                            <td>{{$officialvisitor->designation}}</td>
-                            <td>{{$officialvisitor->date}}</td>
-                            <td>{{$officialvisitor->from}}</td>
-                            <td>{{$officialvisitor->noofhours}}</td>
-                            <td>{{$officialvisitor->otherinfo}}</td>
+                            <td>{{$personalvisitor->visitorname}}</td>
+                            <td>{{$personalvisitor->visitorphonenumber}}</td>
+                            <td>{{$personalvisitor->date}}</td>
+                            <td>{{$personalvisitor->from}}</td>
+                            <td>{{$personalvisitor->noofhours}}</td>
+                            <td>{{$personalvisitor->otherinfo}}</td>
                             <?php
-                                             $status = $officialvisitor->staus;
+                                             $status = $personalvisitor->staus;
                                              if((strcmp($status,"Pending"))==0):
                             ?>
                             <td>Pending</td>
@@ -50,10 +46,7 @@
                             <td>Approved</td>
                             <?php elseif((strcmp($status,"Rejected"))==0): ?>
                             <td>Rejected</td>
-                            <?php endif; ?>
-                            <td><a href="{{ route('acceptofficialvisit', $officialvisitor->id) }}" class="btn btn-success btn-sm">Accept </a>||
-
-								                <a href="{{ route('rejectofficialvisit', $officialvisitor->id) }}" class="btn btn-danger btn-sm">Reject</a></td>
+                              <?php endif; ?>
 
                             </tr>
                             @endforeach
