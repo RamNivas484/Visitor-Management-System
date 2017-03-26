@@ -7,6 +7,8 @@ use Input;
 use Validator;
 use Redirect;
 use App\Register;
+use App\bookingmodel;
+use App\visitormodel;
 use Auth;
 use DB;
 use DateTime;
@@ -442,6 +444,92 @@ class RegisterController extends Controller
                               {
                                 return Redirect::to('admincheckin')->with('failed','Incorrect Administrator Data');
                               }
+                            }
+      }
+
+      public function bookedcheckin(Request $request)
+      {
+                      $data=Input::except(array('_token'));
+                      $bookingid=Input::get('bookingid');
+                      $visitoremail=Input::get('visitoremail');
+                      $password=Input::get('password');
+                      $usertype=Input::get('usertype');
+                      $belongings=Input::get('belongings');
+                      $vehicle_number=Input::get('vehicle_number');
+                      $now = new DateTime();
+                      $rule=array(
+                        'visitoremail'=>'required',
+                        'bookingid'=>'required',
+                        'password'=>'required',
+                      );
+                      $validator=Validator::make($data,$rule);
+
+                          if($validator->fails())
+                          {
+                              return Redirect::to('bookedcheckin')->withErrors($validator);
+                          }
+                          else
+                          {
+                            if (bookingmodel::where('id',$bookingid)->where('visitoremail',$visitoremail)->where('staus',"Approved")->exists())
+                            {    $bookingdata=bookingmodel::select('id','visitoremail','visitortype','empname','empdept','staus')->where('id',$bookingid)->where('visitoremail',$visitoremail)->where('staus',"Approved")->first();
+                                 $visitordata=visitormodel::select('name','gender','age','phonenumber','email','comp_name','comp_dept','comp_designation','comp_location','comp_website','status','count')->where('email',$visitoremail)->first();
+                                 $count=$visitordata->count+1;
+                                 if($visitordata->status=="1")
+                                 return Redirect::to('bookedcheckin')->with('failed','You have already checked in Please check out and try again!!!');
+                                 else
+                                 {
+                                   if(Auth::attempt(['email' => $visitoremail, 'password' => $password, 'usertype' => "Visitor"]))
+                                   {    DB::update('update visitortable set status=1,count=? where email=? and status=?',[$count,$visitoremail,'0']);
+                                        DB::update('update register_users set status=1 where email=? and status=?',[$visitoremail,'0']);
+                                        DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                                                                            phonenumber,visitortype,comp_name,comp_dept,comp_designation,
+                                                                            comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
+                                                                            vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+                                                                            ,["Visitor",$visitordata->name,$visitordata->gender,$visitordata->age,$visitordata->email,
+                                                                              $visitordata->phonenumber,$bookingdata->visitortype,$visitordata->comp_name,$visitordata->comp_dept,$visitordata->comp_designation,
+                                                                              $visitordata->comp_location,$visitordata->comp_website,$bookingdata->empdept,$bookingdata->empname,$belongings,
+                                                                              $vehicle_number,$now,$now,"1"]);
+                                        Auth::logout();
+                                        return Redirect::to('bookedcheckin')->with('success','Welcome You have Successfully checked In with your booking details!!!');
+
+                                   }
+                                   else
+                                   {
+                                       return Redirect::to('bookedcheckin')->with('failed','Incorrect Email or Password!!!');
+                                   }
+                                 }
+
+                            }
+                            else
+                            {
+                              return Redirect::to('bookedcheckin')->with('failed','You Never booked a Employee!!Please Verify your Entered Details!!!');
+                            }
+
+
+
+                 /* if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
+                              {  if(Auth::user()->status=="0")
+                                {
+                                  $employee = DB::table('employeetable')->where('email', $email)->first();
+                                  DB::update('update employeetable set status=1 where email=? and status=0',[$email]);
+                                  DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                                                                       phonenumber,emp_dept,emp_designation,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?)'
+                                                                       ,["Employee",$employee->name,$employee->gender,$employee->age,$employee->email,
+                                                                         $employee->phonenumber,$employee->dept,$employee->designation,$now,$now,"1"]);
+                                  DB::update('update register_users set status=1 where email=? and status=0',[$email]);
+                                  Auth::logout();
+                                  return Redirect::to('employeecheckin')->with('success','Welcome You have Successfully Checked In!!!');
+                                }
+                                elseif (Auth::user()->status=="1")
+                                {
+                                      Auth::logout();
+                                      return Redirect::to('employeecheckin')->with('failed','You have already checked in!!!Checkout and Try again!!!');
+                                }
+                              }
+                              else
+                              {
+                                return Redirect::to('employeecheckin')->with('failed','Incorrect Employee Data');
+                              }*/
                             }
       }
 

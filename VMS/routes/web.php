@@ -5,6 +5,9 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 });
+Route::get('/bookedcheckin', function () {
+    return view('bookedcheckin');
+});
 Route::get('/login', function () {
     return view('login');
 });
@@ -138,6 +141,7 @@ Route::post('employee/{officialvisitorid}/acceptofficialvisitupdate', ['as' => '
 Route::post('employee/{personalvisitorid}/rejectpersonalvisitupdate', ['as' => 'rejectpersonalvisitupdate', 'uses' => 'bookingcontroller@rejectpersonalvisitupdate']);
 Route::post('employee/{personalvisitorid}/acceptpersonalvisitupdate', ['as' => 'acceptpersonalvisitupdate', 'uses' => 'bookingcontroller@acceptpersonalvisitupdate']);
 
+Route::post('/bookedcheckin','RegisterController@bookedcheckin');
 Route::get('/logout',function () {
     Auth::logout();
     return Redirect::to('');

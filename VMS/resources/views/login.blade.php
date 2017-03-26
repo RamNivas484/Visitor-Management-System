@@ -5,8 +5,17 @@
 @if(Session::has('success'))
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <div class="alert alert-danger">
+    <div class="alert alert-success">
       {{Session::get('success')}}
+    </div>
+  </div>
+</div>
+@endif
+@if(Session::has('failed'))
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="alert alert-danger">
+      {{Session::get('failed')}}
     </div>
   </div>
 </div>
