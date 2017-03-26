@@ -39,12 +39,12 @@ class employeecontroller extends Controller
   }
   public function acceptedpersonalvisits(Request $request)
   {
-    $pv=bookingmodel::select('id','visitorname','visitorphonenumber','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Personal Visit")->where('staus',"Approved")->get();
+    $pv=bookingmodel::select('id','visitorname','visitorphonenumber','date','from','noofhours','otherinfo','employeeinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Personal Visit")->where('staus',"Approved")->get();
     return view('employee.acceptedpersonalvisits',compact('pv'));
   }
   public function acceptedofficialvisits(Request $request)
   {
-    $ov=bookingmodel::select('id','visitorname','visitorphonenumber','compname','designation','date','from','noofhours','otherinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Official Visit")->where('staus',"Approved")->get();
+    $ov=bookingmodel::select('id','visitorname','visitorphonenumber','compname','designation','date','from','noofhours','otherinfo','employeeinfo','staus')->where('empmail',Auth::user()->email)->where('visitortype',"Official Visit")->where('staus',"Approved")->get();
 
     return view('employee.acceptedofficialvisits',compact('ov'));
   }

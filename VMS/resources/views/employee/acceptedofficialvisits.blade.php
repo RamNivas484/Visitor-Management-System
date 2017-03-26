@@ -10,7 +10,7 @@
                           @if(Session::has('success'))
                           <div class="row">
                             <div class="col-md-8 col-md-offset-2">
-                              <div class="alert alert-danger">
+                              <div class="alert alert-success">
                                 {{Session::get('success')}}
                               </div>
                             </div>
@@ -25,7 +25,8 @@
                             <th>Date</th>
                             <th>From</th>
                             <th>No.Of Hours</th>
-                            <th>Other info</th>
+                            <th>Vistor Info</th>
+                            <th>Your info</th>
                             <th>Status</th>
 
                             </thead>
@@ -41,6 +42,7 @@
                             <td>{{$officialvisitor->from}}</td>
                             <td>{{$officialvisitor->noofhours}}</td>
                             <td>{{$officialvisitor->otherinfo}}</td>
+                            <td>{{$officialvisitor->employeeinfo}}</td>
                             <?php
                                              $status = $officialvisitor->staus;
                                              if((strcmp($status,"Pending"))==0):

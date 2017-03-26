@@ -11,8 +11,8 @@
                           <table class="table table-hover">
                             <thead>
                             <th>Visit Type</th>
-                            <th>Employee Dept</th>
                             <th>Employee Name</th>
+                            <th>Employee Dept</th>
                             <th>Date</th>
                             <th>From Time</th>
                             <th>No Of Hours</th>

@@ -39,27 +39,27 @@ class bookingcontroller extends Controller
 
     }
     public function rejectofficialvisitupdate(Request $request)
-    {  $otherinfo=$request->input('otherinfo');
+    {  $employeeinfo=$request->input('employeeinfo');
        $id=$request->input('id');
-       DB::update('update bookingtable set otherinfo=?,staus="Rejected" where id=?',[$otherinfo,$id]);
+       DB::update('update bookingtable set employeeinfo=?,staus="Rejected" where id=?',[$employeeinfo,$id]);
        return Redirect::to('employee_ovreq')->with('success','Successfully Rejected Official Visit Request!!!');
     }
     public function rejectpersonalvisitupdate(Request $request)
-    {  $otherinfo=$request->input('otherinfo');
+    {  $employeeinfo=$request->input('employeeinfo');
        $id=$request->input('id');
-       DB::update('update bookingtable set otherinfo=?,staus="Rejected" where id=?',[$otherinfo,$id]);
+       DB::update('update bookingtable set employeeinfo=?,staus="Rejected" where id=?',[$employeeinfo,$id]);
        return Redirect::to('employee_pvreq')->with('success','Successfully Rejected Personal Visit Request!!!');
     }
     public function acceptofficialvisitupdate(Request $request)
-    {  $otherinfo=$request->input('otherinfo');
+    {  $employeeinfo=$request->input('employeeinfo');
        $id=$request->input('id');
-       DB::update('update bookingtable set otherinfo=?,staus="Approved" where id=?',[$otherinfo,$id]);
+       DB::update('update bookingtable set employeeinfo=?,staus="Approved" where id=?',[$employeeinfo,$id]);
        return Redirect::to('acceptedofficialvisits')->with('success','Successfully Accepted Official Book Request!!!');
     }
     public function acceptpersonalvisitupdate(Request $request)
-    {  $otherinfo=$request->input('otherinfo');
+    {  $employeeinfo=$request->input('employeeinfo');
        $id=$request->input('id');
-       DB::update('update bookingtable set otherinfo=?,staus="Approved" where id=?',[$otherinfo,$id]);
+       DB::update('update bookingtable set employeeinfo=?,staus="Approved" where id=?',[$employeeinfo,$id]);
        return Redirect::to('acceptedpersonalvisits')->with('success','Successfully Accepted Personal Book Request!!!');
     }
 }
