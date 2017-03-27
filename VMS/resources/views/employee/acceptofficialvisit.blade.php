@@ -9,7 +9,7 @@
                         <div class="panel-body">
                           <form class="form-horizontal" role="form" method="POST" action="acceptofficialvisitupdate">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                              <input type="text" class="form-control" name="id" value="{{Input::old('id', $booking->id) }}">
+                              <input type="hidden" class="form-control" name="id" value="{{Input::old('id', $booking->id) }}">
                               <input type="hidden" class="form-control" name="visitoremail" value="{{Input::old('visitoremail', $booking->visitoremail) }}">
                               <input type="hidden" class="form-control" name="visitorname" value="{{Input::old('visitorname', $booking->visitorname) }}">
                               <input type="hidden" class="form-control" name="visitorphonenumber" value="{{Input::old('visitorphonenumber', $booking->visitorphonenumber) }}">
