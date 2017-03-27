@@ -79,37 +79,47 @@ class RegisterController extends Controller
       {
           if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
           { if(Auth::user()->status=="0")
-            {   if(preg_match("/^[0-9]{10}$/",$email))
-                  $visitor = DB::table('visitortable')->where('phonenumber', $email)->first();
-                else
-                  $visitor = DB::table('visitortable')->where('email', $email)->first();
-                  $count=$visitor->count+1;
-                if(preg_match("/^[0-9]{10}$/", Auth::user()->email))
-                {    DB::update('update visitortable set status=1,count=? where phonenumber=? and status=?',[$count,$email,'0']);
-                     DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
-                     DB::insert('insert into checkedintable(usertype,name,gender,age,email,
-                                                            phonenumber,visitortype,comp_name,comp_dept,comp_designation,
-                                                            comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
-                                                            vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-                                                            ,["Visitor",$visitor->name,$visitor->gender,$visitor->age,"Visitor Dont Have Email",
-                                                              $visitor->phonenumber,$visiting_purpose,$visitor->comp_name,$visitor->comp_dept,$visitor->comp_designation,
-                                                              $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
-                                                              $vehicle_number,$now,$now,"1"]);
-                }
-                elseif(!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false)
-                {    DB::update('update visitortable set status=1,count=? where email=? and status=?',[$count,$email,'0']);
-                     DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
-                     DB::insert('insert into checkedintable(usertype,name,gender,age,email,
-                                                         phonenumber,visitortype,comp_name,comp_dept,comp_designation,
-                                                         comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
-                                                         vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-                                                         ,["Visitor",$visitor->name,$visitor->gender,$visitor->age,$visitor->email,
-                                                           $visitor->phonenumber,$visiting_purpose,$visitor->comp_name,$visitor->comp_dept,$visitor->comp_designation,
-                                                           $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
-                                                           $vehicle_number,$now,$now,"1"]);
-                }
-                Auth::logout();
-                return Redirect::to('visitorcheckin')->with('success','Welcome you have successfully checked in!!!');
+            {  if(Auth::user()->ban=="0")
+              {
+                if(preg_match("/^[0-9]{10}$/",$email))
+                   $visitor = DB::table('visitortable')->where('phonenumber', $email)->first();
+                 else
+                   $visitor = DB::table('visitortable')->where('email', $email)->first();
+                   $count=$visitor->count+1;
+                 if(preg_match("/^[0-9]{10}$/", Auth::user()->email))
+                 {    DB::update('update visitortable set status=1,count=? where phonenumber=? and status=?',[$count,$email,'0']);
+                      DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
+                      DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                                                             phonenumber,visitortype,comp_name,comp_dept,comp_designation,
+                                                             comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
+                                                             vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+                                                             ,["Visitor",$visitor->name,$visitor->gender,$visitor->age,"Visitor Dont Have Email",
+                                                               $visitor->phonenumber,$visiting_purpose,$visitor->comp_name,$visitor->comp_dept,$visitor->comp_designation,
+                                                               $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
+                                                               $vehicle_number,$now,$now,"1"]);
+                 }
+                 elseif(!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false)
+                 {    DB::update('update visitortable set status=1,count=? where email=? and status=?',[$count,$email,'0']);
+                      DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
+                      DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                                                          phonenumber,visitortype,comp_name,comp_dept,comp_designation,
+                                                          comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
+                                                          vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+                                                          ,["Visitor",$visitor->name,$visitor->gender,$visitor->age,$visitor->email,
+                                                            $visitor->phonenumber,$visiting_purpose,$visitor->comp_name,$visitor->comp_dept,$visitor->comp_designation,
+                                                            $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
+                                                            $vehicle_number,$now,$now,"1"]);
+                 }
+                 Auth::logout();
+                 return Redirect::to('visitorcheckin')->with('success','Welcome you have successfully checked in!!!');
+
+              }
+              else
+              { Auth::logout();
+                return Redirect::to('visitorcheckin')->with('failed','You are Banned!!!Contact Admin For more Information!!!');
+              }
+
+
             }
             elseif (Auth::user()->status=="1")
             {   Auth::logout();
@@ -145,8 +155,15 @@ class RegisterController extends Controller
                         //$data=Input::except(array('_token'));
                         if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
                         //if(Auth::attempt($userdata))
-                        {
-                          return Redirect::to('visitorhomepage');
+                        { if(Auth::user()->ban=="0")
+                          {
+                            return Redirect::to('visitorhomepage');
+                          }
+                          else
+                          { Auth::logout();
+                            return Redirect::to('visitorlogin')->with('success','You are Banned!!!Contact Admin For more Information!!!');
+                          }
+
                         }
                         else
                         {
@@ -471,17 +488,19 @@ class RegisterController extends Controller
                           else
                           {
                             if (bookingmodel::where('id',$bookingid)->where('visitoremail',$visitoremail)->where('staus',"Approved")->exists())
-                            {    $bookingdata=bookingmodel::select('id','visitoremail','visitortype','empname','empdept','staus')->where('id',$bookingid)->where('visitoremail',$visitoremail)->where('staus',"Approved")->first();
-                                 $visitordata=visitormodel::select('name','gender','age','phonenumber','email','comp_name','comp_dept','comp_designation','comp_location','comp_website','status','count')->where('email',$visitoremail)->first();
-                                 $count=$visitordata->count+1;
-                                 if($visitordata->status=="1")
-                                 return Redirect::to('bookedcheckin')->with('failed','You have already checked in Please check out and try again!!!');
-                                 else
-                                 {
-                                   if(Auth::attempt(['email' => $visitoremail, 'password' => $password, 'usertype' => "Visitor"]))
-                                   {    DB::update('update visitortable set status=1,count=? where email=? and status=?',[$count,$visitoremail,'0']);
-                                        DB::update('update register_users set status=1 where email=? and status=?',[$visitoremail,'0']);
-                                        DB::insert('insert into checkedintable(usertype,name,gender,age,email,
+                            {
+                              if(Auth::attempt(['email' => $visitoremail, 'password' => $password, 'usertype' => "Visitor"]))
+                              {
+                                 if(Auth::user()->ban=="0")
+                                 {    $bookingdata=bookingmodel::select('id','visitoremail','visitortype','empname','empdept','staus')->where('id',$bookingid)->where('visitoremail',$visitoremail)->where('staus',"Approved")->first();
+                                      $visitordata=visitormodel::select('name','gender','age','phonenumber','email','comp_name','comp_dept','comp_designation','comp_location','comp_website','status','count')->where('email',$visitoremail)->first();
+                                      $count=$visitordata->count+1;
+                                      if($visitordata->status=="1")
+                                        return Redirect::to('bookedcheckin')->with('failed','You have already checked in Please check out and try again!!!');
+
+                                      DB::update('update visitortable set status=1,count=? where email=? and status=?',[$count,$visitoremail,'0']);
+                                      DB::update('update register_users set status=1 where email=? and status=?',[$visitoremail,'0']);
+                                      DB::insert('insert into checkedintable(usertype,name,gender,age,email,
                                                                             phonenumber,visitortype,comp_name,comp_dept,comp_designation,
                                                                             comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
                                                                             vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
@@ -489,14 +508,21 @@ class RegisterController extends Controller
                                                                               $visitordata->phonenumber,$bookingdata->visitortype,$visitordata->comp_name,$visitordata->comp_dept,$visitordata->comp_designation,
                                                                               $visitordata->comp_location,$visitordata->comp_website,$bookingdata->empdept,$bookingdata->empname,$belongings,
                                                                               $vehicle_number,$now,$now,"1"]);
+                                        DB::delete('delete from bookingtable where id=?',[$bookingid]);
                                         Auth::logout();
                                         return Redirect::to('bookedcheckin')->with('success','Welcome You have Successfully checked In with your booking details!!!');
 
-                                   }
-                                   else
-                                   {
-                                       return Redirect::to('bookedcheckin')->with('failed','Incorrect Email or Password!!!');
-                                   }
+                                  }
+                                  else {
+                                    Auth::logout();
+                                    return Redirect::to('bookedcheckin')->with('failed','You are Banned!!!For More Information Contact Adminstrator!!!');
+                                  }
+
+
+                              }
+                                 else
+                                 {
+                                     return Redirect::to('bookedcheckin')->with('failed','Incorrect Email or Password!!!');
                                  }
 
                             }

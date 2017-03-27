@@ -15,6 +15,7 @@ use Redirect;
 use DB;
 use Auth;
 use Hash;
+use Mail;
 
 
 class visitorcontroller extends Controller
@@ -275,6 +276,7 @@ class visitorcontroller extends Controller
         );
         $validator=Validator::make($data,$rule,$message);
         $visitoremail=Auth::user()->email;
+        $visitorname=Auth::user()->name;
         $visittype= $request->input('visiting_purpose');
         $empdept= $request->input('emp_dept');
         $empname= $request->input('emp_name');
@@ -290,6 +292,13 @@ class visitorcontroller extends Controller
         else
         {
           bookingmodel::booking(Input::except(array('_token')));
+          Mail::send('mails.newbooking',['visitorname'=>$visitorname,'visitoremail'=>$visitoremail,'visittype'=>$visittype,
+                                                     'empname'=>$empname,'date'=>$date,'fromtime'=>$fromtime,
+                                                     'noofhours'=>$noofhours],function($message) use($empmail, $empname)
+          {
+            $message->to($empmail,$empname)->subject('New Book Request');
+          });
+
           return Redirect::to('visitorbooking')->with('success','Employee Booked Successfully!!! You will Receive Mail once your booking is accepted.Periodically Check Booking status for Other information.');
         }
     }

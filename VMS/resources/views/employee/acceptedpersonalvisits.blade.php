@@ -4,7 +4,7 @@
 @section('content')
 
                         <div class="panel-heading">
-                             <h3>Your Personal Visit Book Requests</h3>
+                             <h3>Accepted Personal Visits</h3>
                         </div>
                         <div class="panel-body">
                           @if(Session::has('success'))
