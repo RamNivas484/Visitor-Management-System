@@ -32,6 +32,7 @@ Route::get('visitorlog','visitorcontroller@visitorlog');
 Route::get('employeelog','employeecontroller@employeelog');
 
 Route::get('bookingstatus','visitorcontroller@bookingstatus');
+Route::get('employeebanvisitor','employeecontroller@employeebanvisitor');
 
 
 
@@ -142,6 +143,10 @@ Route::post('employee/{personalvisitorid}/rejectpersonalvisitupdate', ['as' => '
 Route::post('employee/{personalvisitorid}/acceptpersonalvisitupdate', ['as' => 'acceptpersonalvisitupdate', 'uses' => 'bookingcontroller@acceptpersonalvisitupdate']);
 
 Route::post('/bookedcheckin','RegisterController@bookedcheckin');
+
+Route::get('employee/{visitorid}/banvisitor', ['as' => 'banvisitor', 'uses' => 'employeecontroller@banvisitor']);
+Route::post('employee/{visitorid}/banconfirmed', ['as' => 'banconfirmed', 'uses' => 'employeecontroller@banconfirmed']);
+
 Route::get('/logout',function () {
     Auth::logout();
     return Redirect::to('');

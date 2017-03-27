@@ -80,7 +80,7 @@
                   <li><a href="employeelog"><i class="glyphicon glyphicon-th-list"></i> My Entry Log </a></li>
                   <li><a href="employeecheckavailability"><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
                   <li><a href="employeechangepassword"><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-ban-circle"></i> Request Ban Visitor </a></li>
+                  <li><a href="employeebanvisitor"><i class="glyphicon glyphicon-ban-circle"></i> Ban Visitor </a></li>
                 </ul>
               </div>
           </div>

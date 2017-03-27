@@ -26,9 +26,13 @@ class visitorcontroller extends Controller
     $email=Input::get('email');
 
 
-    if (visitormodel::where('phonenumber', '=', Input::get('phonenumber'))->exists())
+    if ($email!=""&&visitormodel::where('email', '=', Input::get('email'))->exists())
     {
-         //return Redirect::to('/justcheckinoutpage')->with('success','Already Registered Just Enter your Phone Number and Password to Checkin!!!');
+         return Redirect::to('/visitorcheckin')->with('success','Already Registered Just Enter Authentication details to Checkin!!!');
+    }
+    elseif ($email==""&&visitormodel::where('phonenumber', '=', Input::get('phonenumber'))->exists())
+    {
+         return Redirect::to('/visitorcheckin')->with('success','Already Registered Just Enter Details and Checkin!!!');
     }
     else
     {

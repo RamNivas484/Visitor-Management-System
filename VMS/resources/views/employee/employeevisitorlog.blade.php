@@ -25,7 +25,20 @@
                           <td>{{$el->comp_designation}}</td>
                           <td>{{$el->checkintime}}</td>
                           <td>{{$el->checkouttime}}</td>
-                          <td>{{$el->status}}</td>
+
+                          <?php
+                                           $status = $el->status;
+                                           if((strcmp($status,"1"))==0):
+                          ?>
+                          <td>IN Campus</td>
+                        <?php elseif((strcmp($status,"0"))==0): ?>
+                          <td>OFF Campus</td>
+                          <?php endif; ?>
+
+
+
+
+                          
                           </tr>
                           @endforeach
                           </tbody>

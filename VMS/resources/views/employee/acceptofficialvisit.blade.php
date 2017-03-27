@@ -1,8 +1,5 @@
 @extends('emplayout')
-
-
 @section('content')
-
                         <div class="panel-heading">
                              <h3>Accept Official Visit Request</h3>
                         </div>
