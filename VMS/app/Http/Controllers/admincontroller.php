@@ -8,9 +8,13 @@ use App\employeemodel;
 use App\checkinmodel;
 use App\adminmodel;
 use App\Register;
+use App\banmodel;
 use Redirect;
 use Input;
+use DB;
 use Validator;
+use DateTime;
+use Auth;
 class admincontroller extends Controller
 {
     public static function adduser()
@@ -151,19 +155,166 @@ class admincontroller extends Controller
         $admin=checkinmodel::select('name')->where('usertype',"Administrator")->where('status',"1")->count();
         return view('admin.admindashboard',compact('visitor','employee','admin'));
     }
+    public static function admindashboardfull()
+    {
+        $checkinfullvisitor=checkinmodel::select('visitortype','name','age','gender','phonenumber','visit_emp_name','visit_emp_dept','checkintime','checkouttime')->where('usertype',"Visitor")->get();
+        $checkinfullemployee=checkinmodel::select('name','age','gender','phonenumber','emp_dept','emp_designation','checkintime','checkouttime')->where('usertype',"Employee")->get();
+        $checkinfulladministrator=checkinmodel::select('name','age','gender','phonenumber','emp_dept','emp_designation','checkintime','checkouttime')->where('usertype',"Administrator")->get();
+        return view('admin.admindashboardfull',compact('checkinfullvisitor','checkinfullemployee','checkinfulladministrator'));
+    }
     public static function visitorlist()
     {
-        $visitor=visitormodel::select('name','gender','age','email','phonenumber','comp_name','comp_dept','comp_designation','comp_location','comp_website','status','ban','count')->get();
+        $visitor=visitormodel::select('id','name','gender','age','email','phonenumber','comp_name','comp_dept','comp_designation','comp_location','comp_website','status','ban','count')->get();
         return view('admin.visitorlist',compact('visitor'));
     }
     public static function employeelist()
-    {   $employee=employeemodel::select('empid','name','gender','age','email','phonenumber','homephonenumber','address','city','postalcode','education','dept','designation','salary','status')->get();
+    {   $employee=employeemodel::select('id','empid','name','gender','age','email','phonenumber','homephonenumber','address','city','postalcode','education','dept','designation','salary','status')->get();
         return view('admin.employeelist',compact('employee'));
     }
     public static function adminlist()
     {
-      $admin=adminmodel::select('adminid','name','gender','age','email','phonenumber','homephonenumber','address','city','postalcode','education','dept','designation','salary','status')->get();
+      $admin=adminmodel::select('id','adminid','name','gender','age','email','phonenumber','homephonenumber','address','city','postalcode','education','dept','designation','salary','status')->get();
           return view('admin.adminlist',compact('admin'));
     }
+    public static function bannedlist()
+    {
+      $ban=banmodel::select('id','visitorname','visitorphonenumber','bannedby','bannedemployeename','bannedemployeedepartment','reason','banneddateandtime')->get();
+          return view('admin.bannedlist',compact('ban'));
+    }
+    public function adminunbanvisitor($visitorid)
+    { $confirms = banmodel::find($visitorid);
+      $confirm=visitormodel::select('name','age','gender','email','phonenumber','comp_name','comp_designation')->where('phonenumber',$confirms->visitorphonenumber)->first();
 
+      return view('admin.unbanconfirm',compact('confirm'));
+    }
+    public function adminunbanvisitordone(Request $request)
+    { $phonenumber=$request->input('phonenumber');
+    $email=$request->input('email');
+    $name=$request->input('name');
+    $age=$request->input('age');
+    $gender=$request->input('gender');
+    $comp_name=$request->input('comp_name');
+    $comp_designation=$request->input('comp_designation');
+      DB::update('update visitortable set ban=0 where phonenumber=?',[$phonenumber]);
+      DB::delete('delete from bannedtable where visitorphonenumber=?',[$phonenumber]);
+      if($email=="")
+      DB::update('update register_users set ban=0 where email=?',[$phonenumber]);
+      else
+      DB::update('update register_users set ban=0 where email=?',[$email]);
+      return Redirect::to('bannedlist')->with('success','Successfully UnBanned Visitor !!!');
+
+    }
+    public function adminbanvisitor($visitorid)
+    {  $confirm = visitormodel::find($visitorid);
+
+      return view('admin.adminbanvisitor',compact('confirm'));
+    }
+    public function adminbanconfirmed(Request $request)
+    {
+      $phonenumber=$request->input('phonenumber');
+      $id=$request->input('id');
+      $email=$request->input('email');
+      $name=$request->input('name');
+      $age=$request->input('age');
+      $gender=$request->input('gender');
+      $comp_name=$request->input('comp_name');
+      $comp_designation=$request->input('comp_designation');
+      $reason=$request->input('reason');
+      $now = new DateTime();
+      DB::update('update visitortable set ban=1 where phonenumber=?',[$phonenumber]);
+
+      $employeedata=adminmodel::select('adminid','name','dept')->where('email',Auth::user()->email)->first();
+      $empname=$employeedata->name;
+      $empdept=$employeedata->dept;
+      $empid=$employeedata->adminid;
+      DB::insert('insert into bannedtable(visitorname,visitoremail,visitorphonenumber,bannedby,bannedemployeename,
+                                          bannedemployeeid,bannedemployeemail,bannedemployeedepartment,reason,banneddateandtime)
+                                           values(?,?,?,?,?,?,?,?,?,?)'
+                                             ,[$name,$email,$phonenumber,"Administrator",$empname,$empid,Auth::user()->email,$empdept,$reason,$now]);
+      if($email=="")
+      DB::update('update register_users set ban=1 where email=?',[$phonenumber]);
+      else
+      DB::update('update register_users set ban=1 where email=?',[$email]);
+      return Redirect::to('bannedlist')->with('success','Successfully Banned Visitor !!!');
+
+    }
+    public function admindeletevisitor($visitorid)
+    {  $confirm = visitormodel::find($visitorid);
+
+      return view('admin.admindeletevisitor',compact('confirm'));
+    }
+    public function admindeletevisitorconfirmed(Request $request)
+    {
+      $phonenumber=$request->input('phonenumber');
+      $id=$request->input('id');
+      $email=$request->input('email');
+      $name=$request->input('name');
+      $age=$request->input('age');
+      $gender=$request->input('gender');
+      $comp_name=$request->input('comp_name');
+      $comp_designation=$request->input('comp_designation');
+      DB::delete('delete from bookingtable where visitoremail=?',[$email]);
+      if($email!="")
+        DB::delete('delete from register_users where email=?',[$email]);
+      else
+        DB::delete('delete from register_users where email=?',[$phonenumber]);
+
+        DB::delete('delete from checkedintable where phonenumber=?',[$phonenumber]);
+        DB::delete('delete from bannedtable where visitorphonenumber=?',[$phonenumber]);
+        DB::delete('delete from visitortable where phonenumber=?',[$phonenumber]);
+      return Redirect::to('visitorlist')->with('success','Successfully Deleted Visitor !!!');
+
+    }
+    public function admindeleteemployee($visitorid)
+    {  $confirm = employeemodel::find($visitorid);
+
+      return view('admin.admindeleteemployee',compact('confirm'));
+    }
+    public function admindeleteemployeeconfirmed(Request $request)
+    {
+      $phonenumber=$request->input('phonenumber');
+      $id=$request->input('id');
+      $email=$request->input('email');
+      $name=$request->input('name');
+      $age=$request->input('age');
+      $gender=$request->input('gender');
+      $dept=$request->input('dept');
+      $designation=$request->input('designation');
+      DB::delete('delete from bookingtable where empmail=?',[$email]);
+
+        DB::delete('delete from register_users where email=?',[$email]);
+
+
+        DB::delete('delete from checkedintable where email=?',[$email]);
+
+        DB::delete('delete from employeetable where email=?',[$email]);
+      return Redirect::to('employeelist')->with('success','Successfully Deleted Employee !!!');
+
+    }
+    public function admindeleteadmin($visitorid)
+    {  $confirm = adminmodel::find($visitorid);
+
+      return view('admin.admindeleteadmin',compact('confirm'));
+    }
+    public function admindeleteadminconfirmed(Request $request)
+    {
+      $phonenumber=$request->input('phonenumber');
+      $id=$request->input('id');
+      $email=$request->input('email');
+      $name=$request->input('name');
+      $age=$request->input('age');
+      $gender=$request->input('gender');
+      $dept=$request->input('dept');
+      $designation=$request->input('designation');
+
+
+        DB::delete('delete from register_users where email=?',[$email]);
+
+
+        DB::delete('delete from checkedintable where email=?',[$email]);
+
+        DB::delete('delete from admintable where email=?',[$email]);
+      return Redirect::to('adminlist')->with('success','Successfully Deleted Employee !!!');
+
+    }
 }

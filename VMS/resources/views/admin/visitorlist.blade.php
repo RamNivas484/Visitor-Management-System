@@ -7,6 +7,15 @@
                              All Visitors basic Details
                         </div>
                         <div class="panel-body">
+                          @if(Session::has('success'))
+                          <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                              <div class="alert alert-success">
+                                {{Session::get('success')}}
+                              </div>
+                            </div>
+                          </div>
+                          @endif
                           <table class="table table-hover">
                             <thead>
                             <th>Name</th>
@@ -17,6 +26,7 @@
                             <th>Status</th>
                             <th>Ban</th>
                             <th>Count</th>
+                            <th>Action</th>
                             </thead>
                             <tbody>
                             @foreach($visitor as $v)
@@ -44,6 +54,8 @@
                             <td>Banned</td>
                             <?php endif; ?>
                             <td>{{$v->count}}</td>
+                            <td><a href="{{ route('adminbanvisitor', $v->id) }}" class="btn btn-success btn-sm">BAN </a>||
+                                <a href="{{ route('admindeletevisitor', $v->id) }}" class="btn btn-danger btn-sm">Delete </a></td>
                             </tr>
 
                             @endforeach

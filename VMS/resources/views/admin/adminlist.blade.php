@@ -7,6 +7,15 @@
                              Administrator Basic Details
                         </div>
                         <div class="panel-body">
+                          @if(Session::has('success'))
+                          <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                              <div class="alert alert-success">
+                                {{Session::get('success')}}
+                              </div>
+                            </div>
+                          </div>
+                          @endif
                           <table class="table table-hover">
                             <thead>
 
@@ -42,6 +51,7 @@
                             <?php elseif((strcmp($status,"1"))==0): ?>
                             <td>ON Campus</td>
                             <?php endif; ?>
+                            <td><a href="{{ route('admindeleteadmin', $v->id) }}" class="btn btn-danger btn-sm">Delete </a></td>
                             </tr>
 
                             @endforeach

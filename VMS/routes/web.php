@@ -102,10 +102,12 @@ Route::get('/visitorprofile','visitorcontroller@visitorprofile');
 Route::get('/empvisitorlog','employeecontroller@empvisitorlog');
 Route::get('/employeeprofile','employeecontroller@employeeprofile');
 Route::get('/admindashboard','admincontroller@admindashboard');
+Route::get('/admindashboardfull','admincontroller@admindashboardfull');
 
 Route::get('/visitorlist','admincontroller@visitorlist');
 Route::get('/employeelist','admincontroller@employeelist');
 Route::get('/adminlist','admincontroller@adminlist');
+Route::get('/bannedlist','admincontroller@bannedlist');
 
 Route::post('/visitoreditprofile','visitorcontroller@visitoreditprofile');
 Route::post('/employeeeditprofile','employeecontroller@employeeeditprofile');
@@ -147,6 +149,24 @@ Route::post('/bookedcheckin','RegisterController@bookedcheckin');
 Route::get('employee/{visitorid}/banvisitor', ['as' => 'banvisitor', 'uses' => 'employeecontroller@banvisitor']);
 Route::post('employee/{visitorid}/banconfirmed', ['as' => 'banconfirmed', 'uses' => 'employeecontroller@banconfirmed']);
 
+Route::get('/employeebannedlist','employeecontroller@employeebannedlist');
+Route::get('employee/{visitorid}/unbanvisitor', ['as' => 'unbanvisitor', 'uses' => 'employeecontroller@unbanvisitor']);
+Route::post('employee/{visitorid}/unbanvisitordone', ['as' => 'unbanvisitordone', 'uses' => 'employeecontroller@unbanvisitordone']);
+
+Route::get('admin/{visitorid}/adminunbanvisitor', ['as' => 'adminunbanvisitor', 'uses' => 'admincontroller@adminunbanvisitor']);
+Route::post('admin/{visitorid}/adminunbanvisitordone', ['as' => 'adminunbanvisitordone', 'uses' => 'admincontroller@adminunbanvisitordone']);
+
+Route::get('admin/{visitorid}/banvisitor', ['as' => 'adminbanvisitor', 'uses' => 'admincontroller@adminbanvisitor']);
+Route::post('admin/{visitorid}/adminbanconfirmed', ['as' => 'adminbanconfirmed', 'uses' => 'admincontroller@adminbanconfirmed']);
+
+Route::get('admin/{visitorid}/admindeletevisitor', ['as' => 'admindeletevisitor', 'uses' => 'admincontroller@admindeletevisitor']);
+Route::post('admin/{visitorid}/admindeletevisitorconfirmed', ['as' => 'admindeletevisitorconfirmed', 'uses' => 'admincontroller@admindeletevisitorconfirmed']);
+
+Route::get('admin/{visitorid}/admindeleteemployee', ['as' => 'admindeleteemployee', 'uses' => 'admincontroller@admindeleteemployee']);
+Route::post('admin/{visitorid}/admindeleteemployeeconfirmed', ['as' => 'admindeleteemployeeconfirmed', 'uses' => 'admincontroller@admindeleteemployeeconfirmed']);
+
+Route::get('admin/{visitorid}/admindeleteadmin', ['as' => 'admindeleteadmin', 'uses' => 'admincontroller@admindeleteadmin']);
+Route::post('admin/{visitorid}/admindeleteadminconfirmed', ['as' => 'admindeleteadminconfirmed', 'uses' => 'admincontroller@admindeleteadminconfirmed']);
 Route::get('/logout',function () {
     Auth::logout();
     return Redirect::to('');

@@ -15,8 +15,10 @@ class Bantable extends Migration
     {
       Schema::create('bannedtable', function (Blueprint $table)
       {     $table->increments('id');
-            $table->string('visitoremail');
+            $table->string('visitorname');
+            $table->string('visitoremail')->nullable();
             $table->string('visitorphonenumber');
+            $table->string('bannedby');
             $table->string('bannedemployeeid');
             $table->string('bannedemployeename');
             $table->string('bannedemployeemail');

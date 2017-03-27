@@ -20,6 +20,7 @@
                             <th>City</th>
                             <th>Postal Code</th>
                             <th>Status</th>
+                            <th>Action</th>
                             </thead>
                             <tbody>
                             @foreach($employee as $v)
@@ -42,6 +43,7 @@
                             <?php elseif((strcmp($status,"1"))==0): ?>
                             <td>ON Campus</td>
                             <?php endif; ?>
+                            <td><a href="{{ route('admindeleteemployee', $v->id) }}" class="btn btn-danger btn-sm">Delete </a></td>
                             </tr>
 
                             @endforeach

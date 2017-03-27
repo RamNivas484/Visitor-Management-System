@@ -7,6 +7,7 @@ use App\employeemodel;
 use App\checkinmodel;
 use App\visitormodel;
 use App\bookingmodel;
+use App\banmodel;
 use Validator;
 use Input;
 use DB;
@@ -178,10 +179,10 @@ class employeecontroller extends Controller
     $empname=$employeedata->name;
     $empdept=$employeedata->dept;
     $empid=$employeedata->empid;
-    DB::insert('insert into bannedtable(visitoremail,visitorphonenumber,bannedemployeename,
+    DB::insert('insert into bannedtable(visitorname,visitoremail,visitorphonenumber,bannedby,bannedemployeename,
                                         bannedemployeeid,bannedemployeemail,bannedemployeedepartment,reason,banneddateandtime)
-                                         values(?,?,?,?,?,?,?,?)'
-                                           ,[$email,$phonenumber,$empname,$empid,Auth::user()->email,$empdept,$reason,$now]);
+                                         values(?,?,?,?,?,?,?,?,?,?)'
+                                           ,[$name,$email,$phonenumber,"Employee",$empname,$empid,Auth::user()->email,$empdept,$reason,$now]);
     if($email=="")
     DB::update('update register_users set ban=1 where email=?',[$phonenumber]);
     else
@@ -189,6 +190,35 @@ class employeecontroller extends Controller
     return Redirect::to('employeebanvisitor')->with('success','Successfully Banned Visitor !!!');
 
   }
+  public static function employeebannedlist()
+  {
+    $ban=banmodel::select('id','visitorname','visitoremail','visitorphonenumber','reason','banneddateandtime')->where('bannedemployeemail',Auth::user()->email)->get();
+        return view('employee.employeebannedvisitors',compact('ban'));
+  }
+  public function unbanvisitor($visitorid)
+  { $confirms = banmodel::find($visitorid);
+    $confirm=visitormodel::select('name','age','gender','email','phonenumber','comp_name','comp_designation')->where('phonenumber',$confirms->visitorphonenumber)->first();
+
+    return view('employee.unbanconfirm',compact('confirm'));
+  }
+  public function unbanvisitordone(Request $request)
+  { $phonenumber=$request->input('phonenumber');
+  $email=$request->input('email');
+  $name=$request->input('name');
+  $age=$request->input('age');
+  $gender=$request->input('gender');
+  $comp_name=$request->input('comp_name');
+  $comp_designation=$request->input('comp_designation');
+    DB::update('update visitortable set ban=0 where phonenumber=?',[$phonenumber]);
+    DB::delete('delete from bannedtable where visitorphonenumber=?',[$phonenumber]);
+    if($email=="")
+    DB::update('update register_users set ban=0 where email=?',[$phonenumber]);
+    else
+    DB::update('update register_users set ban=0 where email=?',[$email]);
+    return Redirect::to('employeebanvisitor')->with('success','Successfully UnBanned Visitor !!!');
+
+  }
+  
   /*public function banconfirmed(Request $request)
   {
     $phonenumber=$request->input('phonenumber');
