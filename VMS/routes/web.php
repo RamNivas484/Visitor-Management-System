@@ -28,11 +28,19 @@ Route::get('visitorchangepassword', function () {
 Route::get('employeechangepassword', function () {
     return view('employee.changepassword');
 });
+Route::get('adminchangepassword', function () {
+    return view('admin.changepassword');
+});
 Route::get('visitorlog','visitorcontroller@visitorlog');
 Route::get('employeelog','employeecontroller@employeelog');
+Route::get('adminlog','admincontroller@adminlog');
 
 Route::get('bookingstatus','visitorcontroller@bookingstatus');
 Route::get('employeebanvisitor','employeecontroller@employeebanvisitor');
+
+Route::get('admin_visitorresetpassword','admincontroller@adminvisitorresetpassword');
+Route::get('admin_employeeresetpassword','admincontroller@adminemployeeresetpassword');
+Route::get('admin_adminresetpassword','admincontroller@adminadminresetpassword');
 
 
 
@@ -63,6 +71,10 @@ Route::get('/visitorcheckavailability', function () {
 Route::get('/employeecheckavailability', function () {
     return view('employee.employeecheckavailability');
 });
+
+Route::get('/admincheckavailability', function () {
+    return view('admin.admincheckavailability');
+});
 Route::get('/adminhomepage', function () {
     return view('admin.adminhomepage');
 });
@@ -84,6 +96,9 @@ Route::get('/visitoreditprofile', function () {
 Route::get('/employee_editprofile', function () {
     return view('employee.employeeeditprofile');
 });
+Route::get('/admin_editprofile', function () {
+    return view('admin.admineditprofile');
+});
 Route::get('/visitorbooking', function () {
     return view('visitor.booking');
 });
@@ -101,6 +116,7 @@ Route::get('acceptedofficialvisits','employeecontroller@acceptedofficialvisits')
 Route::get('/visitorprofile','visitorcontroller@visitorprofile');
 Route::get('/empvisitorlog','employeecontroller@empvisitorlog');
 Route::get('/employeeprofile','employeecontroller@employeeprofile');
+Route::get('/adminprofile','admincontroller@adminprofile');
 Route::get('/admindashboard','admincontroller@admindashboard');
 Route::get('/admindashboardfull','admincontroller@admindashboardfull');
 
@@ -111,6 +127,7 @@ Route::get('/bannedlist','admincontroller@bannedlist');
 
 Route::post('/visitoreditprofile','visitorcontroller@visitoreditprofile');
 Route::post('/employeeeditprofile','employeecontroller@employeeeditprofile');
+Route::post('/admineditprofile','admincontroller@admineditprofile');
 Route::post('/register_action','RegisterController@store');
 Route::post('/login_check','RegisterController@login');
 Route::post('/visitorlogin_check','RegisterController@login');
@@ -126,6 +143,7 @@ Route::post('/admin_checkout','RegisterController@checkout');
 Route::post('/visitor_checkin','RegisterController@visitorcheckin');
 Route::post('/visitor_changepassword','visitorcontroller@visitorchangepassword');
 Route::post('/employee_changepassword','employeecontroller@employeechangepassword');
+Route::post('/admin_changepassword','admincontroller@adminchangepassword');
 Route::post('/visitorbooking','visitorcontroller@visitorbooking');
 Route::post('/adminadduser','admincontroller@adduser');
 
@@ -133,12 +151,7 @@ Route::get('employee/{officialvisitorid}/acceptofficialvisit', ['as' => 'accepto
 Route::get('employee/{officialvisitorid}/rejectofficialvisit', ['as' => 'rejectofficialvisit', 'uses' => 'bookingcontroller@rejectofficialvisit']);
 Route::get('employee/{personalvisitorid}/acceptpersonalvisit', ['as' => 'acceptpersonalvisit', 'uses' => 'bookingcontroller@acceptpersonalvisit']);
 Route::get('employee/{personalvisitorid}/rejectpersonalvisit', ['as' => 'rejectpersonalvisit', 'uses' => 'bookingcontroller@rejectpersonalvisit']);
-/*
-Route::post('rejectofficialvisitupdate','bookingcontroller@rejectofficialvisitupdate');
-Route::post('acceptofficialvisitupdate','bookingcontroller@acceptofficialvisitupdate');
-Route::post('rejectpersonalvisitupdate','bookingcontroller@rejectpersonalvisitupdate');
-Route::post('acceptpersonalvisitupdate','bookingcontroller@acceptpersonalvisitupdate');
-*/
+
 Route::post('employee/{officialvisitorid}/rejectofficialvisitupdate', ['as' => 'rejectofficialvisitupdate', 'uses' => 'bookingcontroller@rejectofficialvisitupdate']);
 Route::post('employee/{officialvisitorid}/acceptofficialvisitupdate', ['as' => 'acceptofficialvisitupdate', 'uses' => 'bookingcontroller@acceptofficialvisitupdate']);
 Route::post('employee/{personalvisitorid}/rejectpersonalvisitupdate', ['as' => 'rejectpersonalvisitupdate', 'uses' => 'bookingcontroller@rejectpersonalvisitupdate']);
@@ -167,6 +180,15 @@ Route::post('admin/{visitorid}/admindeleteemployeeconfirmed', ['as' => 'admindel
 
 Route::get('admin/{visitorid}/admindeleteadmin', ['as' => 'admindeleteadmin', 'uses' => 'admincontroller@admindeleteadmin']);
 Route::post('admin/{visitorid}/admindeleteadminconfirmed', ['as' => 'admindeleteadminconfirmed', 'uses' => 'admincontroller@admindeleteadminconfirmed']);
+
+Route::get('admin/{visitorid}/adminresetvisitorpassword', ['as' => 'adminresetvisitorpassword', 'uses' => 'admincontroller@adminresetvisitorpassword']);
+Route::get('admin/{employeeid}/adminresetemployeepassword', ['as' => 'adminresetemployeepassword', 'uses' => 'admincontroller@adminresetemployeepassword']);
+Route::get('admin/{adminid}/adminresetadminpassword', ['as' => 'adminresetadminpassword', 'uses' => 'admincontroller@adminresetadminpassword']);
+
+Route::post('admin/{visitorid}/adminresetvisitorpasswordupdate', ['as' => 'adminresetvisitorpasswordupdate', 'uses' => 'admincontroller@adminresetvisitorpasswordupdate']);
+Route::post('admin/{employeeid}/adminresetemployeepasswordupdate', ['as' => 'adminresetemployeepasswordupdate', 'uses' => 'admincontroller@adminresetemployeepasswordupdate']);
+Route::post('admin/{adminid}/adminresetadminpasswordupdate', ['as' => 'adminresetadminpasswordupdate', 'uses' => 'admincontroller@adminresetadminpasswordupdate']);
+
 Route::get('/logout',function () {
     Auth::logout();
     return Redirect::to('');

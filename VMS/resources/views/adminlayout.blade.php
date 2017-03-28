@@ -70,6 +70,8 @@
               <div class="panel-body">
                 <ul class="nav" id="side-menu">
                   <li><a href="adminhomepage"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                  <li><a href="adminprofile"><i class="glyphicon glyphicon-user"></i> View Profile</a></li>
+                  <li><a href="admin_editprofile"><i class="glyphicon glyphicon-edit"></i> Edit Profie</a></li>
                   <li><a href="admindashboard"><i class="glyphicon glyphicon-th-large"></i> Optimised Dashboard</a></li>
                   <li><a href="admindashboardfull"><i class="glyphicon glyphicon-th-large"></i> Detailed Dashboard</a></li>
                   <li><a href="adminadduser"><i class="glyphicon glyphicon-plus"></i> Add User </a></li>
@@ -77,6 +79,13 @@
                   <li><a href="employeelist"><i class="glyphicon glyphicon-th-list"></i> Employee List </a></li>
                   <li><a href="adminlist"><i class="glyphicon glyphicon-th-list"></i> Admin List </a></li>
                   <li><a href="bannedlist"><i class="glyphicon glyphicon-ban-circle"></i> Banned Visitors List </a></li>
+                  <li><a href="admin_visitorresetpassword"><i class="glyphicon glyphicon-erase"></i> Visitor Reset Password </a></li>
+                  <li><a href="admin_employeeresetpassword"><i class="glyphicon glyphicon-erase"></i> Employee Reset Password </a></li>
+                  <li><a href="admin_adminresetpassword"><i class="glyphicon glyphicon-erase"></i> Admin Reset Password </a></li>
+                  <li><a href="adminlog"><i class="glyphicon glyphicon-th-list"></i> My Entry Log </a></li>
+                  <li><a href="admincheckavailability"><i class="glyphicon glyphicon-search"></i> Check Employee Availability </a></li>
+                  <li><a href="adminchangepassword"><i class="glyphicon glyphicon-erase"></i> Change Password </a></li>
+
 
                 </ul>
               </div>

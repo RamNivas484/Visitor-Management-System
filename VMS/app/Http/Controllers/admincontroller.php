@@ -14,9 +14,89 @@ use Input;
 use DB;
 use Validator;
 use DateTime;
+use Hash;
 use Auth;
 class admincontroller extends Controller
 {
+  public function adminprofile(Request $request)
+  {
+    $admin=adminmodel::all();
+    return view('admin.adminprofile',compact('admin'));
+  }
+  public function adminlog(Request $request)
+  {
+         $email=Auth::user()->email;
+
+         $adminlog=checkinmodel::select('checkintime','checkouttime')->where('email',$email)->get();
+         return view('admin.adminlog',compact('adminlog'));
+  }
+  public function adminvisitorresetpassword()
+  {
+
+         $visitor=visitormodel::select('id','name','phonenumber','email')->get();
+         return view('admin.adminvisitorresetpassword',compact('visitor'));
+  }
+  public function adminemployeeresetpassword()
+  {
+
+         $employee=employeemodel::select('id','name','phonenumber','email','dept','designation')->get();
+         return view('admin.adminemployeeresetpassword',compact('employee'));
+  }
+  public function adminadminresetpassword()
+  {
+
+         $admin=adminmodel::select('id','name','phonenumber','email','dept','designation')->get();
+         return view('admin.adminadminresetpassword',compact('admin'));
+  }
+  public function admineditprofile(Request $request)
+  { $data=Input::except(array('_token'));
+    $rule=array(
+      'name'=>'required',
+      'age'=>'required',
+      'gender'=>'required',
+      'email'=>'required|email',
+      'phonenumber'=>'required',
+      'homephonenumber'=>'required',
+      'address'=>'required',
+      'city'=>'required',
+      'postalcode'=>'required',
+    );
+    $message=array(
+      'name.required'=>'Enter Your Exisiting Name',
+      'age.required'=>'Reenter Your Age',
+      'gender.required'=>'Choose Your Gender',
+      'email.required'=>'Enter Your Email',
+      'email.email'=>'Enter Valid Email',
+      'phonenumber.required'=>'Enter Phone Number Again',
+      'homephonenumber.required'=>'Enter Your Home Phone Number ',
+      'address.required'=>'Enter Your Home Address',
+      'city.required'=>'Enter Your City',
+      'postalcode.required'=>'Enter Your Postal Code',
+    );
+    $validator=Validator::make($data,$rule,$message);
+    $newname = $request->input('name');
+    $newage = $request->input('age');
+    $newgender = $request->input('gender');
+    $newphonenumber = $request->input('phonenumber');
+    $newhomephonenumber = $request->input('homephonenumber');
+    $newemail = $request->input('email');
+    $newaddress = $request->input('address');
+    $newcity = $request->input('city');
+    $newpostalcode = $request->input('postalcode');
+
+    if($validator->fails())
+    {
+      return view('admin.admineditprofile')->withErrors($validator);
+    }
+    else
+    {
+       DB::update('update admintable set name=?,age=?,gender=?,email=?,phonenumber=?,homephonenumber=?,address=?,city=?,postalcode=? where email=?',[$newname,$newage,$newgender,$newemail,$newphonenumber,$newhomephonenumber,$newaddress,$newcity,$newpostalcode,Auth::user()->email]);
+
+       DB::update('update checkedintable set name=?,gender=?,age=?,email=?,phonenumber=?  where email=?',[$newname,$newgender,$newage,$newemail,$newphonenumber,Auth::user()->email]);
+       DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
+       return Redirect::to('admin_editprofile')->with('success','You Have Successfully Edited Your Profile!!!');
+    }
+  }
     public static function adduser()
     { $data=Input::except(array('_token'));
       $usertype=Input::get('usertype');
@@ -147,6 +227,44 @@ class admincontroller extends Controller
           return Redirect::to('adminadduser')->with('success','Administrator Added Successfully!!!');
         }
       }
+    }
+    public function adminchangepassword(Request $request)
+    {
+      $data=Input::except(array('_token'));
+        $rule=array(
+          'adminoldpassword'=>'required',
+          'adminnewpassword'=>'required',
+          'adminconfirmpassword'=>'required|same:adminnewpassword',
+
+        );
+        $message=array(
+          'adminnewpassword.required'=>'Enter New Password',
+          'adminnewpassword.same'=>'New Password and Confirm password field donot match',
+          'adminoldpassword.required'=>'Enter Old Password',
+          'adminconfirmpassword.required'=>'Enter The new password again',
+
+        );
+        $validator=Validator::make($data,$rule,$message);
+        $oldpassword = $request->input('adminoldpassword');
+        $newpassword = $request->input('adminnewpassword');
+        $confirmpassword = $request->input('adminconfirmpassword');
+        $hashed=Hash::make($newpassword);
+        if($validator->fails())
+        {
+          return view('admin.changepassword')->withErrors($validator);
+        }
+        else
+        { if (Hash::check($oldpassword, Auth::user()->password))
+          {
+            DB::update('update register_users set password=? where email=?',[$hashed,Auth::user()->email]);
+            return Redirect::to('adminchangepassword')->with('success','You have changed your Password!!!');
+          }
+          else
+          {
+              return Redirect::to('adminchangepassword')->with('failed','Incorrect old Password!!!');
+          }
+
+        }
     }
     public static function admindashboard()
     {
@@ -315,6 +433,133 @@ class admincontroller extends Controller
 
         DB::delete('delete from admintable where email=?',[$email]);
       return Redirect::to('adminlist')->with('success','Successfully Deleted Employee !!!');
+
+    }
+    public function adminresetvisitorpassword($visitorid)
+    {  $visitor = visitormodel::find($visitorid);
+       return view('admin.adminresetvisitorpassword',compact('visitor'));
+    }
+    public function adminresetemployeepassword($employeeid)
+    {  $employee = employeemodel::find($employeeid);
+       return view('admin.adminresetemployeepassword',compact('employee'));
+    }
+    public function adminresetadminpassword($adminid)
+    {  $admin = adminmodel::find($adminid);
+       return view('admin.adminresetadminpassword',compact('admin'));
+    }
+    public function adminresetvisitorpasswordupdate(Request $request)
+    {
+      $data=Input::except(array('_token'));
+      $rule=array(
+        'visitornewpassword'=>'required|min:6',
+        'visitorconfirmpassword'=>'required|same:visitornewpassword',
+      );
+      $message=array(
+        'visitornewpassword.required'=>'Enter New Password',
+        'visitornewpassword.min'=>'Password must be atleast 6 characters',
+        'visitornewpassword.same'=>'New Password and Confirm password field donot match',
+        'visitorconfirmpassword.required'=>'Enter The password again',
+      );
+      $validator=Validator::make($data,$rule,$message);
+      $newpassword = $request->input('visitornewpassword');
+      $confirmpassword = $request->input('visitorconfirmpassword');
+      $hashed=Hash::make($newpassword);
+      $phonenumber=$request->input('phonenumber');
+      $id=$request->input('id');
+      $email=$request->input('email');
+      $name=$request->input('name');
+      $age=$request->input('age');
+      $gender=$request->input('gender');
+      if($validator->fails())
+      {
+        return view('admin.adminresetvisitorpassword')->withErrors($validator);
+      }
+      else
+      {
+        if($email=="")
+        {     DB::update('update register_users set password=? where email=?',[$hashed,$phonenumber]);
+              DB::update('update visitortable set password=? where phonenumber=?',[$hashed,$phonenumber]);
+        }
+        else
+        {     DB::update('update register_users set password=? where email=?',[$hashed,$email]);
+              DB::update('update visitortable set password=? where phonenumber=?',[$hashed,$phonenumber]);
+        }
+
+        return Redirect::to('admin_visitorresetpassword')->with('success','Successfully Set Password for Visitor !!!');
+      }
+
+
+    }
+    public function adminresetemployeepasswordupdate(Request $request)
+    {
+      $data=Input::except(array('_token'));
+      $rule=array(
+        'employeenewpassword'=>'required|min:6',
+        'employeeconfirmpassword'=>'required|same:employeenewpassword',
+      );
+      $message=array(
+        'employeenewpassword.required'=>'Enter New Password',
+        'employeenewpassword.min'=>'Password must be atleast 6 characters',
+        'employeenewpassword.same'=>'New Password and Confirm password field donot match',
+        'employeeconfirmpassword.required'=>'Enter The password again',
+      );
+      $validator=Validator::make($data,$rule,$message);
+      $newpassword = $request->input('employeenewpassword');
+      $confirmpassword = $request->input('employeeconfirmpassword');
+      $hashed=Hash::make($newpassword);
+      $phonenumber=$request->input('phonenumber');
+      $id=$request->input('id');
+      $email=$request->input('email');
+      $name=$request->input('name');
+      $age=$request->input('age');
+      $gender=$request->input('gender');
+      if($validator->fails())
+      {
+        return view('admin.adminresetemployeepassword')->withErrors($validator);
+      }
+      else
+      {
+            DB::update('update register_users set password=? where email=?',[$hashed,$email]);
+            DB::update('update employeetable set password=? where email=?',[$hashed,$email]);
+            return Redirect::to('admin_employeeresetpassword')->with('success','Successfully Set Password for Employee !!!');
+      }
+
+
+    }
+    public function adminresetadminpasswordupdate(Request $request)
+    {
+      $data=Input::except(array('_token'));
+      $rule=array(
+        'adminnewpassword'=>'required|min:6',
+        'adminconfirmpassword'=>'required|same:adminnewpassword',
+      );
+      $message=array(
+        'adminnewpassword.required'=>'Enter New Password',
+        'adminnewpassword.min'=>'Password must be atleast 6 characters',
+        'adminnewpassword.same'=>'New Password and Confirm password field donot match',
+        'adminconfirmpassword.required'=>'Enter The password again',
+      );
+      $validator=Validator::make($data,$rule,$message);
+      $newpassword = $request->input('adminnewpassword');
+      $confirmpassword = $request->input('adminconfirmpassword');
+      $hashed=Hash::make($newpassword);
+      $phonenumber=$request->input('phonenumber');
+      $id=$request->input('id');
+      $email=$request->input('email');
+      $name=$request->input('name');
+      $age=$request->input('age');
+      $gender=$request->input('gender');
+      if($validator->fails())
+      {
+        return view('admin.adminresetadminpassword')->withErrors($validator);
+      }
+      else
+      {
+            DB::update('update register_users set password=? where email=?',[$hashed,$email]);
+            DB::update('update admintable set password=? where email=?',[$hashed,$email]);
+            return Redirect::to('admin_adminresetpassword')->with('success','Successfully Set Password for Admin !!!');
+      }
+
 
     }
 }
