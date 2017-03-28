@@ -28,7 +28,7 @@
             <form class="form-horizontal" action="visitor_checkout" method="post" >
               <input type="hidden" name="_token" value="{{csrf_token()}}">
               <div class="form-group">
-                <label for="email" class="col-md-4 control-label" >Email or Phone Number:</label>
+                <label for="email" class="col-md-4 control-label" >Email(If you have not given then enter Phone Number):</label>
                   <div class="col-md-6">
                     <input id="email" name="email" class="form-control" type="text">
                     @if($errors->has('email'))
@@ -49,6 +49,13 @@
                     </span>
 
                     @endif
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-md-12 col-md-offset-1">
+                    <center>
+                    <label>Note:If You Have Forget Password Contact Admin</label>
+                    </center>
                   </div>
               </div>
               <input id="usertype" name="usertype" class="hidden" type="text" value="Visitor">

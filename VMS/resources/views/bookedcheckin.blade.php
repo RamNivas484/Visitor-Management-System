@@ -85,6 +85,13 @@
                   @endif
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-md-12 col-md-offset-1">
+                  <center>
+                  <label>Note:If You Have Forget Password Contact Admin</label>
+                  </center>
+                </div>
+            </div>
               <input id="usertype" name="usertype" class="hidden" type="text" value="Visitor">
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
