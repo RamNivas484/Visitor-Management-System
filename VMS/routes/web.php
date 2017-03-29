@@ -17,7 +17,9 @@ Route::get('visitorlogin', function () {
 Route::get('visitorregisterandcheckin', function () {
     return view('visitor.registerandcheckin');
 });
-
+Route::get('visitorregister', function () {
+    return view('visitor.visitorregister');
+});
 
 Route::get('adminlogin', function () {
     return view('admin.adminlogin');
@@ -90,19 +92,16 @@ Route::get('/visitorcheckout', function () {
 Route::get('/register', function () {
     return view('register.register');
 });
-Route::get('/visitoreditprofile', function () {
-    return view('visitor.visitoreditprofile');
-});
-Route::get('/employee_editprofile', function () {
-    return view('employee.employeeeditprofile');
-});
-Route::get('/admin_editprofile', function () {
-    return view('admin.admineditprofile');
-});
+
+Route::get('/visitoreditprofile','visitorcontroller@visitoreditprofileshow');
+Route::get('/employee_editprofile','employeecontroller@employeeeditprofileshow');
+
+Route::get('/admin_editprofile','admincontroller@admineditprofileshow');
 Route::get('/visitorbooking', function () {
     return view('visitor.booking');
 });
 Route::post('/visitor_registerandcheckin_store','visitorcontroller@register_checkin_store');
+Route::post('/visitor_register_store','visitorcontroller@register_store');
 Route::get('/visitorfindempname','visitorcontroller@findempname');
 Route::get('/visitorfindempdept','visitorcontroller@findempdept');
 Route::get('/visitorfindempavailability','visitorcontroller@findempavailability');

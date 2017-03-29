@@ -20,7 +20,7 @@
                             <div class="form-group">
                               <label for="name" class="col-md-4 control-label" align='center'>Name:</label>
                                 <div class="col-md-6" >
-                                  <input id="name" name="name" class="form-control" type="text">
+                                  <input id="name" name="name" class="form-control" type="text" value="{{ $confirm->name }}">
                                   @if($errors->has('name'))
                                   <span class="help-block" style="color:red;">
                                     <strong>{{ $errors->first('name') }}</strong>
@@ -31,7 +31,7 @@
                             <div class="form-group">
                               <label for="age" class="col-md-4 control-label" align='center'>Age:</label>
                                 <div class="col-md-6" >
-                                  <input id="age" name="age" class="form-control" type="text">
+                                  <input id="age" name="age" class="form-control" type="text" value="{{ $confirm->age }}">
                                   @if($errors->has('age'))
                                   <span class="help-block" style="color:red;">
                                     <strong>{{ $errors->first('age') }}</strong>
@@ -43,7 +43,7 @@
                               <label for="gender" class="col-md-4 control-label" align='center'>Gender:</label>
                                 <div class="col-md-6" >
                                   <select id="gender" name="gender" class="form-control">
-                                                      <option value="" selected disabled>--Select Gender--</option>
+                                                      <option value="{{ $confirm->gender }}" selected >{{ $confirm->gender }}</option>
                                                       <option value="Male">Male</option>
                                                       <option value="Female">Female</option>
                                   </select>
@@ -57,7 +57,7 @@
                             <div class="form-group">
                               <label for="email" class="col-md-4 control-label" >Email:</label>
                                 <div class="col-md-6">
-                                  <input id="email" name="email" class="form-control" type="text">
+                                  <input id="email" name="email" class="form-control" type="text" value="{{ $confirm->email }}">
                                   @if($errors->has('email'))
                                   <span class="help-block" style="color:red;">
                                     <strong>{{ $errors->first('email') }}</strong>
@@ -69,7 +69,7 @@
                             <div class="form-group">
                               <label for="phonenumber" class="col-md-4 control-label" >Contact Number:</label>
                                 <div class="col-md-6">
-                                  <input id="phonenumber" name="phonenumber" class="form-control" type="text" pattern="[789][0-9]{9}">
+                                  <input id="phonenumber" name="phonenumber" class="form-control" type="text" pattern="[789][0-9]{9}" value="{{ $confirm->phonenumber }}">
                                   @if($errors->has('phonenumber'))
                                   <span class="help-block" style="color:red;">
                                     <strong>{{ $errors->first('phonenumber') }}</strong>
@@ -80,7 +80,7 @@
                             <div class="form-group">
                               <label for="homephonenumber" class="col-md-4 control-label" >Home Contact Number:</label>
                                 <div class="col-md-6">
-                                  <input id="homephonenumber" name="homephonenumber" class="form-control" type="text" pattern="[789][0-9]{9}">
+                                  <input id="homephonenumber" name="homephonenumber" class="form-control" type="text" pattern="[789][0-9]{9}" value="{{ $confirm->homephonenumber }}">
                                   @if($errors->has('homephonenumber'))
                                   <span class="help-block" style="color:red;">
                                     <strong>{{ $errors->first('homephonenumber') }}</strong>
@@ -91,7 +91,7 @@
                             <div class="form-group">
                               <label for="address" class="col-md-4 control-label" >Home Address:</label>
                                 <div class="col-md-6">
-                                  <input id="address" name="address" class="form-control" type="text" >
+                                  <input id="address" name="address" class="form-control" type="text" value="{{ $confirm->address }}">
                                   @if($errors->has('address'))
                                   <span class="help-block" style="color:red;">
                                     <strong>{{ $errors->first('address') }}</strong>
@@ -102,7 +102,7 @@
                             <div class="form-group">
                               <label for="city" class="col-md-4 control-label" >City:</label>
                                 <div class="col-md-6">
-                                  <input id="city" name="city" class="form-control" type="text">
+                                  <input id="city" name="city" class="form-control" type="text" value="{{ $confirm->city }}">
                                   @if($errors->has('city'))
                                   <span class="help-block" style="color:red;">
                                     <strong>{{ $errors->first('city') }}</strong>
@@ -113,7 +113,7 @@
                             <div class="form-group">
                               <label for="postalcode" class="col-md-4 control-label" >Postal Code:</label>
                                 <div class="col-md-6">
-                                  <input id="postalcode" name="postalcode" class="form-control" type="text" >
+                                  <input id="postalcode" name="postalcode" class="form-control" type="text" value="{{ $confirm->postalcode }}">
                                   @if($errors->has('postalcode'))
                                   <span class="help-block" style="color:red;">
                                     <strong>{{ $errors->first('postalcode') }}</strong>

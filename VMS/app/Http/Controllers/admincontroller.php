@@ -48,6 +48,12 @@ class admincontroller extends Controller
          $admin=adminmodel::select('id','name','phonenumber','email','dept','designation')->get();
          return view('admin.adminadminresetpassword',compact('admin'));
   }
+  public function admineditprofileshow()
+  {
+
+         $confirm=adminmodel::select('name','age','gender','phonenumber','email','homephonenumber','address','city','postalcode')->first();
+         return view('admin.admineditprofile',compact('confirm'));
+  }
   public function admineditprofile(Request $request)
   { $data=Input::except(array('_token'));
     $rule=array(
@@ -86,7 +92,7 @@ class admincontroller extends Controller
 
     if($validator->fails())
     {
-      return view('admin.admineditprofile')->withErrors($validator);
+      return Redirect::to('admin_editprofile')->withErrors($validator);
     }
     else
     {

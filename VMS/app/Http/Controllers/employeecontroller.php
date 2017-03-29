@@ -96,7 +96,7 @@ class employeecontroller extends Controller
 
     if($validator->fails())
     {
-      return view('employee.employeeeditprofile')->withErrors($validator);
+      return Redirect::to('employee_editprofile')->withErrors($validator);
     }
     else
     {
@@ -161,6 +161,12 @@ class employeecontroller extends Controller
 
     return view('employee.banvisitor',compact('confirm'));
   }
+  public function employeeeditprofileshow()
+  {
+
+         $confirm=employeemodel::select('name','age','gender','phonenumber','email','homephonenumber','address','city','postalcode')->first();
+         return view('employee.employeeeditprofile',compact('confirm'));
+  }
   public function banconfirmed(Request $request)
   {
     $phonenumber=$request->input('phonenumber');
@@ -218,7 +224,7 @@ class employeecontroller extends Controller
     return Redirect::to('employeebanvisitor')->with('success','Successfully UnBanned Visitor !!!');
 
   }
-  
+
   /*public function banconfirmed(Request $request)
   {
     $phonenumber=$request->input('phonenumber');

@@ -20,6 +20,63 @@ use Mail;
 
 class visitorcontroller extends Controller
 {
+  public static function register_store()
+  {
+    $data=Input::except(array('_token'));
+    $email=Input::get('email');
+    if ($email!=""&&visitormodel::where('email', '=', Input::get('email'))->exists())
+    {
+         return Redirect::to('/visitorregister')->with('failed','Email already Taken!!!');
+    }
+    elseif ($email==""&&visitormodel::where('phonenumber', '=', Input::get('phonenumber'))->exists())
+    {
+         return Redirect::to('/visitorregister')->with('failed','Phonenumber Already Taken!!!');
+    }
+    else
+    {
+
+            $rule=array(
+              'name'=>'required',
+              'age'=>'required',
+              'gender'=>'required',
+              'phonenumber'=>'required',
+              'password'=>'required|min:6',
+              'cpassword'=>'required|same:password'
+            );
+         $message=array(
+           'name.required'=>'Enter Your Name',
+           'age.required'=>'Enter Your Correct Age',
+           'gender.required'=>'Choose Your Gender',
+           'phonenumber.required'=>'Enter Correct Phone Number',
+           'cpassword.required'=>'The Confirm Password is Required',
+           'password.min'=>'the Password must be atleast 6 characters',
+           'cpassword.same'=>'The Password Fields donot match',
+         );
+         $validator=Validator::make($data,$rule,$message);
+         $employee=employeemodel::all();
+         if($validator->fails())
+         {
+           return Redirect::to('/visitorregister')->withErrors($validator);
+           //var_dump($data);
+           //onspotcheckinvisitor::formstore(Input::except(array('_token')));
+           //  return view('visitor.visitorcheckin',compact('employee'))->with('success','successfully Checkedin');
+         // onspotcheckinvisitor::formstore(Input::except(array('_token')));
+         }
+         else
+         {
+            visitormodel::visitortableregisterstore(Input::except(array('_token')));
+            if($email!="")
+            Register::visitorregisterstore(Input::except(array('_token')));
+            else
+            Register::visitorregisterstorephone(Input::except(array('_token')));
+
+
+             return Redirect::to('visitorregister')->with('success','Successfully Registered!!!');
+         }
+       }
+    }
+
+
   public static function register_checkin_store()
   {
     $data=Input::except(array('_token'));
@@ -130,6 +187,18 @@ class visitorcontroller extends Controller
       $visitor=visitormodel::all();
       return view('visitor.visitorprofile',compact('visitor'));
     }
+    public function visitoreditprofileshow()
+    {
+           $email=Auth::user()->email;
+          if(preg_match("/^[0-9]{10}$/", Auth::user()->email))
+             $confirm=visitormodel::select('name','age','gender','phonenumber','email','comp_name','comp_dept','comp_designation','comp_location','comp_website')->where('phonenumber',$email)->first();
+
+          elseif(!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false)
+           $confirm=visitormodel::select('name','age','gender','phonenumber','email','comp_name','comp_dept','comp_designation','comp_location','comp_website')->where('email',$email)->first();
+
+
+           return view('visitor.visitoreditprofile',compact('confirm'));
+    }
     public function visitorlog(Request $request)
     {
            $email=Auth::user()->email;
@@ -171,10 +240,16 @@ class visitorcontroller extends Controller
 		  $newgender = $request->input('gender');
       $newphonenumber = $request->input('phonenumber');
       $newemail = $request->input('email');
+      $comp_name = $request->input('comp_name');
+      $comp_dept = $request->input('comp_dept');
+      $comp_location = $request->input('comp_location');
+      $comp_designation = $request->input('comp_designation');
+      $comp_website = $request->input('comp_website');
+
 
       if($validator->fails())
       {
-        return view('visitor.visitoreditprofile')->withErrors($validator);
+        return Redirect::to('visitoreditprofile')->withErrors($validator);
         //var_dump($data);
         //onspotcheckinvisitor::formstore(Input::except(array('_token')));
         //  return view('visitor.visitorcheckin',compact('employee'))->with('success','successfully Checkedin');
@@ -183,23 +258,25 @@ class visitorcontroller extends Controller
       else
       {
           if((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail=="")
-          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,Auth::user()->email]);
-                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",Auth::user()->email]);
+          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
+                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=?  where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
                   DB::update('update register_users set name=?,email=? where email=?',[$newname,$newphonenumber,Auth::user()->email]);
           }
           elseif((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail!="")
-          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
-                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
+          {       DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=? where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
+                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=?  where phonenumber=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
                   DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
           }
           elseif((!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false) &&$newemail=="")
-          {        DB::update('update visitortable set name=?,age=?,email=?,gender=?phonenumber=? where email=?',[$newname,$newage,$newgender,$newemail,$newphonenumber,Auth::user()->email]);
-                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where email=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",Auth::user()->email]);
+          {        DB::update('update visitortable set name=?,age=?,email=?,gender=?,phonenumber=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=? where email=?',[$newname,$newage,$newemail,$newgender,$newphonenumber,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
+                  DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=?  where email=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
+                  DB::delete('delete from bookingtable where email=?',Auth::user()->email);
                   DB::update('update register_users set name=?,email=? where email=?',[$newname,$newphonenumber,Auth::user()->email]);
           }
           elseif((!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false) &&$newemail!="")
-          {        DB::update('update visitortable set name=?,age=?,gender=?,phonenumber=?,email=? where email=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,Auth::user()->email]);
-                   DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=? where email=?',[$newname,$newage,$newgender,$newphonenumber,$email,Auth::user()->email]);
+          {           DB::update('update visitortable set name=?,age=?,email=?,gender=?,phonenumber=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=? where email=?',[$newname,$newage,$newemail,$newgender,$newphonenumber,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
+                   DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=?  where email=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
+                   DB::update('update from bookingtable set visitoremail=?,visitorname=?,visitorphonenumber=?,compname=?,designation=? where visitoremail=?',$newemail,$newname,$newphonenumber,$comp_name,$comp_designation,Auth::user()->email);
                    DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
           }
   /*        if((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail=="")
