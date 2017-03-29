@@ -18,6 +18,7 @@ class bookingmodel extends Model
         $visitorcompname=visitormodel::select('comp_name')->where('email',$visitoremail)->first();
         $visitordesignation=visitormodel::select('comp_designation')->where('email',$visitoremail)->first();
         $visiting_purpose=Input::get('visiting_purpose');
+        $empid=Input::get('emp_id');
         $empdept=Input::get('emp_dept');
         $empname=Input::get('emp_name');
         $empmail=Input::get('empmail');
@@ -32,6 +33,7 @@ class bookingmodel extends Model
         $booking->visitortype=$visiting_purpose;
         $booking->compname=$visitorcompname->comp_name;
         $booking->designation=$visitordesignation->comp_designation;
+        $booking->empid=$empid;
         $booking->empdept=$empdept;
         $booking->empname=$empname;
         $booking->empmail=$empmail;

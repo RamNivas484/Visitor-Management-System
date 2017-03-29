@@ -23,6 +23,8 @@ class checkinmodel extends Model
         $comp_location=Input::get('comp_location');
         $comp_website=Input::get('comp_website');
         $emp_dept=Input::get('emp_dept');
+        $visit_emp_id=Input::get('visit_emp_id');
+        $visit_emp_status=Input::get('visit_emp_status');
         $emp_name=Input::get('emp_name');
         $belongings=Input::get('belongings');
         $vehicle_number=Input::get('vehicle_number');
@@ -43,6 +45,8 @@ class checkinmodel extends Model
         $visitor->comp_website=$comp_website;
         $visitor->visit_emp_dept=$emp_dept;
         $visitor->visit_emp_name=$emp_name;
+        $visitor->visit_emp_status=$visit_emp_status;
+        $visitor->visit_emp_id=$visit_emp_id;
         $visitor->belongings=$belongings;
         $visitor->vehicle_number=$vehicle_number;
         $visitor->status="1";

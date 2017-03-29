@@ -92,6 +92,11 @@
                   </center>
                 </div>
             </div>
+            <div class="form-group hidden">
+                <div class="col-md-6">
+                  <input id="visit_emp_status" name="visit_emp_status" class="form-control visit_emp_status" type="text" Value="Not Updated">
+                </div>
+            </div>
               <input id="usertype" name="usertype" class="hidden" type="text" value="Visitor">
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">

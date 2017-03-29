@@ -28,8 +28,10 @@ class Checkedintable extends Migration
             $table->string('comp_designation')->nullable();
             $table->string('comp_location')->nullable();
             $table->string('comp_website')->nullable();
+            $table->string('visit_emp_id')->nullable();
             $table->string('visit_emp_dept')->nullable();
             $table->string('visit_emp_name')->nullable();
+            $table->string('visit_emp_status')->nullable();
             $table->string('emp_dept')->nullable();
             $table->string('emp_designation')->nullable();
             $table->string('belongings')->nullable();

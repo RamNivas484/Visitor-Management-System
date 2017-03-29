@@ -357,6 +357,7 @@ class visitorcontroller extends Controller
         $visitoremail=Auth::user()->email;
         $visitorname=Auth::user()->name;
         $visittype= $request->input('visiting_purpose');
+        $empid= $request->input('emp_id');
         $empdept= $request->input('emp_dept');
         $empname= $request->input('emp_name');
         $empmail= $request->input('empmail');
@@ -393,7 +394,7 @@ class visitorcontroller extends Controller
     }
     public function findempavailability(Request $request)
     {
-      $data=employeemodel::select('status')->where('name',$request->id)->get();
+      $data=employeemodel::select('id','empid','status')->where('name',$request->id)->get();
       return response()->json($data);
     }
     public function findempmail(Request $request)

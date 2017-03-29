@@ -50,6 +50,8 @@ class RegisterController extends Controller
       $visit_emp_dept=Input::get('emp_dept');
       $visit_emp_name=Input::get('emp_name');
       $visiting_purpose=Input::get('visiting_purpose');
+      $visit_emp_id=Input::get('visit_emp_id');
+      $visit_emp_status=Input::get('visit_emp_status');
       $belongings=Input::get('belongings');
       $vehicle_number=Input::get('vehicle_number');
       $now = new DateTime();
@@ -91,11 +93,11 @@ class RegisterController extends Controller
                       DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
                       DB::insert('insert into checkedintable(usertype,name,gender,age,email,
                                                              phonenumber,visitortype,comp_name,comp_dept,comp_designation,
-                                                             comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
-                                                             vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+                                                             comp_location,comp_website,visit_emp_id,visit_emp_dept,visit_emp_name,visit_emp_status,belongings,
+                                                             vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
                                                              ,["Visitor",$visitor->name,$visitor->gender,$visitor->age,"Visitor Dont Have Email",
                                                                $visitor->phonenumber,$visiting_purpose,$visitor->comp_name,$visitor->comp_dept,$visitor->comp_designation,
-                                                               $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
+                                                               $visitor->comp_location,$visitor->comp_website,$visit_emp_id,$visit_emp_dept,$visit_emp_name,$visit_emp_status,$belongings,
                                                                $vehicle_number,$now,$now,"1"]);
                  }
                  elseif(!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false)
@@ -103,11 +105,11 @@ class RegisterController extends Controller
                       DB::update('update register_users set status=1 where email=? and status=?',[$email,'0']);
                       DB::insert('insert into checkedintable(usertype,name,gender,age,email,
                                                           phonenumber,visitortype,comp_name,comp_dept,comp_designation,
-                                                          comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
-                                                          vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+                                                          comp_location,comp_website,visit_emp_id,visit_emp_dept,visit_emp_name,
+                                                          visit_emp_status,belongings,vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
                                                           ,["Visitor",$visitor->name,$visitor->gender,$visitor->age,$visitor->email,
                                                             $visitor->phonenumber,$visiting_purpose,$visitor->comp_name,$visitor->comp_dept,$visitor->comp_designation,
-                                                            $visitor->comp_location,$visitor->comp_website,$visit_emp_dept,$visit_emp_name,$belongings,
+                                                            $visitor->comp_location,$visitor->comp_website,$visit_emp_id,$visit_emp_dept,$visit_emp_name,$visit_emp_status,$belongings,
                                                             $vehicle_number,$now,$now,"1"]);
                  }
                  Auth::logout();
@@ -472,6 +474,8 @@ class RegisterController extends Controller
                       $password=Input::get('password');
                       $usertype=Input::get('usertype');
                       $belongings=Input::get('belongings');
+                      
+                      $visit_emp_status=Input::get('visit_emp_status');
                       $vehicle_number=Input::get('vehicle_number');
                       $now = new DateTime();
                       $rule=array(
@@ -492,7 +496,7 @@ class RegisterController extends Controller
                               if(Auth::attempt(['email' => $visitoremail, 'password' => $password, 'usertype' => "Visitor"]))
                               {
                                  if(Auth::user()->ban=="0")
-                                 {    $bookingdata=bookingmodel::select('id','visitoremail','visitortype','empname','empdept','staus')->where('id',$bookingid)->where('visitoremail',$visitoremail)->where('staus',"Approved")->first();
+                                 {    $bookingdata=bookingmodel::select('id','visitoremail','visitortype','empid','empname','empdept','staus')->where('id',$bookingid)->where('visitoremail',$visitoremail)->where('staus',"Approved")->first();
                                       $visitordata=visitormodel::select('name','gender','age','phonenumber','email','comp_name','comp_dept','comp_designation','comp_location','comp_website','status','count')->where('email',$visitoremail)->first();
                                       $count=$visitordata->count+1;
                                       if($visitordata->status=="1")
@@ -502,11 +506,11 @@ class RegisterController extends Controller
                                       DB::update('update register_users set status=1 where email=? and status=?',[$visitoremail,'0']);
                                       DB::insert('insert into checkedintable(usertype,name,gender,age,email,
                                                                             phonenumber,visitortype,comp_name,comp_dept,comp_designation,
-                                                                            comp_location,comp_website,visit_emp_dept,visit_emp_name,belongings,
-                                                                            vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+                                                                            comp_location,comp_website,visit_emp_id,visit_emp_dept,visit_emp_name,visit_emp_status,belongings,
+                                                                            vehicle_number,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
                                                                             ,["Visitor",$visitordata->name,$visitordata->gender,$visitordata->age,$visitordata->email,
                                                                               $visitordata->phonenumber,$bookingdata->visitortype,$visitordata->comp_name,$visitordata->comp_dept,$visitordata->comp_designation,
-                                                                              $visitordata->comp_location,$visitordata->comp_website,$bookingdata->empdept,$bookingdata->empname,$belongings,
+                                                                              $visitordata->comp_location,$visitordata->comp_website,$bookingdata->empid,$bookingdata->empdept,$bookingdata->empname,$visit_emp_status,$belongings,
                                                                               $vehicle_number,$now,$now,"1"]);
                                         DB::delete('delete from bookingtable where id=?',[$bookingid]);
                                         Auth::logout();

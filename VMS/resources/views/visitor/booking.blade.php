@@ -74,6 +74,7 @@
                           success:function(data){
 
                                console.log(data[0].status);
+                               console.log(data[0].empid);
                                op+=data[0].status;
                                if (op==0) {
                                  a.find('.availability').val("Unavailable Now");
@@ -82,6 +83,7 @@
                                  a.find('.availability').val("Available Now");
                                }
 
+                                a.find('.visit_emp_id').val(data[0].empid);
                           },
                           error:function(){
 
@@ -199,6 +201,11 @@
                                    <strong>{{ $errors->first('empmail') }}</strong>
                                  </span>
                                  @endif
+                               </div>
+                           </div>
+                           <div class="form-group hidden">
+                               <div class="col-md-6">
+                                 <input id="emp_id" name="emp_id" class="form-control visit_emp_id" type="text">
                                </div>
                            </div>
                            <div class="form-group">

@@ -195,6 +195,14 @@ Route::post('admin/{visitorid}/adminresetvisitorpasswordupdate', ['as' => 'admin
 Route::post('admin/{employeeid}/adminresetemployeepasswordupdate', ['as' => 'adminresetemployeepasswordupdate', 'uses' => 'admincontroller@adminresetemployeepasswordupdate']);
 Route::post('admin/{adminid}/adminresetadminpasswordupdate', ['as' => 'adminresetadminpasswordupdate', 'uses' => 'admincontroller@adminresetadminpasswordupdate']);
 
+
+
+Route::get('employee/{visitorid}/empseen', ['as' => 'empseen', 'uses' => 'employeecontroller@empseen']);
+Route::get('employee/{visitorid}/empnotseen', ['as' => 'empnotseen', 'uses' => 'employeecontroller@empnotseen']);
+
+
+
+
 Route::get('/logout',function () {
     Auth::logout();
     return Redirect::to('');

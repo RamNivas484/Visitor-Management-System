@@ -24,7 +24,7 @@ class employeecontroller extends Controller
   }
   public function empvisitorlog(Request $request)
   {
-    $employeevisitorlog=checkinmodel::select('visitortype','name','phonenumber','comp_name','comp_designation','checkintime','checkouttime','status')->where('visit_emp_name',Auth::user()->name)->get();
+    $employeevisitorlog=checkinmodel::select('id','visitortype','name','phonenumber','comp_name','comp_designation','checkintime','checkouttime','status','visit_emp_status')->where('visit_emp_name',Auth::user()->name)->get();
     return view('employee.employeevisitorlog',compact('employeevisitorlog'));
 
 
@@ -160,6 +160,16 @@ class employeecontroller extends Controller
   {  $confirm = visitormodel::find($visitorid);
 
     return view('employee.banvisitor',compact('confirm'));
+  }
+  public function empseen($visitorid)
+  {  DB::update('update checkedintable set visit_emp_status=? where id=?',["Seen",$visitorid]);
+
+    return Redirect::to('empvisitorlog')->with('success','Visit Status Updated!!!');
+  }
+  public function empnotseen($visitorid)
+  {  DB::update('update checkedintable set visit_emp_status=? where id=?',["Not Seen",$visitorid]);
+
+    return Redirect::to('empvisitorlog')->with('success','Visit Status Updated!!!');
   }
   public function employeeeditprofileshow()
   {

@@ -16,6 +16,7 @@ class Booking extends Migration
             $table->string('visitortype');
             $table->string('compname')->nullable();
             $table->string('designation')->nullable();
+            $table->string('empid');
             $table->string('empname');
             $table->string('empdept');
             $table->string('empmail');

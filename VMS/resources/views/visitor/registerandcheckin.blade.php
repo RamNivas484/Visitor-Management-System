@@ -78,6 +78,7 @@
           {    var name=$(this).val();
                var a=$(this).parent().parent().parent();
                var op=" ";
+               var email=" ";
                $.ajax({
                           type:'get',
                           url:'{!!URL::to('visitorfindempavailability')!!}',
@@ -86,13 +87,16 @@
                           success:function(data){
 
                                console.log(data[0].status);
+                                console.log(data[0].id);
                                op+=data[0].status;
+                               email+=data[0].email;
                                if (op==0) {
                                  a.find('.availability').val("Unavailable");
                                }
                                else if (op==1) {
                                  a.find('.availability').val("Available");
                                }
+                              a.find('.visit_emp_id').val(data[0].empid);
 
                           },
                           error:function(){
@@ -324,6 +328,16 @@
                     <strong>{{ $errors->first('vehicle_number') }}</strong>
                   </span>
                   @endif
+                </div>
+            </div>
+            <div class="form-group hidden">
+                <div class="col-md-6">
+                  <input id="visit_emp_id" name="visit_emp_id" class="form-control visit_emp_id" type="text">
+                </div>
+            </div>
+            <div class="form-group hidden">
+                <div class="col-md-6">
+                  <input id="visit_emp_status" name="visit_emp_status" class="form-control visit_emp_status" type="text" Value="Not Updated">
                 </div>
             </div>
             <div class="form-group">
