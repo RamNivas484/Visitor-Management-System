@@ -270,13 +270,15 @@ class visitorcontroller extends Controller
           elseif((!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false) &&$newemail=="")
           {        DB::update('update visitortable set name=?,age=?,email=?,gender=?,phonenumber=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=? where email=?',[$newname,$newage,$newemail,$newgender,$newphonenumber,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
                   DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=?  where email=?',[$newname,$newage,$newgender,$newphonenumber,"Visitor Dont Have Email",$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
-                  DB::delete('delete from bookingtable where email=?',Auth::user()->email);
+                  DB::delete('delete from bookingtable where visitoremail=?',[Auth::user()->email]);
+
+
                   DB::update('update register_users set name=?,email=? where email=?',[$newname,$newphonenumber,Auth::user()->email]);
           }
           elseif((!filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL) === false) &&$newemail!="")
           {           DB::update('update visitortable set name=?,age=?,email=?,gender=?,phonenumber=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=? where email=?',[$newname,$newage,$newemail,$newgender,$newphonenumber,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
                    DB::update('update checkedintable set name=?,age=?,gender=?,phonenumber=?,email=?,comp_name=?,comp_dept=?,comp_designation=?,comp_location=?,comp_website=?  where email=?',[$newname,$newage,$newgender,$newphonenumber,$newemail,$comp_name,$comp_dept,$comp_designation,$comp_location,$comp_website,Auth::user()->email]);
-                   DB::update('update from bookingtable set visitoremail=?,visitorname=?,visitorphonenumber=?,compname=?,designation=? where visitoremail=?',$newemail,$newname,$newphonenumber,$comp_name,$comp_designation,Auth::user()->email);
+                  DB::update('update bookingtable set visitoremail=?,visitorname=?,visitorphonenumber=?,compname=?,designation=? where visitoremail=?',[$newemail,$newname,$newphonenumber,$comp_name,$comp_designation,Auth::user()->email]);
                    DB::update('update register_users set name=?,email=? where email=?',[$newname,$newemail,Auth::user()->email]);
           }
   /*        if((preg_match("/^[0-9]{10}$/", Auth::user()->email))&&$newemail=="")
