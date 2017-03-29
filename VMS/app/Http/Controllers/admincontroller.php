@@ -388,6 +388,16 @@ class admincontroller extends Controller
 
       return view('admin.admindeleteemployee',compact('confirm'));
     }
+    public function admineditemployee($visitorid)
+    {  $confirm = employeemodel::find($visitorid);
+
+      return view('admin.admineditemployee',compact('confirm'));
+    }
+    public function admineditadmin($visitorid)
+    {  $confirm = adminmodel::find($visitorid);
+
+      return view('admin.admineditadmin',compact('confirm'));
+    }
     public function admindeleteemployeeconfirmed(Request $request)
     {
       $phonenumber=$request->input('phonenumber');
@@ -407,6 +417,32 @@ class admincontroller extends Controller
 
         DB::delete('delete from employeetable where email=?',[$email]);
       return Redirect::to('employeelist')->with('success','Successfully Deleted Employee !!!');
+
+    }
+    public function admineditemployeeconfirmed(Request $request)
+    {
+
+      $id=$request->input('id');
+      $empid=$request->input('empid');
+      $education=$request->input('education');
+      $dept=$request->input('department');
+      $designation=$request->input('designation');
+      $salary=$request->input('salary');
+      DB::update('update employeetable set education=?,dept=?,designation=?,salary=? where empid=?',[$education,$dept,$designation,$salary,$empid]);
+      return Redirect::to('employeelist')->with('success','Successfully Edited Employee Details !!!');
+
+    }
+    public function admineditadminconfirmed(Request $request)
+    {
+
+      $id=$request->input('id');
+      $adminid=$request->input('adminid');
+      $education=$request->input('education');
+      $dept=$request->input('department');
+      $designation=$request->input('designation');
+      $salary=$request->input('salary');
+      DB::update('update admintable set education=?,dept=?,designation=?,salary=? where adminid=?',[$education,$dept,$designation,$salary,$adminid]);
+      return Redirect::to('adminlist')->with('success','Successfully Edited Admin Details !!!');
 
     }
     public function admindeleteadmin($visitorid)

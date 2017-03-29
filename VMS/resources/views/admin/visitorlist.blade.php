@@ -54,7 +54,8 @@
                             <td>Banned</td>
                             <?php endif; ?>
                             <td>{{$v->count}}</td>
-                            <td><a href="{{ route('adminbanvisitor', $v->id) }}" class="btn btn-success btn-sm">BAN </a>||
+                            <td><a href="{{ route('adminbanvisitor', $v->id) }}" class="btn btn-success btn-sm">&nbsp;&nbsp;BAN&nbsp;&nbsp; </a>
+                                
                                 <a href="{{ route('admindeletevisitor', $v->id) }}" class="btn btn-danger btn-sm">Delete </a></td>
                             </tr>
 

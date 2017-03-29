@@ -178,6 +178,13 @@ Route::post('admin/{visitorid}/admindeletevisitorconfirmed', ['as' => 'admindele
 Route::get('admin/{visitorid}/admindeleteemployee', ['as' => 'admindeleteemployee', 'uses' => 'admincontroller@admindeleteemployee']);
 Route::post('admin/{visitorid}/admindeleteemployeeconfirmed', ['as' => 'admindeleteemployeeconfirmed', 'uses' => 'admincontroller@admindeleteemployeeconfirmed']);
 
+Route::get('admin/{visitorid}/admineditemployee', ['as' => 'admineditemployee', 'uses' => 'admincontroller@admineditemployee']);
+Route::post('admin/{visitorid}/admineditemployeeconfirmed', ['as' => 'admineditemployeeconfirmed', 'uses' => 'admincontroller@admineditemployeeconfirmed']);
+
+Route::get('admin/{visitorid}/admineditadmin', ['as' => 'admineditadmin', 'uses' => 'admincontroller@admineditadmin']);
+Route::post('admin/{visitorid}/admineditadminconfirmed', ['as' => 'admineditadminconfirmed', 'uses' => 'admincontroller@admineditadminconfirmed']);
+
+
 Route::get('admin/{visitorid}/admindeleteadmin', ['as' => 'admindeleteadmin', 'uses' => 'admincontroller@admindeleteadmin']);
 Route::post('admin/{visitorid}/admindeleteadminconfirmed', ['as' => 'admindeleteadminconfirmed', 'uses' => 'admincontroller@admindeleteadminconfirmed']);
 

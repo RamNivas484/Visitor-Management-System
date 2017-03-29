@@ -43,6 +43,7 @@
                             <?php elseif((strcmp($status,"1"))==0): ?>
                             <td>ON Campus</td>
                             <?php endif; ?>
+                            <td><a href="{{ route('admineditemployee', $v->id) }}" class="btn btn-warning btn-sm">Edit </a></td>
                             <td><a href="{{ route('admindeleteemployee', $v->id) }}" class="btn btn-danger btn-sm">Delete </a></td>
                             </tr>
 
