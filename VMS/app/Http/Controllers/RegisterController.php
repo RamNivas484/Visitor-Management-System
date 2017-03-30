@@ -537,29 +537,7 @@ class RegisterController extends Controller
 
 
 
-                 /* if(Auth::attempt(['email' => $email, 'password' => $password, 'usertype' => $usertype]))
-                              {  if(Auth::user()->status=="0")
-                                {
-                                  $employee = DB::table('employeetable')->where('email', $email)->first();
-                                  DB::update('update employeetable set status=1 where email=? and status=0',[$email]);
-                                  DB::insert('insert into checkedintable(usertype,name,gender,age,email,
-                                                                       phonenumber,emp_dept,emp_designation,checkintime,checkouttime,status) values(?,?,?,?,?,?,?,?,?,?,?)'
-                                                                       ,["Employee",$employee->name,$employee->gender,$employee->age,$employee->email,
-                                                                         $employee->phonenumber,$employee->dept,$employee->designation,$now,$now,"1"]);
-                                  DB::update('update register_users set status=1 where email=? and status=0',[$email]);
-                                  Auth::logout();
-                                  return Redirect::to('employeecheckin')->with('success','Welcome You have Successfully Checked In!!!');
-                                }
-                                elseif (Auth::user()->status=="1")
-                                {
-                                      Auth::logout();
-                                      return Redirect::to('employeecheckin')->with('failed','You have already checked in!!!Checkout and Try again!!!');
-                                }
-                              }
-                              else
-                              {
-                                return Redirect::to('employeecheckin')->with('failed','Incorrect Employee Data');
-                              }*/
+               
                             }
       }
 

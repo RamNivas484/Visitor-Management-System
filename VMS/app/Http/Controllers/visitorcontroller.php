@@ -57,10 +57,7 @@ class visitorcontroller extends Controller
          if($validator->fails())
          {
            return Redirect::to('/visitorregister')->withErrors($validator);
-           //var_dump($data);
-           //onspotcheckinvisitor::formstore(Input::except(array('_token')));
-           //  return view('visitor.visitorcheckin',compact('employee'))->with('success','successfully Checkedin');
-         // onspotcheckinvisitor::formstore(Input::except(array('_token')));
+           
          }
          else
          {
